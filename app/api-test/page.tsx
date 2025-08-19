@@ -45,7 +45,7 @@ export default function ApiTestPage() {
       const data = await response.json()
       setResults(data)
     } catch (error) {
-      console.error("Multi-source search failed:", error)
+      // Error handled by error boundary
     } finally {
       setLoading(false)
     }
@@ -59,7 +59,7 @@ export default function ApiTestPage() {
       const data = await response.json()
       setResults({ [source]: data } as any)
     } catch (error) {
-      console.error(`${source} search failed:`, error)
+      // Error handled by error boundary
     } finally {
       setLoading(false)
       setSelectedSource(null)

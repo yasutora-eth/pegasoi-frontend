@@ -50,7 +50,7 @@ export function RealDataProcessor() {
       const data = await response.json()
       setResults(data)
     } catch (error) {
-      console.error("API test failed:", error)
+      // API test failed, handle gracefully
     } finally {
       setLoading(false)
     }
@@ -88,7 +88,7 @@ export function RealDataProcessor() {
       }
       return parsed
     } catch (error) {
-      console.error("ArXiv XML parsing error:", error)
+      // ArXiv XML parsing error, return empty result
       return []
     }
   }

@@ -35,7 +35,6 @@ export default function SubmitArticle() {
       alert("Article submitted successfully!")
       router.push("/dashboard")
     } catch (error) {
-      console.error("Error submitting article:", error)
       alert("Failed to submit article. Please try again.")
     } finally {
       setIsSubmitting(false)

@@ -19,7 +19,7 @@ export default function Login() {
   const [role, setRole] = useState<"user" | "publisher" | "admin">("user")
   // const { login, isAuthenticated } = useAuth()
   const isAuthenticated = false
-  const login = (role: string) => console.log(`Mock login as ${role}`)
+  const login = (role: string) => { /* Mock login */ }
   const router = useRouter()
 
   useEffect(() => {

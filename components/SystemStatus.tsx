@@ -28,7 +28,6 @@ export function SystemStatus() {
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Unknown error occurred"
       setError(errorMessage)
-      console.error("Health check error:", err)
     } finally {
       setLoading(false)
     }

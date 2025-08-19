@@ -36,7 +36,7 @@ export function ResearchAssistant() {
       const data = await apiService.getArticles("published")
       setArticles(data.slice(0, 5))
     } catch (error) {
-      console.error("Error fetching articles:", error)
+      // Error fetching articles, handle gracefully
       setError("Failed to fetch articles. Please try again later.")
     } finally {
       setLoadingArticles(false)
@@ -72,7 +72,7 @@ export function ResearchAssistant() {
 
       setMessages((prev) => [...prev, assistantMessage])
     } catch (error) {
-      console.error("Error:", error)
+      // Error occurred, handle gracefully
       setError("Failed to get response from research assistant. Please try again.")
     } finally {
       setIsLoading(false)

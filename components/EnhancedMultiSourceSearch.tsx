@@ -85,7 +85,6 @@ export function EnhancedMultiSourceSearch() {
 
       setResults(data)
     } catch (err) {
-      console.error("Search error:", err)
       setError(err instanceof Error ? err.message : "Search failed")
     } finally {
       setLoading(false)
@@ -459,7 +458,6 @@ export function EnhancedMultiSourceSearch() {
 
       return { entries: parsed, total: parsed.length }
     } catch (error) {
-      console.error("ArXiv XML parsing error:", error)
       return { entries: [], total: 0, error: "XML parsing failed" }
     }
   }
@@ -558,7 +556,6 @@ export function EnhancedMultiSourceSearch() {
 
       return { entries: parsed, total: parsed.length }
     } catch (error) {
-      console.error("DOAJ parsing error:", error)
       return { entries: [], total: 0, error: "DOAJ parsing failed" }
     }
   }
@@ -603,7 +600,6 @@ export function EnhancedMultiSourceSearch() {
 
       return { entries: parsed, total: parsed.length }
     } catch (error) {
-      console.error("Crossref parsing error:", error)
       return { entries: [], total: 0, error: "Crossref parsing failed" }
     }
   }
@@ -656,7 +652,6 @@ export function EnhancedMultiSourceSearch() {
 
       return { entries: parsed, total: parsed.length }
     } catch (error) {
-      console.error("Getty Museum parsing error:", error)
       return { entries: [], total: 0, error: "Getty Museum parsing failed" }
     }
   }
