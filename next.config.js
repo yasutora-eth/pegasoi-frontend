@@ -1,10 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    appDir: true,
-  },
-  // Disable static optimization for pages with issues
-  generateStaticParams: false,
+  // App Router is enabled by default in Next.js 14+
   // Skip build-time static generation for problematic pages
   output: 'standalone',
   // Disable type checking during build for faster iteration
