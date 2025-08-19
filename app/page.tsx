@@ -56,8 +56,8 @@ export default function Home() {
   // Temporary no-auth version for development
   const isAuthenticated = false
   const user = null
-  const toggleAuth = () => console.log('Auth disabled for development')
-  const setRole = () => console.log('Role setting disabled for development')
+  const toggleAuth = () => {} // Auth disabled for development
+  const setRole = () => {} // Role setting disabled for development
 
   // Content for unauthenticated users
   const PublicContent = () => (

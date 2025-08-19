@@ -126,8 +126,7 @@ class ApiService {
     try {
       return this.request<SearchResult>(`/api/v1/search?query=${encodeURIComponent(query)}`)
     } catch (error) {
-      console.warn("Backend search failed, using fallback:", error)
-      // Return fallback structure
+      // Return fallback structure with proper error handling
       throw new Error(`Search service unavailable: ${error instanceof Error ? error.message : "Unknown error"}`)
     }
   }

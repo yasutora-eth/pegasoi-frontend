@@ -63,7 +63,7 @@ export function EnhancedMultiSourceSearch() {
       let data: any
 
       try {
-        response = await fetch(`http://localhost:8000/search?query=${encodeURIComponent(query.trim())}`, {
+        response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/search?query=${encodeURIComponent(query.trim())}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -75,9 +75,8 @@ export function EnhancedMultiSourceSearch() {
         }
 
         data = await response.json()
-        console.log("Backend response:", data)
       } catch (backendError) {
-        console.warn("Backend unavailable, trying direct API calls:", backendError)
+        // Backend unavailable, trying direct API calls
         setUsingFallback(true)
 
         // Try direct API calls with improved error handling
@@ -252,7 +251,6 @@ export function EnhancedMultiSourceSearch() {
 
     if (!doajSuccess) {
       // Use curated DOAJ fallback data
-      console.log("All DOAJ endpoints failed, using curated fallback data")
       results.doaj = {
         ok: true,
         data: createDoajFallbackData(searchQuery),
@@ -312,7 +310,6 @@ export function EnhancedMultiSourceSearch() {
       }
     } catch (error) {
       // Use curated Getty Museum data with working links
-      console.log("Getty Museum API failed, using curated data with working links")
       results.getty = {
         ok: true,
         data: createGettyMuseumFallbackData(searchQuery),
