@@ -1,11 +1,18 @@
-"use client"
+'use client'
 
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Activity, Database, Zap, Clock, TrendingUp, Server } from 'lucide-react'
+import {
+  Activity,
+  Database,
+  Zap,
+  Clock,
+  TrendingUp,
+  Server,
+} from 'lucide-react'
 
 interface PerformanceMetrics {
   apiResponseTime: number
@@ -54,7 +61,7 @@ export function PerformanceMonitor() {
 
     const interval = setInterval(() => {
       // Simulate realistic metrics
-      setMetrics(prev => ({
+      setMetrics((prev) => ({
         apiResponseTime: Math.random() * 200 + 50, // 50-250ms
         redisHitRate: Math.random() * 20 + 80, // 80-100%
         graphqlCacheHitRate: Math.random() * 30 + 70, // 70-100%
@@ -66,7 +73,7 @@ export function PerformanceMonitor() {
       }))
 
       // Simulate health checks
-      setHealth(prev => ({
+      setHealth((prev) => ({
         ...prev,
         status: Math.random() > 0.95 ? 'degraded' : 'healthy',
         lastCheck: new Date().toISOString(),
@@ -100,13 +107,13 @@ export function PerformanceMonitor() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg">
+          <div className="rounded-lg bg-gradient-to-r from-purple-500 to-pink-600 p-2">
             <Activity className="h-6 w-6 text-white" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+            <h2 className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-2xl font-bold text-transparent">
               Performance Monitor
             </h2>
             <p className="text-muted-foreground">
@@ -114,7 +121,7 @@ export function PerformanceMonitor() {
             </p>
           </div>
         </div>
-        <Badge 
+        <Badge
           variant={isMonitoring ? 'default' : 'outline'}
           className="cursor-pointer"
           onClick={() => setIsMonitoring(!isMonitoring)}
@@ -124,14 +131,18 @@ export function PerformanceMonitor() {
       </div>
 
       {/* System Health Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
-              <div className={`w-3 h-3 rounded-full ${getStatusColor(health.status)}`} />
+              <div
+                className={`h-3 w-3 rounded-full ${getStatusColor(health.status)}`}
+              />
               <div>
                 <p className="text-sm font-medium">System Status</p>
-                <p className="text-xs text-muted-foreground capitalize">{health.status}</p>
+                <p className="text-xs capitalize text-muted-foreground">
+                  {health.status}
+                </p>
               </div>
             </div>
           </CardContent>
@@ -143,7 +154,9 @@ export function PerformanceMonitor() {
               <Database className="h-4 w-4 text-blue-500" />
               <div>
                 <p className="text-sm font-medium">Redis Cache</p>
-                <p className="text-xs text-muted-foreground">{metrics.redisHitRate.toFixed(1)}% hit rate</p>
+                <p className="text-xs text-muted-foreground">
+                  {metrics.redisHitRate.toFixed(1)}% hit rate
+                </p>
               </div>
             </div>
           </CardContent>
@@ -155,7 +168,9 @@ export function PerformanceMonitor() {
               <Zap className="h-4 w-4 text-yellow-500" />
               <div>
                 <p className="text-sm font-medium">Response Time</p>
-                <p className="text-xs text-muted-foreground">{metrics.apiResponseTime.toFixed(0)}ms avg</p>
+                <p className="text-xs text-muted-foreground">
+                  {metrics.apiResponseTime.toFixed(0)}ms avg
+                </p>
               </div>
             </div>
           </CardContent>
@@ -167,7 +182,9 @@ export function PerformanceMonitor() {
               <TrendingUp className="h-4 w-4 text-green-500" />
               <div>
                 <p className="text-sm font-medium">Error Rate</p>
-                <p className="text-xs text-muted-foreground">{metrics.errorRate.toFixed(2)}%</p>
+                <p className="text-xs text-muted-foreground">
+                  {metrics.errorRate.toFixed(2)}%
+                </p>
               </div>
             </div>
           </CardContent>
@@ -175,7 +192,7 @@ export function PerformanceMonitor() {
       </div>
 
       {/* Detailed Metrics */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Redis Performance */}
         <Card>
           <CardHeader>
@@ -186,7 +203,7 @@ export function PerformanceMonitor() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <div className="flex justify-between text-sm mb-2">
+              <div className="mb-2 flex justify-between text-sm">
                 <span>Cache Hit Rate</span>
                 <span>{metrics.redisHitRate.toFixed(1)}%</span>
               </div>
@@ -194,7 +211,7 @@ export function PerformanceMonitor() {
             </div>
 
             <div>
-              <div className="flex justify-between text-sm mb-2">
+              <div className="mb-2 flex justify-between text-sm">
                 <span>Memory Usage</span>
                 <span>{metrics.memoryUsage.toFixed(1)}%</span>
               </div>
@@ -218,7 +235,7 @@ export function PerformanceMonitor() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <div className="flex justify-between text-sm mb-2">
+              <div className="mb-2 flex justify-between text-sm">
                 <span>GraphQL Cache Hit Rate</span>
                 <span>{metrics.graphqlCacheHitRate.toFixed(1)}%</span>
               </div>
@@ -227,12 +244,16 @@ export function PerformanceMonitor() {
 
             <div className="flex justify-between text-sm">
               <span>Total Requests</span>
-              <Badge variant="outline">{metrics.totalRequests.toLocaleString()}</Badge>
+              <Badge variant="outline">
+                {metrics.totalRequests.toLocaleString()}
+              </Badge>
             </div>
 
             <div className="flex justify-between text-sm">
               <span>Uptime</span>
-              <Badge variant="outline">{Math.floor(metrics.uptime / 60)}m {metrics.uptime % 60}s</Badge>
+              <Badge variant="outline">
+                {Math.floor(metrics.uptime / 60)}m {metrics.uptime % 60}s
+              </Badge>
             </div>
           </CardContent>
         </Card>
@@ -243,7 +264,8 @@ export function PerformanceMonitor() {
         <Alert>
           <Database className="h-4 w-4" />
           <AlertDescription>
-            Redis cache hit rate is below optimal (80%). Consider reviewing cache strategies.
+            Redis cache hit rate is below optimal (80%). Consider reviewing
+            cache strategies.
           </AlertDescription>
         </Alert>
       )}
@@ -252,7 +274,8 @@ export function PerformanceMonitor() {
         <Alert>
           <Clock className="h-4 w-4" />
           <AlertDescription>
-            API response time is elevated ({metrics.apiResponseTime.toFixed(0)}ms). Monitor backend performance.
+            API response time is elevated ({metrics.apiResponseTime.toFixed(0)}
+            ms). Monitor backend performance.
           </AlertDescription>
         </Alert>
       )}
@@ -261,7 +284,8 @@ export function PerformanceMonitor() {
         <Alert variant="destructive">
           <Activity className="h-4 w-4" />
           <AlertDescription>
-            Error rate is above threshold ({metrics.errorRate.toFixed(2)}%). Check system logs.
+            Error rate is above threshold ({metrics.errorRate.toFixed(2)}%).
+            Check system logs.
           </AlertDescription>
         </Alert>
       )}
@@ -274,16 +298,24 @@ export function PerformanceMonitor() {
         <CardContent>
           <div className="space-y-2 text-sm">
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-green-500 rounded-full" />
-              <span>Redis cache hit rate is excellent ({metrics.redisHitRate.toFixed(1)}%)</span>
+              <div className="h-2 w-2 rounded-full bg-green-500" />
+              <span>
+                Redis cache hit rate is excellent (
+                {metrics.redisHitRate.toFixed(1)}%)
+              </span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-blue-500 rounded-full" />
-              <span>GraphQL caching is performing well ({metrics.graphqlCacheHitRate.toFixed(1)}%)</span>
+              <div className="h-2 w-2 rounded-full bg-blue-500" />
+              <span>
+                GraphQL caching is performing well (
+                {metrics.graphqlCacheHitRate.toFixed(1)}%)
+              </span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-yellow-500 rounded-full" />
-              <span>Consider implementing request batching for better performance</span>
+              <div className="h-2 w-2 rounded-full bg-yellow-500" />
+              <span>
+                Consider implementing request batching for better performance
+              </span>
             </div>
           </div>
         </CardContent>

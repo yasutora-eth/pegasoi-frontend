@@ -5,6 +5,7 @@ This document provides a comprehensive overview of the Pegasoi Frontend architec
 ## 🏗️ High-Level Architecture
 
 ### Current Architecture (Phase 1)
+
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                    Pegasoi Frontend (Next.js 14)                │
@@ -34,6 +35,7 @@ This document provides a comprehensive overview of the Pegasoi Frontend architec
 ```
 
 ### Future Architecture (Phase 2 - Web3 Integration)
+
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                Pegasoi Frontend + Web3 Layer                    │
@@ -60,6 +62,7 @@ This document provides a comprehensive overview of the Pegasoi Frontend architec
 ## 📁 Project Structure
 
 ### Root Directory Structure
+
 ```
 pegasoi-frontend/
 ├── 📁 app/                     # Next.js 14 App Router
@@ -77,6 +80,7 @@ pegasoi-frontend/
 ```
 
 ### App Directory (Next.js 14 App Router)
+
 ```
 app/
 ├── 📄 layout.tsx               # Root layout with providers
@@ -132,6 +136,7 @@ app/
 ```
 
 ### Components Directory
+
 ```
 components/
 ├── 📁 ui/                      # Shadcn/UI base components
@@ -202,6 +207,7 @@ components/
 ```
 
 ### Lib Directory
+
 ```
 lib/
 ├── 📄 utils.ts                 # General utility functions
@@ -246,6 +252,7 @@ lib/
 ### Component Architecture
 
 #### 1. Atomic Design Principles
+
 ```
 Atoms (Basic UI elements)
 ├── Button, Input, Badge, Avatar
@@ -264,6 +271,7 @@ Pages (Complete views)
 ```
 
 #### 2. Component Structure Pattern
+
 ```typescript
 // components/ExampleComponent.tsx
 import { useState, useEffect } from 'react'
@@ -276,18 +284,18 @@ interface ExampleComponentProps {
   onAction?: () => void
 }
 
-export function ExampleComponent({ 
-  title, 
-  children, 
+export function ExampleComponent({
+  title,
+  children,
   className,
-  onAction 
+  onAction
 }: ExampleComponentProps) {
   const [state, setState] = useState(false)
-  
+
   useEffect(() => {
     // Side effects
   }, [])
-  
+
   return (
     <div className={cn("base-classes", className)}>
       <h2>{title}</h2>
@@ -300,6 +308,7 @@ export function ExampleComponent({
 ### State Management Patterns
 
 #### 1. Local State (useState)
+
 ```typescript
 // For component-specific state
 const [isOpen, setIsOpen] = useState(false)
@@ -307,17 +316,19 @@ const [formData, setFormData] = useState({})
 ```
 
 #### 2. Server State (React Query/SWR)
+
 ```typescript
 // For API data fetching
 import { useQuery } from '@tanstack/react-query'
 
 const { data, isLoading, error } = useQuery({
   queryKey: ['articles'],
-  queryFn: () => apiService.getArticles()
+  queryFn: () => apiService.getArticles(),
 })
 ```
 
 #### 3. Global State (Context + useReducer)
+
 ```typescript
 // For app-wide state
 interface AppState {
@@ -332,24 +343,25 @@ const AppContext = createContext<AppState | null>(null)
 ### API Integration Patterns
 
 #### 1. API Client Structure
+
 ```typescript
 // lib/api.ts
 class ApiService {
   private baseURL = process.env.NEXT_PUBLIC_API_URL
-  
+
   async get<T>(endpoint: string): Promise<T> {
     // GET implementation
   }
-  
+
   async post<T>(endpoint: string, data: any): Promise<T> {
     // POST implementation
   }
-  
+
   // Specific methods
   async getArticles(): Promise<Article[]> {
     return this.get('/api/v1/articles')
   }
-  
+
   async searchPapers(query: string): Promise<SearchResult> {
     return this.get(`/api/v1/search/papers?query=${query}`)
   }
@@ -359,6 +371,7 @@ export const apiService = new ApiService()
 ```
 
 #### 2. Error Handling Pattern
+
 ```typescript
 try {
   const result = await apiService.getArticles()
@@ -375,6 +388,7 @@ try {
 ### Web3 Integration Patterns (Phase 2)
 
 #### 1. Wallet Connection Pattern
+
 ```typescript
 // components/web3/WalletConnectButton.tsx
 import { useConnect, useAccount } from 'wagmi'
@@ -382,11 +396,11 @@ import { useConnect, useAccount } from 'wagmi'
 export function WalletConnectButton() {
   const { connect, connectors } = useConnect()
   const { isConnected } = useAccount()
-  
+
   if (isConnected) {
     return <WalletInfo />
   }
-  
+
   return (
     <div>
       {connectors.map((connector) => (
@@ -403,6 +417,7 @@ export function WalletConnectButton() {
 ```
 
 #### 2. Smart Contract Interaction Pattern
+
 ```typescript
 // hooks/useResearchNFT.ts
 import { useContractWrite, useWaitForTransaction } from 'wagmi'
@@ -412,17 +427,17 @@ export function useResearchNFT() {
   const { data, write, isLoading } = useContractWrite({
     address: process.env.NEXT_PUBLIC_RESEARCH_NFT_CONTRACT,
     abi: researchNFTABI,
-    functionName: 'mintResearchNFT'
+    functionName: 'mintResearchNFT',
   })
-  
+
   const { isLoading: isConfirming } = useWaitForTransaction({
     hash: data?.hash,
   })
-  
+
   return {
     mintNFT: write,
     isLoading: isLoading || isConfirming,
-    txHash: data?.hash
+    txHash: data?.hash,
   }
 }
 ```
@@ -430,6 +445,7 @@ export function useResearchNFT() {
 ## 🚀 Routing & Navigation
 
 ### App Router Structure
+
 ```typescript
 // app/layout.tsx - Root Layout
 export default function RootLayout({
@@ -454,6 +470,7 @@ export default function RootLayout({
 ```
 
 ### Route Groups & Layouts
+
 ```
 app/
 ├── (auth)/                     # Auth routes with special layout
@@ -471,6 +488,7 @@ app/
 ## 🎯 Performance Optimization
 
 ### Code Splitting Strategy
+
 ```typescript
 // Dynamic imports for large components
 import dynamic from 'next/dynamic'
@@ -485,6 +503,7 @@ const Web3Dashboard = dynamic(() => import('./web3/Dashboard'))
 ```
 
 ### Image Optimization
+
 ```typescript
 import Image from 'next/image'
 
@@ -501,15 +520,16 @@ import Image from 'next/image'
 ```
 
 ### Caching Strategy
+
 ```typescript
 // API Route caching
 export async function GET() {
   const data = await fetchData()
-  
+
   return Response.json(data, {
     headers: {
-      'Cache-Control': 'max-age=3600, stale-while-revalidate=86400'
-    }
+      'Cache-Control': 'max-age=3600, stale-while-revalidate=86400',
+    },
   })
 }
 
@@ -527,6 +547,7 @@ const queryClient = new QueryClient({
 ## 🔐 Security Considerations
 
 ### Environment Variables
+
 ```bash
 # Public variables (exposed to client)
 NEXT_PUBLIC_API_URL=https://api.example.com
@@ -539,6 +560,7 @@ PRIVATE_KEY=0x...
 ```
 
 ### API Security
+
 ```typescript
 // Rate limiting
 import { rateLimiter } from '@/lib/rate-limiter'
@@ -546,16 +568,17 @@ import { rateLimiter } from '@/lib/rate-limiter'
 export async function POST(request: Request) {
   const identifier = getClientIP(request)
   const { success } = await rateLimiter.limit(identifier)
-  
+
   if (!success) {
     return new Response('Too Many Requests', { status: 429 })
   }
-  
+
   // Process request
 }
 ```
 
 ### Web3 Security
+
 ```typescript
 // Never expose private keys
 // Use environment variables for sensitive data
@@ -566,6 +589,7 @@ export async function POST(request: Request) {
 ## 📊 Monitoring & Analytics
 
 ### Error Tracking
+
 ```typescript
 // Error boundary integration
 import * as Sentry from '@sentry/nextjs'
@@ -580,6 +604,7 @@ export function ErrorBoundary({ children }: { children: React.ReactNode }) {
 ```
 
 ### Performance Monitoring
+
 ```typescript
 // Web Vitals tracking
 import { getCLS, getFID, getFCP, getLCP, getTTFB } from 'web-vitals'

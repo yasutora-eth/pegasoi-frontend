@@ -1,12 +1,12 @@
 /**
  * Wallet Connection Component for Pegasoi Frontend
- * 
+ *
  * This component will handle wallet connection functionality including:
  * - Multi-wallet support (MetaMask, WalletConnect, Coinbase)
  * - Connection state management
  * - Error handling
  * - Network switching
- * 
+ *
  * TODO for Web3 Expert:
  * 1. Implement wallet connection with RainbowKit or ConnectKit
  * 2. Add support for multiple wallet types
@@ -17,14 +17,14 @@
 
 'use client'
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
 
 // Placeholder component for Web3 wallet connection
 export function WalletConnectButton() {
   return (
-    <Card className="max-w-md mx-auto">
+    <Card className="mx-auto max-w-md">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           🔗 Web3 Wallet Connection
@@ -35,10 +35,10 @@ export function WalletConnectButton() {
         <p className="text-sm text-muted-foreground">
           Web3 wallet integration will be implemented here by our Web3 expert.
         </p>
-        
+
         <div className="space-y-2">
           <h4 className="text-sm font-medium">Planned Features:</h4>
-          <ul className="text-xs text-muted-foreground space-y-1">
+          <ul className="space-y-1 text-xs text-muted-foreground">
             <li>• MetaMask connection</li>
             <li>• WalletConnect support</li>
             <li>• Coinbase Wallet integration</li>
@@ -47,7 +47,7 @@ export function WalletConnectButton() {
             <li>• Transaction history</li>
           </ul>
         </div>
-        
+
         <Button disabled className="w-full">
           Connect Wallet (Coming Soon)
         </Button>

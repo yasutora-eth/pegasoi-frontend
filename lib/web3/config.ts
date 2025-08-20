@@ -1,12 +1,12 @@
 /**
  * Web3 Configuration for Pegasoi Frontend
- * 
+ *
  * This file will contain the main Web3 configuration including:
  * - Wagmi configuration
  * - Chain configurations
  * - Provider setup
  * - Wallet connectors
- * 
+ *
  * TODO for Web3 Expert:
  * 1. Install required packages: wagmi, viem, @rainbow-me/rainbowkit
  * 2. Configure supported chains (Ethereum, Polygon, Sepolia)
@@ -20,20 +20,12 @@ export const WEB3_CONFIG_TODO = {
   message: 'Web3 configuration to be implemented by Web3 expert',
   requiredPackages: [
     'wagmi',
-    'viem', 
+    'viem',
     '@rainbow-me/rainbowkit',
-    '@tanstack/react-query'
+    '@tanstack/react-query',
   ],
-  supportedChains: [
-    'Ethereum Mainnet',
-    'Polygon',
-    'Sepolia Testnet'
-  ],
-  walletConnectors: [
-    'MetaMask',
-    'WalletConnect',
-    'Coinbase Wallet'
-  ]
+  supportedChains: ['Ethereum Mainnet', 'Polygon', 'Sepolia Testnet'],
+  walletConnectors: ['MetaMask', 'WalletConnect', 'Coinbase Wallet'],
 }
 
 // Example structure for future implementation:

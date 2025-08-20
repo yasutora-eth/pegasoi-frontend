@@ -1,4 +1,4 @@
-import Head from "next/head"
+import Head from 'next/head'
 
 interface SEOProps {
   title?: string
@@ -8,10 +8,10 @@ interface SEOProps {
 }
 
 export function SEO({
-  title = "Research Portal",
-  description = "A comprehensive portal for classical studies research articles and information",
+  title = 'Research Portal',
+  description = 'A comprehensive portal for classical studies research articles and information',
   canonical,
-  ogImage = "/og-image.jpg",
+  ogImage = '/og-image.jpg',
 }: SEOProps) {
   return (
     <Head>

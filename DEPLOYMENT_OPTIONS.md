@@ -1,10 +1,11 @@
 # 🚀 Pegasoi Frontend Deployment Options
 
 ## 📍 Current Setup Status
+
 ✅ **Frontend isolated** from pegasoi-v0 repository  
 ✅ **API configured** to connect to Railway backend  
 ✅ **Environment variables** configured for production  
-✅ **Backend compatibility** verified and working  
+✅ **Backend compatibility** verified and working
 
 **Backend URL:** `https://pegasoibackend-production.up.railway.app`
 
@@ -13,9 +14,11 @@
 ## 🎯 Deployment Options (Ranked by Recommendation)
 
 ### 1️⃣ **Vercel (RECOMMENDED)** 🥇
+
 **Perfect for Next.js projects**
 
 #### Quick Setup:
+
 ```bash
 # Install Vercel CLI
 npm i -g vercel
@@ -32,6 +35,7 @@ vercel --prod
 ```
 
 #### Environment Variables (Add in Vercel Dashboard):
+
 ```
 NEXT_PUBLIC_API_URL=https://pegasoibackend-production.up.railway.app
 NEXT_PUBLIC_GRAPHQL_URL=https://pegasoibackend-production.up.railway.app/graphql
@@ -39,14 +43,16 @@ NEXT_PUBLIC_APP_NAME=Pegasoi Research Platform
 ```
 
 **Pros:** ✅ Next.js optimized, ✅ Global CDN, ✅ Auto-deployments, ✅ Great performance  
-**Deployment Time:** ~10 minutes  
+**Deployment Time:** ~10 minutes
 
 ---
 
 ### 2️⃣ **Railway (UNIFIED PLATFORM)** 🥈
+
 **Keep frontend and backend on same platform**
 
 #### Quick Setup:
+
 ```bash
 # Add railway.json to project
 echo '{"build": {"builder": "nixpacks"}, "deploy": {"startCommand": "npm start"}}' > railway.json
@@ -58,17 +64,20 @@ railway up --detach
 ```
 
 #### Environment Variables (Railway Dashboard):
+
 - Same as Vercel above
 
 **Pros:** ✅ Same platform as backend, ✅ Unified billing, ✅ Internal networking  
-**Deployment Time:** ~15 minutes  
+**Deployment Time:** ~15 minutes
 
 ---
 
 ### 3️⃣ **Netlify (GREAT ALTERNATIVE)** 🥉
+
 **Excellent for static sites with dynamic features**
 
 #### Quick Setup:
+
 ```bash
 # Build the project
 npm run build
@@ -80,27 +89,30 @@ netlify deploy --prod --dir=out
 ```
 
 **Pros:** ✅ Great CI/CD, ✅ Form handling, ✅ Edge functions  
-**Deployment Time:** ~12 minutes  
+**Deployment Time:** ~12 minutes
 
 ---
 
-### 4️⃣ **Cloudflare Pages (PERFORMANCE BEAST)** 
+### 4️⃣ **Cloudflare Pages (PERFORMANCE BEAST)**
+
 **Global edge network with excellent performance**
 
 #### Quick Setup:
+
 - Connect GitHub repository to Cloudflare Pages
 - Build command: `npm run build`
 - Output directory: `.next`
 - Environment variables: Same as above
 
 **Pros:** ✅ Global edge, ✅ Excellent caching, ✅ Fast edge functions  
-**Deployment Time:** ~20 minutes  
+**Deployment Time:** ~20 minutes
 
 ---
 
 ## 🔧 Pre-Deployment Checklist
 
 ### Required Updates Before Deployment:
+
 1. **✅ DONE:** API endpoints updated to use `/api/v1/` prefix
 2. **✅ DONE:** Environment variables configured for Railway backend
 3. **⚠️ TODO:** Update Article interface components to handle new field names
@@ -112,10 +124,12 @@ netlify deploy --prod --dir=out
 ## 🚨 Known Issues to Fix:
 
 ### 1. Field Name Mismatches:
+
 - Backend uses: `article_id`, `authors[]`, `created_at`, `updated_at`
 - Frontend expects: `id`, `author`, `createdAt`, `updatedAt`
 
 ### 2. Component Updates Needed:
+
 - `ArticleManager.tsx` needs field name updates
 - Forms need to match backend create/update schemas
 - Display components need array handling for authors/keywords
@@ -130,6 +144,7 @@ netlify deploy --prod --dir=out
 4. **Configure custom domain** (optional, 20 minutes)
 
 ### Quick Test Command:
+
 ```bash
 # Test local development with Railway backend
 cd /home/silver49/pegasoi-frontend

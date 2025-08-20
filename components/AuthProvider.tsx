@@ -1,13 +1,25 @@
-"use client"
+'use client'
 
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react"
-import { useUser, useAuth as useClerkAuth, SignInButton, SignOutButton, UserButton } from "@clerk/nextjs"
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from 'react'
+import {
+  useUser,
+  useAuth as useClerkAuth,
+  SignInButton,
+  SignOutButton,
+  UserButton,
+} from '@clerk/nextjs'
 
 interface User {
   id: string
   name: string
   email: string
-  role: "user" | "publisher" | "admin"
+  role: 'user' | 'publisher' | 'admin'
 }
 
 interface AuthContextType {
@@ -16,7 +28,7 @@ interface AuthContextType {
   login: (user: User) => void
   logout: () => void
   toggleAuth: () => void
-  setRole: (role: "user" | "publisher" | "admin") => void
+  setRole: (role: 'user' | 'publisher' | 'admin') => void
   // Clerk-specific components
   SignInButton: typeof SignInButton
   SignOutButton: typeof SignOutButton
@@ -35,9 +47,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (isLoaded && clerkUser) {
       const userData: User = {
         id: clerkUser.id,
-        name: clerkUser.fullName || clerkUser.firstName || "Unknown User",
-        email: clerkUser.primaryEmailAddress?.emailAddress || "",
-        role: (clerkUser.unsafeMetadata?.role as "user" | "publisher" | "admin") || "user"
+        name: clerkUser.fullName || clerkUser.firstName || 'Unknown User',
+        email: clerkUser.primaryEmailAddress?.emailAddress || '',
+        role:
+          (clerkUser.unsafeMetadata?.role as 'user' | 'publisher' | 'admin') ||
+          'user',
       }
       setUser(userData)
     } else if (isLoaded && !clerkUser) {
@@ -49,29 +63,35 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = (userData: User) => {
     // With Clerk, login is handled by Clerk components
     // This method is kept for backward compatibility
-    console.warn("Direct login is handled by Clerk. Use SignInButton component instead.")
+    console.warn(
+      'Direct login is handled by Clerk. Use SignInButton component instead.'
+    )
   }
 
   const logout = () => {
     // With Clerk, logout is handled by Clerk components
     // This method is kept for backward compatibility
-    console.warn("Direct logout is handled by Clerk. Use SignOutButton component instead.")
+    console.warn(
+      'Direct logout is handled by Clerk. Use SignOutButton component instead.'
+    )
   }
 
   const toggleAuth = () => {
     // With Clerk, authentication toggle is handled by Clerk components
-    console.warn("Authentication toggle is handled by Clerk components. Use SignInButton/SignOutButton instead.")
+    console.warn(
+      'Authentication toggle is handled by Clerk components. Use SignInButton/SignOutButton instead.'
+    )
   }
 
-  const setRole = async (role: "user" | "publisher" | "admin") => {
+  const setRole = async (role: 'user' | 'publisher' | 'admin') => {
     if (clerkUser) {
       try {
         // Update user metadata in Clerk (using unsafeMetadata for development)
         await clerkUser.update({
           unsafeMetadata: {
             ...clerkUser.unsafeMetadata,
-            role: role
-          }
+            role: role,
+          },
         })
 
         // Update local user state
@@ -79,7 +99,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setUser({ ...user, role })
         }
       } catch (error) {
-        console.error("Failed to update user role:", error)
+        console.error('Failed to update user role:', error)
       }
     }
   }
@@ -106,7 +126,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext)
   if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider")
+    throw new Error('useAuth must be used within an AuthProvider')
   }
   return context
 }

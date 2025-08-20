@@ -14,6 +14,7 @@ A clear and concise description of the blockchain functionality you want to add.
 ## 🔗 Blockchain Integration Type
 
 **What type of Web3 integration is this?**
+
 - [ ] Wallet connection/management
 - [ ] Smart contract interaction
 - [ ] Token/NFT functionality
@@ -22,32 +23,35 @@ A clear and concise description of the blockchain functionality you want to add.
 - [ ] DAO governance
 - [ ] Identity/authentication
 - [ ] Cross-chain functionality
-- [ ] Other: ___________
+- [ ] Other: ****\_\_\_****
 
 ## 🌐 Network Requirements
 
 **Which blockchain networks should be supported?**
+
 - [ ] Ethereum Mainnet
 - [ ] Polygon
 - [ ] Arbitrum
 - [ ] Optimism
 - [ ] Base
-- [ ] Testnet only (specify): ___________
+- [ ] Testnet only (specify): ****\_\_\_****
 - [ ] Multi-chain support
-- [ ] Other: ___________
+- [ ] Other: ****\_\_\_****
 
 ## 🔧 Technical Implementation
 
 **Proposed technical approach:**
+
 - [ ] Wagmi hooks
 - [ ] Ethers.js
 - [ ] Web3.js
 - [ ] RainbowKit
 - [ ] Web3Modal
 - [ ] Custom implementation
-- [ ] Other: ___________
+- [ ] Other: ****\_\_\_****
 
 **Smart Contract Requirements:**
+
 - [ ] New contract deployment needed
 - [ ] Existing contract integration
 - [ ] Contract interface/ABI needed
@@ -56,6 +60,7 @@ A clear and concise description of the blockchain functionality you want to add.
 ## 💰 Token/Economic Considerations
 
 **Does this involve tokens or economic incentives?**
+
 - [ ] ERC-20 tokens
 - [ ] ERC-721 NFTs
 - [ ] ERC-1155 tokens
@@ -67,6 +72,7 @@ A clear and concise description of the blockchain functionality you want to add.
 ## 🔐 Security Considerations
 
 **Security aspects to consider:**
+
 - [ ] Wallet security
 - [ ] Smart contract security
 - [ ] Private key management
@@ -74,11 +80,12 @@ A clear and concise description of the blockchain functionality you want to add.
 - [ ] Access control
 - [ ] Gas optimization
 - [ ] MEV protection
-- [ ] Other: ___________
+- [ ] Other: ****\_\_\_****
 
 ## 👥 User Experience
 
 **How will users interact with this feature?**
+
 - [ ] Connect wallet button
 - [ ] Transaction approval flow
 - [ ] Network switching
@@ -90,24 +97,27 @@ A clear and concise description of the blockchain functionality you want to add.
 ## 📝 Acceptance Criteria
 
 **What should be true when this feature is complete?**
-- [ ] 
-- [ ] 
-- [ ] 
+
+- [ ]
+- [ ]
+- [ ]
 
 ## 🧪 Testing Strategy
 
 **How should this Web3 feature be tested?**
+
 - [ ] Unit tests with mocked providers
 - [ ] Integration tests with local blockchain
 - [ ] Testnet testing
 - [ ] Multiple wallet testing (MetaMask, WalletConnect, etc.)
 - [ ] Gas estimation testing
 - [ ] Error scenario testing
-- [ ] Manual testing steps: ___________
+- [ ] Manual testing steps: ****\_\_\_****
 
 ## 📊 Expected Benefits
 
 **What benefits will this bring to the research platform?**
+
 - [ ] Enhanced user ownership
 - [ ] Decentralized data storage
 - [ ] Token incentives for researchers
@@ -115,11 +125,12 @@ A clear and concise description of the blockchain functionality you want to add.
 - [ ] Improved security
 - [ ] Academic credential verification
 - [ ] Research funding mechanisms
-- [ ] Other: ___________
+- [ ] Other: ****\_\_\_****
 
 ## 🔗 Related Issues/PRs
 
 **Link any related issues or pull requests:**
+
 - Related to #
 - Depends on #
 - Blocks #
@@ -138,17 +149,19 @@ A clear and concise description of the blockchain functionality you want to add.
 ## 💡 Academic Research Context
 
 **How does this relate to academic research workflows?**
+
 - [ ] Research paper citations
 - [ ] Academic credentials
 - [ ] Peer review incentives
 - [ ] Research funding
 - [ ] Data provenance
 - [ ] Collaboration tools
-- [ ] Other: ___________
+- [ ] Other: ****\_\_\_****
 
 ---
 
 **For Web3 Expert:** This issue is specifically tagged for Web3 expertise. Please consider:
+
 - Gas optimization strategies
 - Multi-wallet compatibility
 - Network switching UX

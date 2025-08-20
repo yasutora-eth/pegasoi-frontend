@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -18,12 +18,12 @@ export default function GraphQLDashboard() {
     <div className="container mx-auto px-4 py-8">
       {/* Header */}
       <div className="mb-8">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg">
+        <div className="mb-4 flex items-center gap-3">
+          <div className="rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 p-2">
             <Zap className="h-6 w-6 text-white" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <h1 className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-3xl font-bold text-transparent">
               GraphQL Dashboard
             </h1>
             <p className="text-muted-foreground">
@@ -33,16 +33,20 @@ export default function GraphQLDashboard() {
         </div>
 
         {/* Status Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-4">
           <Card>
             <CardContent className="p-4">
               <div className="flex items-center gap-2">
                 <Database className="h-5 w-5 text-blue-500" />
                 <div>
                   <p className="text-sm font-medium">Backend</p>
-                  <p className="text-xs text-muted-foreground">Redis + FastAPI</p>
+                  <p className="text-xs text-muted-foreground">
+                    Redis + FastAPI
+                  </p>
                 </div>
-                <Badge variant="default" className="ml-auto">Active</Badge>
+                <Badge variant="default" className="ml-auto">
+                  Active
+                </Badge>
               </div>
             </CardContent>
           </Card>
@@ -55,7 +59,9 @@ export default function GraphQLDashboard() {
                   <p className="text-sm font-medium">GraphQL</p>
                   <p className="text-xs text-muted-foreground">Real-time API</p>
                 </div>
-                <Badge variant="default" className="ml-auto">Connected</Badge>
+                <Badge variant="default" className="ml-auto">
+                  Connected
+                </Badge>
               </div>
             </CardContent>
           </Card>
@@ -68,7 +74,9 @@ export default function GraphQLDashboard() {
                   <p className="text-sm font-medium">Live Updates</p>
                   <p className="text-xs text-muted-foreground">Subscriptions</p>
                 </div>
-                <Badge variant="default" className="ml-auto">Enabled</Badge>
+                <Badge variant="default" className="ml-auto">
+                  Enabled
+                </Badge>
               </div>
             </CardContent>
           </Card>
@@ -81,18 +89,21 @@ export default function GraphQLDashboard() {
                   <p className="text-sm font-medium">Performance</p>
                   <p className="text-xs text-muted-foreground">Optimized</p>
                 </div>
-                <Badge variant="default" className="ml-auto">Fast</Badge>
+                <Badge variant="default" className="ml-auto">
+                  Fast
+                </Badge>
               </div>
             </CardContent>
           </Card>
         </div>
 
         {/* Info Alert */}
-        <Alert className="bg-blue-50 border-blue-200">
+        <Alert className="border-blue-200 bg-blue-50">
           <Activity className="h-4 w-4" />
           <AlertDescription>
-            This dashboard demonstrates GraphQL integration with the Redis backend. 
-            Features include real-time updates, optimistic UI updates, and intelligent caching.
+            This dashboard demonstrates GraphQL integration with the Redis
+            backend. Features include real-time updates, optimistic UI updates,
+            and intelligent caching.
           </AlertDescription>
         </Alert>
       </div>
@@ -133,7 +144,7 @@ export default function GraphQLDashboard() {
                 </div>
                 <Badge variant="outline">Connected</Badge>
               </div>
-              
+
               <div className="flex items-center justify-between">
                 <div>
                   <p className="font-medium">Real-time Subscriptions</p>

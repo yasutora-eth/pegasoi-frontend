@@ -41,6 +41,7 @@ npm run dev
 ### 🔵 For Next.js Experts
 
 **Your Focus Areas:**
+
 - Performance optimization and Core Web Vitals
 - App Router architecture and routing strategies
 - Component architecture and reusability
@@ -50,6 +51,7 @@ npm run dev
 - TypeScript enhancements
 
 **Key Directories:**
+
 ```
 app/                    # App Router pages and layouts
 ├── (dashboard)/       # Dashboard routes
@@ -70,6 +72,7 @@ lib/                  # Utilities and hooks
 ```
 
 **Next.js Specific Tasks:**
+
 - [ ] Implement advanced caching strategies
 - [ ] Add Server Components where beneficial
 - [ ] Optimize image loading and performance
@@ -79,6 +82,7 @@ lib/                  # Utilities and hooks
 - [ ] Implement advanced routing patterns
 
 **Development Workflow:**
+
 ```bash
 # Next.js specific commands
 npm run dev              # Development with fast refresh
@@ -90,6 +94,7 @@ npm run lighthouse       # Performance testing (to be added)
 ### 🟣 For Web3 Experts
 
 **Your Focus Areas:**
+
 - Wallet connection and management
 - Smart contract integration
 - Blockchain data fetching
@@ -99,6 +104,7 @@ npm run lighthouse       # Performance testing (to be added)
 - Gas optimization strategies
 
 **Key Directories:**
+
 ```
 lib/web3/             # Web3 utilities (to be created)
 ├── providers/       # Web3 providers and context
@@ -120,6 +126,7 @@ app/web3/            # Web3-specific pages (to be created)
 ```
 
 **Web3 Integration Roadmap:**
+
 - [ ] Wallet connection (MetaMask, WalletConnect)
 - [ ] User authentication via wallet signatures
 - [ ] Research citation NFTs
@@ -129,6 +136,7 @@ app/web3/            # Web3-specific pages (to be created)
 - [ ] DAO governance features
 
 **Development Workflow:**
+
 ```bash
 # Web3 specific commands (to be added)
 npm run web3:dev         # Development with Web3 tools
@@ -140,6 +148,7 @@ npm run ipfs:upload      # IPFS file uploads
 ## 🏗️ Architecture Overview
 
 ### Current Architecture
+
 ```
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
 │   Frontend      │───▶│   Backend API    │───▶│   Data Sources  │
@@ -148,6 +157,7 @@ npm run ipfs:upload      # IPFS file uploads
 ```
 
 ### Future Web3 Architecture
+
 ```
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
 │   Frontend      │───▶│   Backend API    │───▶│   Data Sources  │
@@ -164,6 +174,7 @@ npm run ipfs:upload      # IPFS file uploads
 ## 🔄 Development Workflow
 
 ### Branch Strategy
+
 ```
 main                 # Production-ready code
 ├── develop         # Integration branch
@@ -173,6 +184,7 @@ main                 # Production-ready code
 ```
 
 ### Commit Convention
+
 ```
 feat(nextjs): add server-side rendering for search page
 feat(web3): implement wallet connection with MetaMask
@@ -182,6 +194,7 @@ perf(nextjs): optimize bundle size with code splitting
 ```
 
 ### Pull Request Process
+
 1. **Create Feature Branch** from `develop`
 2. **Implement Changes** following expertise guidelines
 3. **Write Tests** (unit/integration as appropriate)
@@ -194,6 +207,7 @@ perf(nextjs): optimize bundle size with code splitting
 ## 🧪 Testing Strategy
 
 ### Next.js Testing
+
 ```bash
 # Unit tests for components
 npm run test:components
@@ -209,6 +223,7 @@ npm run test:lighthouse
 ```
 
 ### Web3 Testing
+
 ```bash
 # Smart contract tests
 npm run test:contracts
@@ -223,24 +238,28 @@ npm run test:wallet
 ## 📋 Code Standards
 
 ### TypeScript
+
 - **Strict mode** enabled
 - **Explicit return types** for functions
 - **Interface definitions** for all data structures
 - **Generic types** where applicable
 
 ### React/Next.js
+
 - **Server Components** by default
 - **Client Components** only when necessary
 - **Custom hooks** for reusable logic
 - **Error boundaries** for fault tolerance
 
 ### Web3
+
 - **Type-safe** contract interactions
 - **Error handling** for network issues
 - **Gas optimization** considerations
 - **Security** best practices
 
 ### Styling
+
 - **Tailwind CSS** for styling
 - **CSS variables** for theming
 - **Mobile-first** responsive design
@@ -249,12 +268,14 @@ npm run test:wallet
 ## 🚀 Deployment & CI/CD
 
 ### Environments
+
 - **Development** - Local development
 - **Preview** - Vercel preview deployments
 - **Staging** - Pre-production testing
 - **Production** - Live application
 
 ### Automated Checks
+
 - ✅ TypeScript compilation
 - ✅ ESLint + Prettier
 - ✅ Unit tests
@@ -265,12 +286,14 @@ npm run test:wallet
 ## 📞 Communication
 
 ### Channels
+
 - **GitHub Issues** - Bug reports and feature requests
 - **GitHub Discussions** - Architecture discussions
 - **Pull Requests** - Code review and collaboration
 - **Project Board** - Task tracking and planning
 
 ### Meeting Cadence
+
 - **Weekly Sync** - Progress updates and blockers
 - **Sprint Planning** - Feature prioritization
 - **Code Reviews** - Pair programming sessions
@@ -279,6 +302,7 @@ npm run test:wallet
 ## 🎯 Current Priorities
 
 ### Phase 1: Foundation (Current)
+
 - [x] Next.js application setup
 - [x] Component library integration
 - [x] Backend API integration
@@ -286,12 +310,14 @@ npm run test:wallet
 - [ ] Testing framework setup
 
 ### Phase 2: Web3 Integration
+
 - [ ] Wallet connection implementation
 - [ ] Web3 provider setup
 - [ ] Smart contract integration
 - [ ] Decentralized authentication
 
 ### Phase 3: Advanced Features
+
 - [ ] Research citation NFTs
 - [ ] Token reward system
 - [ ] DAO governance
@@ -300,16 +326,19 @@ npm run test:wallet
 ## 🆘 Getting Help
 
 ### Next.js Questions
+
 - Check Next.js documentation
 - Review existing component patterns
 - Ask in #nextjs-help discussions
 
 ### Web3 Questions
+
 - Reference Web3 integration docs
 - Check smart contract examples
 - Ask in #web3-help discussions
 
 ### General Questions
+
 - Read project README
 - Check existing issues
 - Create new discussion
@@ -317,12 +346,14 @@ npm run test:wallet
 ## 📚 Resources
 
 ### Next.js Resources
+
 - [Next.js Documentation](https://nextjs.org/docs)
 - [React Documentation](https://react.dev)
 - [Shadcn/ui Components](https://ui.shadcn.com)
 - [Tailwind CSS](https://tailwindcss.com)
 
 ### Web3 Resources
+
 - [Ethereum Documentation](https://ethereum.org/en/developers/)
 - [Wagmi Hooks](https://wagmi.sh)
 - [RainbowKit](https://www.rainbowkit.com)

@@ -14,6 +14,7 @@ A clear and concise description of what you want to happen.
 ## 🔧 Proposed Implementation
 
 **How should this be implemented?**
+
 - [ ] App Router enhancement
 - [ ] Performance optimization
 - [ ] Component architecture improvement
@@ -21,11 +22,12 @@ A clear and concise description of what you want to happen.
 - [ ] Bundle size reduction
 - [ ] Accessibility improvement
 - [ ] TypeScript enhancement
-- [ ] Other: ___________
+- [ ] Other: ****\_\_\_****
 
 ## 🏗️ Technical Details
 
 **Specific Next.js concepts involved:**
+
 - [ ] Server Components
 - [ ] Client Components
 - [ ] Route handlers
@@ -40,6 +42,7 @@ A clear and concise description of what you want to happen.
 ## 📊 Expected Benefits
 
 **What benefits will this bring?**
+
 - [ ] Improved performance (Core Web Vitals)
 - [ ] Better user experience
 - [ ] Enhanced developer experience
@@ -47,18 +50,20 @@ A clear and concise description of what you want to happen.
 - [ ] Better SEO
 - [ ] Improved accessibility
 - [ ] Code maintainability
-- [ ] Other: ___________
+- [ ] Other: ****\_\_\_****
 
 ## 📝 Acceptance Criteria
 
 **What should be true when this feature is complete?**
-- [ ] 
-- [ ] 
-- [ ] 
+
+- [ ]
+- [ ]
+- [ ]
 
 ## 🔗 Related Issues/PRs
 
 **Link any related issues or pull requests:**
+
 - Related to #
 - Depends on #
 - Blocks #
@@ -66,12 +71,13 @@ A clear and concise description of what you want to happen.
 ## 🧪 Testing Considerations
 
 **How should this feature be tested?**
+
 - [ ] Unit tests
 - [ ] Integration tests
 - [ ] E2E tests
 - [ ] Performance tests
 - [ ] Accessibility tests
-- [ ] Manual testing steps: ___________
+- [ ] Manual testing steps: ****\_\_\_****
 
 ## 📚 Additional Context
 
@@ -87,6 +93,7 @@ A clear and concise description of what you want to happen.
 ---
 
 **For Next.js Expert:** This issue is specifically tagged for Next.js expertise. Please consider:
+
 - Next.js 14+ App Router patterns
 - Performance implications
 - Accessibility standards

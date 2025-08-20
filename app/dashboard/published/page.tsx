@@ -1,21 +1,21 @@
-"use client"
+'use client'
 
-import { PrivateRoute } from "@/components/PrivateRoute"
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
+import { PrivateRoute } from '@/components/PrivateRoute'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 export default function Published() {
   const publishedArticles = [
-    { id: 1, title: "Published Article 1", publicationDate: "2024-01-15" },
-    { id: 2, title: "Published Article 2", publicationDate: "2024-02-20" },
-    { id: 3, title: "Published Article 3", publicationDate: "2024-03-10" },
+    { id: 1, title: 'Published Article 1', publicationDate: '2024-01-15' },
+    { id: 2, title: 'Published Article 2', publicationDate: '2024-02-20' },
+    { id: 3, title: 'Published Article 3', publicationDate: '2024-03-10' },
   ]
 
   return (
     <PrivateRoute>
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-8">Published Articles</h1>
+        <h1 className="mb-8 text-4xl font-bold">Published Articles</h1>
         <div className="space-y-4">
           {publishedArticles.map((article) => (
             <Card key={article.id}>

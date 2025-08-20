@@ -3,10 +3,12 @@
 ## Backend Deployment (Railway)
 
 ### Prerequisites
+
 1. Railway CLI installed: `npm install -g @railway/cli`
 2. Railway account linked: `railway login`
 
 ### Environment Variables
+
 Copy `.env.example` to your Railway environment:
 
 ```bash
@@ -33,6 +35,7 @@ CORS_ORIGINS=https://your-app.vercel.app,http://localhost:3000
 ```
 
 ### Deploy Backend
+
 ```bash
 railway up
 ```
@@ -40,10 +43,12 @@ railway up
 ## Frontend Deployment (Vercel)
 
 ### Prerequisites
+
 1. Vercel CLI: `npm install -g vercel`
 2. Vercel account linked: `vercel login`
 
 ### Environment Variables
+
 Copy `.env.local.example`:
 
 ```bash
@@ -57,6 +62,7 @@ CLERK_SECRET_KEY=your_clerk_secret_key
 ```
 
 ### Deploy Frontend
+
 ```bash
 vercel --prod
 ```

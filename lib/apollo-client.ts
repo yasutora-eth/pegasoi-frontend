@@ -1,4 +1,9 @@
-import { ApolloClient, InMemoryCache, createHttpLink, from } from '@apollo/client'
+import {
+  ApolloClient,
+  InMemoryCache,
+  createHttpLink,
+  from,
+} from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import { onError } from '@apollo/client/link/error'
 
@@ -10,49 +15,52 @@ const httpLink = createHttpLink({
 // Auth link to add JWT token to requests
 const authLink = setContext((_, { headers }) => {
   // Get token from Clerk or localStorage
-  const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null
-  
+  const token =
+    typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null
+
   return {
     headers: {
       ...headers,
       authorization: token ? `Bearer ${token}` : '',
       'Content-Type': 'application/json',
-    }
+    },
   }
 })
 
 // Error link for handling GraphQL errors
-const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) => {
-  if (graphQLErrors) {
-    graphQLErrors.forEach(({ message, locations, path }) => {
-      console.error(
-        `GraphQL error: Message: ${message}, Location: ${locations}, Path: ${path}`
-      )
-    })
-  }
+const errorLink = onError(
+  ({ graphQLErrors, networkError }) => {
+    if (graphQLErrors) {
+      graphQLErrors.forEach(({ message, locations, path }) => {
+        console.error(
+          `GraphQL error: Message: ${message}, Location: ${locations}, Path: ${path}`
+        )
+      })
+    }
 
-  if (networkError) {
-    console.error(`Network error: ${networkError}`)
-    
-    // Handle specific error codes
-    if ('statusCode' in networkError) {
-      switch (networkError.statusCode) {
-        case 401:
-          // Redirect to login or refresh token
-          if (typeof window !== 'undefined') {
-            window.location.href = '/login'
-          }
-          break
-        case 403:
-          console.error('Access forbidden - insufficient permissions')
-          break
-        case 500:
-          console.error('Server error - please try again later')
-          break
+    if (networkError) {
+      console.error(`Network error: ${networkError}`)
+
+      // Handle specific error codes
+      if ('statusCode' in networkError) {
+        switch (networkError.statusCode) {
+          case 401:
+            // Redirect to login or refresh token
+            if (typeof window !== 'undefined') {
+              window.location.href = '/login'
+            }
+            break
+          case 403:
+            console.error('Access forbidden - insufficient permissions')
+            break
+          case 500:
+            console.error('Server error - please try again later')
+            break
+        }
       }
     }
   }
-})
+)
 
 // Apollo Client instance
 export const apolloClient = new ApolloClient({

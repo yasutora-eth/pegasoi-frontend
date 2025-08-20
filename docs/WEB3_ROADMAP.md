@@ -5,6 +5,7 @@ This document outlines the comprehensive plan for integrating Web3 functionality
 ## 🎯 Vision
 
 Transform Pegasoi into a Web3-powered platform where:
+
 - **Researchers** own their work through NFTs
 - **Academic contributions** are tokenized and rewarded
 - **Peer review** is incentivized through token economics
@@ -14,9 +15,11 @@ Transform Pegasoi into a Web3-powered platform where:
 ## 🗺️ Implementation Phases
 
 ### Phase 1: Foundation (Weeks 1-2)
+
 **Goal**: Set up core Web3 infrastructure
 
 #### 1.1 Wallet Integration
+
 - [ ] Install and configure Wagmi + RainbowKit
 - [ ] Create wallet connection components
 - [ ] Implement multi-wallet support (MetaMask, WalletConnect, Coinbase)
@@ -24,6 +27,7 @@ Transform Pegasoi into a Web3-powered platform where:
 - [ ] Create wallet info display components
 
 #### 1.2 Web3 Provider Setup
+
 - [ ] Configure Web3 providers for multiple chains
 - [ ] Set up React Query for blockchain data
 - [ ] Create Web3 context and state management
@@ -31,21 +35,25 @@ Transform Pegasoi into a Web3-powered platform where:
 - [ ] Add environment configuration for different networks
 
 #### 1.3 Basic Authentication
+
 - [ ] Implement wallet-based authentication
 - [ ] Create "Sign in with Ethereum" functionality
 - [ ] Store wallet addresses and authentication state
 - [ ] Integrate with existing Clerk authentication (hybrid approach)
 
 **Deliverables:**
+
 - Working wallet connection
 - Multi-chain support (Ethereum, Polygon)
 - Basic Web3 authentication
 - Developer tools and testing setup
 
 ### Phase 2: Smart Contracts (Weeks 3-4)
+
 **Goal**: Deploy core smart contracts for platform functionality
 
 #### 2.1 Research NFT Contract
+
 - [ ] Design NFT schema for research papers
 - [ ] Implement ERC-721 contract with metadata
 - [ ] Add minting functionality for authors
@@ -53,6 +61,7 @@ Transform Pegasoi into a Web3-powered platform where:
 - [ ] Deploy to testnet and mainnet
 
 #### 2.2 Pegasoi Token (PGAI)
+
 - [ ] Create ERC-20 token for platform economy
 - [ ] Implement token distribution mechanisms
 - [ ] Add staking functionality
@@ -60,6 +69,7 @@ Transform Pegasoi into a Web3-powered platform where:
 - [ ] Set up token governance features
 
 #### 2.3 Research Registry Contract
+
 - [ ] Create registry for all research papers
 - [ ] Implement paper submission and validation
 - [ ] Add peer review assignment logic
@@ -67,6 +77,7 @@ Transform Pegasoi into a Web3-powered platform where:
 - [ ] Track citations and references
 
 **Smart Contract Architecture:**
+
 ```
 contracts/
 ├── src/
@@ -85,15 +96,18 @@ contracts/
 ```
 
 **Deliverables:**
+
 - Deployed smart contracts on testnet
 - Contract verification and documentation
 - Frontend integration with contracts
 - Testing suite for all contract functionality
 
 ### Phase 3: IPFS Integration (Weeks 5-6)
+
 **Goal**: Implement decentralized storage for research content
 
 #### 3.1 IPFS Setup
+
 - [ ] Configure IPFS nodes (local development)
 - [ ] Set up Pinata/Infura for production IPFS
 - [ ] Create IPFS upload utilities
@@ -101,6 +115,7 @@ contracts/
 - [ ] Add IPFS gateway fallbacks
 
 #### 3.2 Research Paper Storage
+
 - [ ] Upload research papers to IPFS
 - [ ] Store IPFS hashes in NFT metadata
 - [ ] Create paper versioning system
@@ -108,6 +123,7 @@ contracts/
 - [ ] Add paper access control
 
 #### 3.3 Metadata Management
+
 - [ ] Store paper metadata on IPFS
 - [ ] Create standardized metadata schema
 - [ ] Implement metadata validation
@@ -115,6 +131,7 @@ contracts/
 - [ ] Create backup and recovery systems
 
 **IPFS Integration Structure:**
+
 ```
 lib/web3/ipfs/
 ├── client.ts              # IPFS client configuration
@@ -125,15 +142,18 @@ lib/web3/ipfs/
 ```
 
 **Deliverables:**
+
 - Fully functional IPFS integration
 - Research paper storage on IPFS
 - Metadata management system
 - File backup and recovery mechanisms
 
 ### Phase 4: Token Economics (Weeks 7-8)
+
 **Goal**: Implement token-based incentive systems
 
 #### 4.1 Research Rewards
+
 - [ ] Token rewards for paper submissions
 - [ ] Citation-based reward calculations
 - [ ] Impact factor bonuses
@@ -141,6 +161,7 @@ lib/web3/ipfs/
 - [ ] Author collaboration incentives
 
 #### 4.2 Peer Review Incentives
+
 - [ ] Token rewards for quality reviews
 - [ ] Reviewer reputation scoring
 - [ ] Review validation mechanisms
@@ -148,6 +169,7 @@ lib/web3/ipfs/
 - [ ] Review timeline incentives
 
 #### 4.3 Platform Governance
+
 - [ ] Voting mechanisms for platform decisions
 - [ ] Proposal submission and voting
 - [ ] Token-weighted governance
@@ -155,6 +177,7 @@ lib/web3/ipfs/
 - [ ] Protocol upgrade voting
 
 **Token Economics Flow:**
+
 ```
 Research Submission → PGAI Reward
 Quality Peer Review → PGAI Reward + Reputation
@@ -164,15 +187,18 @@ Staking → Additional Rewards + Governance Boost
 ```
 
 **Deliverables:**
+
 - Token reward distribution system
 - Peer review incentive mechanisms
 - Governance voting platform
 - Economic sustainability modeling
 
 ### Phase 5: Advanced Features (Weeks 9-10)
+
 **Goal**: Implement advanced Web3 features for enhanced functionality
 
 #### 5.1 Research Collaboration DAOs
+
 - [ ] Create DAO formation tools
 - [ ] Multi-signature research funding
 - [ ] Collaborative paper authorship
@@ -180,6 +206,7 @@ Staking → Additional Rewards + Governance Boost
 - [ ] Cross-institutional collaboration tools
 
 #### 5.2 Academic Credentials
+
 - [ ] NFT-based academic credentials
 - [ ] Verifiable achievement badges
 - [ ] Institution verification system
@@ -187,6 +214,7 @@ Staking → Additional Rewards + Governance Boost
 - [ ] Academic reputation portability
 
 #### 5.3 Research Funding Mechanisms
+
 - [ ] Crowdfunding for research projects
 - [ ] Grant distribution through smart contracts
 - [ ] Milestone-based funding release
@@ -194,6 +222,7 @@ Staking → Additional Rewards + Governance Boost
 - [ ] Impact measurement and reporting
 
 **Advanced Features Structure:**
+
 ```
 components/web3/advanced/
 ├── dao/
@@ -211,15 +240,18 @@ components/web3/advanced/
 ```
 
 **Deliverables:**
+
 - DAO creation and management tools
 - Academic credential system
 - Research funding mechanisms
 - Advanced governance features
 
 ### Phase 6: Integration & Optimization (Weeks 11-12)
+
 **Goal**: Integrate all Web3 features with existing platform
 
 #### 6.1 Backend Integration
+
 - [ ] Update backend APIs for Web3 data
 - [ ] Implement blockchain event listeners
 - [ ] Create off-chain indexing for Web3 data
@@ -227,6 +259,7 @@ components/web3/advanced/
 - [ ] Optimize database for blockchain data
 
 #### 6.2 User Experience Optimization
+
 - [ ] Seamless Web2/Web3 user flows
 - [ ] Gas optimization strategies
 - [ ] Transaction batching
@@ -234,6 +267,7 @@ components/web3/advanced/
 - [ ] Mobile wallet integration
 
 #### 6.3 Security & Auditing
+
 - [ ] Smart contract security audits
 - [ ] Frontend security reviews
 - [ ] Penetration testing
@@ -241,6 +275,7 @@ components/web3/advanced/
 - [ ] Documentation and compliance
 
 **Deliverables:**
+
 - Fully integrated Web3 platform
 - Optimized user experience
 - Security-audited smart contracts
@@ -251,6 +286,7 @@ components/web3/advanced/
 ### Web3 Technology Stack
 
 #### Frontend Libraries
+
 ```json
 {
   "wagmi": "^2.0.0",
@@ -262,6 +298,7 @@ components/web3/advanced/
 ```
 
 #### Smart Contract Development
+
 ```json
 {
   "hardhat": "^2.19.0",
@@ -272,6 +309,7 @@ components/web3/advanced/
 ```
 
 #### IPFS & Storage
+
 ```json
 {
   "ipfs-http-client": "^60.0.0",
@@ -283,6 +321,7 @@ components/web3/advanced/
 ### Environment Configuration
 
 #### Development Environment
+
 ```bash
 # Web3 Development
 NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_project_id
@@ -305,6 +344,7 @@ NEXT_PUBLIC_ENABLE_TESTNETS=true
 ```
 
 #### Production Environment
+
 ```bash
 # Production contracts (Mainnet/Polygon)
 NEXT_PUBLIC_RESEARCH_NFT_CONTRACT=0x...
@@ -323,6 +363,7 @@ NEXT_PUBLIC_ENABLE_TESTNETS=false
 ### Component Architecture
 
 #### Web3 Provider Structure
+
 ```typescript
 // app/web3/layout.tsx
 export default function Web3Layout({
@@ -345,6 +386,7 @@ export default function Web3Layout({
 ```
 
 #### Smart Contract Hooks
+
 ```typescript
 // lib/web3/hooks/useResearchNFT.ts
 export function useResearchNFT() {
@@ -378,6 +420,7 @@ export function useResearchNFT() {
 ## 📊 Success Metrics
 
 ### Technical Metrics
+
 - [ ] Wallet connection success rate > 95%
 - [ ] Transaction success rate > 98%
 - [ ] IPFS upload success rate > 99%
@@ -385,6 +428,7 @@ export function useResearchNFT() {
 - [ ] Page load time < 3 seconds (including Web3 initialization)
 
 ### User Adoption Metrics
+
 - [ ] 100+ connected wallets in first month
 - [ ] 50+ research papers minted as NFTs
 - [ ] 500+ peer reviews completed with token rewards
@@ -392,6 +436,7 @@ export function useResearchNFT() {
 - [ ] $10k+ in research funding distributed
 
 ### Platform Economics
+
 - [ ] Token distribution to 200+ researchers
 - [ ] 1000+ PGAI tokens earned through platform activities
 - [ ] 100+ governance proposals voted on
@@ -401,6 +446,7 @@ export function useResearchNFT() {
 ## 🔐 Security Considerations
 
 ### Smart Contract Security
+
 - [ ] Multi-signature wallet for contract upgrades
 - [ ] Time-locked governance changes
 - [ ] Emergency pause mechanisms
@@ -408,6 +454,7 @@ export function useResearchNFT() {
 - [ ] Bug bounty program
 
 ### Frontend Security
+
 - [ ] Secure private key handling (never store client-side)
 - [ ] Transaction validation before signing
 - [ ] Phishing protection measures
@@ -415,6 +462,7 @@ export function useResearchNFT() {
 - [ ] Input sanitization for all Web3 interactions
 
 ### Operational Security
+
 - [ ] Secure deployment pipelines
 - [ ] Environment variable protection
 - [ ] Regular dependency updates
@@ -424,6 +472,7 @@ export function useResearchNFT() {
 ## 🚀 Deployment Strategy
 
 ### Testnet Deployment (Phase 1-5)
+
 1. Deploy contracts to Sepolia testnet
 2. Frontend integration with testnet
 3. Comprehensive testing with test tokens
@@ -431,6 +480,7 @@ export function useResearchNFT() {
 5. Security review and optimization
 
 ### Mainnet Deployment (Phase 6)
+
 1. Final security audit
 2. Contract deployment to Ethereum mainnet
 3. Progressive rollout to users
@@ -440,6 +490,7 @@ export function useResearchNFT() {
 ## 🤝 Collaboration Guidelines
 
 ### For Web3 Experts
+
 - Focus on smart contract development and optimization
 - Implement wallet integration and Web3 UX
 - Handle IPFS integration and decentralized storage
@@ -447,6 +498,7 @@ export function useResearchNFT() {
 - Ensure security best practices throughout
 
 ### For Next.js Experts
+
 - Optimize Web3 component performance
 - Implement seamless Web2/Web3 user flows
 - Handle loading states and error boundaries for Web3
@@ -454,6 +506,7 @@ export function useResearchNFT() {
 - Integrate Web3 features with existing Next.js patterns
 
 ### Integration Points
+
 - Shared TypeScript types for Web3 data
 - Common error handling patterns
 - Coordinated testing strategies

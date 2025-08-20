@@ -1,25 +1,25 @@
-"use client"
+'use client'
 
-import type React from "react"
+import type React from 'react'
 
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AlertCircle, Loader2, Search } from "lucide-react"
-import { apiService, type Article } from "@/lib/api"
+import { useState, useEffect } from 'react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { AlertCircle, Loader2, Search } from 'lucide-react'
+import { apiService, type Article } from '@/lib/api'
 
 interface Message {
   id: string
-  role: "user" | "assistant"
+  role: 'user' | 'assistant'
   content: string
   timestamp: Date
 }
 
 export function ResearchAssistant() {
-  const [input, setInput] = useState("")
+  const [input, setInput] = useState('')
   const [messages, setMessages] = useState<Message[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -33,11 +33,11 @@ export function ResearchAssistant() {
   const fetchArticles = async () => {
     setLoadingArticles(true)
     try {
-      const data = await apiService.getArticles("published")
+      const data = await apiService.getArticles('published')
       setArticles(data.slice(0, 5))
     } catch {
       // Error fetching articles, handle gracefully
-      setError("Failed to fetch articles. Please try again later.")
+      setError('Failed to fetch articles. Please try again later.')
     } finally {
       setLoadingArticles(false)
     }
@@ -49,13 +49,13 @@ export function ResearchAssistant() {
 
     const userMessage: Message = {
       id: Date.now().toString(),
-      role: "user",
+      role: 'user',
       content: input.trim(),
       timestamp: new Date(),
     }
 
     setMessages((prev) => [...prev, userMessage])
-    setInput("")
+    setInput('')
     setIsLoading(true)
     setError(null)
 
@@ -65,7 +65,7 @@ export function ResearchAssistant() {
 
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
-        role: "assistant",
+        role: 'assistant',
         content: generateMockResponse(userMessage.content),
         timestamp: new Date(),
       }
@@ -73,7 +73,9 @@ export function ResearchAssistant() {
       setMessages((prev) => [...prev, assistantMessage])
     } catch {
       // Error occurred, handle gracefully
-      setError("Failed to get response from research assistant. Please try again.")
+      setError(
+        'Failed to get response from research assistant. Please try again.'
+      )
     } finally {
       setIsLoading(false)
     }
@@ -114,9 +116,11 @@ export function ResearchAssistant() {
     }
 
     const lowerQuery = query.toLowerCase()
-    if (lowerQuery.includes("egypt")) return responses.egypt
-    if (lowerQuery.includes("greece") || lowerQuery.includes("greek")) return responses.greece
-    if (lowerQuery.includes("rome") || lowerQuery.includes("roman")) return responses.rome
+    if (lowerQuery.includes('egypt')) return responses.egypt
+    if (lowerQuery.includes('greece') || lowerQuery.includes('greek'))
+      return responses.greece
+    if (lowerQuery.includes('rome') || lowerQuery.includes('roman'))
+      return responses.rome
 
     return `
       <h3>Classical Studies Research</h3>
@@ -132,9 +136,11 @@ export function ResearchAssistant() {
 
   return (
     <div className="space-y-6">
-      <Card className="w-full max-w-2xl mx-auto bg-card text-card-foreground">
+      <Card className="mx-auto w-full max-w-2xl bg-card text-card-foreground">
         <CardHeader>
-          <CardTitle className="text-primary">Classical Studies Research Assistant</CardTitle>
+          <CardTitle className="text-primary">
+            Classical Studies Research Assistant
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           {error && (
@@ -145,12 +151,15 @@ export function ResearchAssistant() {
             </Alert>
           )}
 
-          <ScrollArea className="h-[400px] border rounded-lg p-4">
+          <ScrollArea className="h-[400px] rounded-lg border p-4">
             {messages.length === 0 ? (
-              <div className="text-center text-muted-foreground py-8">
-                <Search className="h-12 w-12 mx-auto mb-4 opacity-50" />
+              <div className="py-8 text-center text-muted-foreground">
+                <Search className="mx-auto mb-4 h-12 w-12 opacity-50" />
                 <p>Ask me about classical studies research!</p>
-                <p className="text-sm mt-2">Try topics like &ldquo;Ancient Egypt&rdquo;, &ldquo;Greek philosophy&rdquo;, or &ldquo;Roman history&rdquo;</p>
+                <p className="mt-2 text-sm">
+                  Try topics like &ldquo;Ancient Egypt&rdquo;, &ldquo;Greek
+                  philosophy&rdquo;, or &ldquo;Roman history&rdquo;
+                </p>
               </div>
             ) : (
               <div className="space-y-4">
@@ -158,30 +167,40 @@ export function ResearchAssistant() {
                   <div
                     key={message.id}
                     className={`${
-                      message.role === "assistant" ? "bg-accent/20 p-3 rounded-lg" : "bg-muted/20 p-3 rounded-lg"
+                      message.role === 'assistant'
+                        ? 'rounded-lg bg-accent/20 p-3'
+                        : 'rounded-lg bg-muted/20 p-3'
                     }`}
                   >
-                    <div className="flex items-center gap-2 mb-2">
+                    <div className="mb-2 flex items-center gap-2">
                       <span className="text-xs font-medium text-muted-foreground">
-                        {message.role === "assistant" ? "Research Assistant" : "You"}
+                        {message.role === 'assistant'
+                          ? 'Research Assistant'
+                          : 'You'}
                       </span>
-                      <span className="text-xs text-muted-foreground">{message.timestamp.toLocaleTimeString()}</span>
+                      <span className="text-xs text-muted-foreground">
+                        {message.timestamp.toLocaleTimeString()}
+                      </span>
                     </div>
-                    {message.role === "assistant" ? (
+                    {message.role === 'assistant' ? (
                       <div
                         dangerouslySetInnerHTML={{ __html: message.content }}
                         className="prose prose-invert max-w-none text-sm"
                       />
                     ) : (
-                      <p className="text-foreground text-sm">{message.content}</p>
+                      <p className="text-sm text-foreground">
+                        {message.content}
+                      </p>
                     )}
                   </div>
                 ))}
                 {isLoading && (
-                  <div className="bg-accent/20 p-3 rounded-lg">
+                  <div className="rounded-lg bg-accent/20 p-3">
                     <div className="flex items-center gap-2">
                       <Loader2 className="h-4 w-4 animate-spin" />
-                      <span className="text-sm text-muted-foreground">Research Assistant is thinking...</span>
+                      <span className="text-sm text-muted-foreground">
+                        Research Assistant is thinking...
+                      </span>
                     </div>
                   </div>
                 )}
@@ -202,13 +221,17 @@ export function ResearchAssistant() {
               disabled={isLoading || !input.trim()}
               className="bg-primary text-primary-foreground hover:bg-primary/90"
             >
-              {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Search className="h-4 w-4" />}
+              {isLoading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Search className="h-4 w-4" />
+              )}
             </Button>
           </form>
         </CardContent>
       </Card>
 
-      <Card className="w-full max-w-2xl mx-auto bg-card text-card-foreground">
+      <Card className="mx-auto w-full max-w-2xl bg-card text-card-foreground">
         <CardHeader>
           <CardTitle className="text-primary">Published Articles</CardTitle>
         </CardHeader>
@@ -221,19 +244,35 @@ export function ResearchAssistant() {
           ) : articles.length > 0 ? (
             <div className="space-y-4">
               {articles.map((article) => (
-                <div key={article.articleId} className="p-4 bg-accent/10 rounded-lg">
-                  <h4 className="font-semibold text-primary">{article.title}</h4>
-                  <p className="text-sm text-muted-foreground">By {article.authors.join(", ")}</p>
+                <div
+                  key={article.articleId}
+                  className="rounded-lg bg-accent/10 p-4"
+                >
+                  <h4 className="font-semibold text-primary">
+                    {article.title}
+                  </h4>
+                  <p className="text-sm text-muted-foreground">
+                    By {article.authors.join(', ')}
+                  </p>
                   <p className="mt-2 text-sm font-medium">Abstract:</p>
-                  <p className="mt-1 text-sm">{article.abstract.substring(0, 150)}...</p>
-                  <div className="flex justify-between text-xs text-muted-foreground mt-2">
+                  <p className="mt-1 text-sm">
+                    {article.abstract.substring(0, 150)}...
+                  </p>
+                  <div className="mt-2 flex justify-between text-xs text-muted-foreground">
                     <span>Status: {article.status}</span>
-                    <span>{new Date(article.createdAt).toLocaleDateString()}</span>
+                    <span>
+                      {new Date(article.createdAt).toLocaleDateString()}
+                    </span>
                   </div>
                   {article.keywords.length > 0 && (
-                    <div className="flex gap-1 mt-2 flex-wrap">
+                    <div className="mt-2 flex flex-wrap gap-1">
                       {article.keywords.slice(0, 3).map((keyword, idx) => (
-                        <span key={idx} className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">{keyword}</span>
+                        <span
+                          key={idx}
+                          className="rounded bg-primary/10 px-2 py-1 text-xs text-primary"
+                        >
+                          {keyword}
+                        </span>
                       ))}
                     </div>
                   )}
@@ -241,7 +280,9 @@ export function ResearchAssistant() {
               ))}
             </div>
           ) : (
-            <p className="text-muted-foreground">No published articles found.</p>
+            <p className="text-muted-foreground">
+              No published articles found.
+            </p>
           )}
         </CardContent>
       </Card>

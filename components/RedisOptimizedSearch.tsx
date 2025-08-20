@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useState, useEffect, useCallback } from 'react'
 import { useQuery } from '@apollo/client'
@@ -38,7 +38,11 @@ export function RedisOptimizedSearch() {
   const [query, setQuery] = useState('')
   const [debouncedQuery, setDebouncedQuery] = useState('')
   const [searchHistory, setSearchHistory] = useState<string[]>([])
-  const [selectedSources, setSelectedSources] = useState<string[]>(['arxiv', 'doaj', 'crossref'])
+  const [selectedSources, setSelectedSources] = useState<string[]>([
+    'arxiv',
+    'doaj',
+    'crossref',
+  ])
 
   // Debounced search to reduce Redis load
   const debouncedSearch = useCallback(
@@ -47,7 +51,7 @@ export function RedisOptimizedSearch() {
         setDebouncedQuery(searchQuery.trim())
       }
     }, 500),
-    []
+    [setDebouncedQuery]
   )
 
   useEffect(() => {
@@ -61,10 +65,10 @@ export function RedisOptimizedSearch() {
   const { data, loading, error } = useQuery<{ searchPapers: SearchResponse }>(
     SEARCH_PAPERS,
     {
-      variables: { 
-        query: debouncedQuery, 
+      variables: {
+        query: debouncedQuery,
         sources: selectedSources,
-        limit: 20 
+        limit: 20,
       },
       skip: !debouncedQuery,
       fetchPolicy: 'cache-first', // Use Redis cache when available
@@ -74,7 +78,7 @@ export function RedisOptimizedSearch() {
 
   const handleSearch = (searchQuery: string) => {
     if (searchQuery.trim() && !searchHistory.includes(searchQuery.trim())) {
-      setSearchHistory(prev => [searchQuery.trim(), ...prev.slice(0, 4)])
+      setSearchHistory((prev) => [searchQuery.trim(), ...prev.slice(0, 4)])
     }
   }
 
@@ -84,9 +88,9 @@ export function RedisOptimizedSearch() {
   }
 
   const toggleSource = (source: string) => {
-    setSelectedSources(prev => 
-      prev.includes(source) 
-        ? prev.filter(s => s !== source)
+    setSelectedSources((prev) =>
+      prev.includes(source)
+        ? prev.filter((s) => s !== source)
         : [...prev, source]
     )
   }
@@ -100,11 +104,11 @@ export function RedisOptimizedSearch() {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center gap-3">
-        <div className="p-2 bg-gradient-to-r from-green-500 to-blue-600 rounded-lg">
+        <div className="rounded-lg bg-gradient-to-r from-green-500 to-blue-600 p-2">
           <Database className="h-6 w-6 text-white" />
         </div>
         <div>
-          <h2 className="text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+          <h2 className="bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-2xl font-bold text-transparent">
             Redis-Optimized Search
           </h2>
           <p className="text-muted-foreground">
@@ -121,7 +125,7 @@ export function RedisOptimizedSearch() {
             Academic Paper Search
             {isCached && (
               <Badge variant="outline" className="bg-green-50 text-green-700">
-                <Zap className="h-3 w-3 mr-1" />
+                <Zap className="mr-1 h-3 w-3" />
                 Cached
               </Badge>
             )}
@@ -137,7 +141,7 @@ export function RedisOptimizedSearch() {
               onKeyDown={(e) => e.key === 'Enter' && handleSearch(query)}
               className="flex-1"
             />
-            <Button 
+            <Button
               onClick={() => handleSearch(query)}
               disabled={query.trim().length < 3 || loading}
             >
@@ -150,12 +154,14 @@ export function RedisOptimizedSearch() {
           </div>
 
           {/* Source Selection */}
-          <div className="flex gap-2 flex-wrap">
+          <div className="flex flex-wrap gap-2">
             <span className="text-sm font-medium">Sources:</span>
             {['arxiv', 'doaj', 'crossref', 'getty'].map((source) => (
               <Badge
                 key={source}
-                variant={selectedSources.includes(source) ? 'default' : 'outline'}
+                variant={
+                  selectedSources.includes(source) ? 'default' : 'outline'
+                }
                 className="cursor-pointer"
                 onClick={() => toggleSource(source)}
               >
@@ -166,7 +172,7 @@ export function RedisOptimizedSearch() {
 
           {/* Search History */}
           {searchHistory.length > 0 && (
-            <div className="flex gap-2 flex-wrap">
+            <div className="flex flex-wrap gap-2">
               <span className="text-sm font-medium">Recent:</span>
               {searchHistory.map((historyQuery, index) => (
                 <Badge
@@ -175,7 +181,7 @@ export function RedisOptimizedSearch() {
                   className="cursor-pointer hover:bg-secondary/80"
                   onClick={() => handleHistoryClick(historyQuery)}
                 >
-                  <Clock className="h-3 w-3 mr-1" />
+                  <Clock className="mr-1 h-3 w-3" />
                   {historyQuery}
                 </Badge>
               ))}
@@ -196,16 +202,14 @@ export function RedisOptimizedSearch() {
       {/* Error Display */}
       {error && (
         <Alert variant="destructive">
-          <AlertDescription>
-            Search error: {error.message}
-          </AlertDescription>
+          <AlertDescription>Search error: {error.message}</AlertDescription>
         </Alert>
       )}
 
       {/* Loading State */}
       {loading && (
         <div className="flex items-center justify-center p-8">
-          <Loader2 className="h-8 w-8 animate-spin mr-2" />
+          <Loader2 className="mr-2 h-8 w-8 animate-spin" />
           <span>Searching Redis cache and external sources...</span>
         </div>
       )}
@@ -213,13 +217,13 @@ export function RedisOptimizedSearch() {
       {/* Search Results */}
       {searchResults?.ok && searchResults.data.entries.length > 0 && (
         <div className="space-y-4">
-          <div className="flex justify-between items-center">
+          <div className="flex items-center justify-between">
             <h3 className="text-lg font-semibold">
               Search Results ({totalResults} found)
             </h3>
             {isCached && (
               <Badge variant="outline" className="bg-green-50">
-                <Database className="h-3 w-3 mr-1" />
+                <Database className="mr-1 h-3 w-3" />
                 Served from Redis Cache
               </Badge>
             )}
@@ -227,17 +231,17 @@ export function RedisOptimizedSearch() {
 
           <div className="grid gap-4">
             {searchResults.data.entries.map((result, index) => (
-              <Card key={index} className="hover:shadow-md transition-shadow">
+              <Card key={index} className="transition-shadow hover:shadow-md">
                 <CardContent className="p-4">
                   <div className="space-y-2">
-                    <div className="flex justify-between items-start">
-                      <h4 className="font-semibold text-lg leading-tight">
+                    <div className="flex items-start justify-between">
+                      <h4 className="text-lg font-semibold leading-tight">
                         {result.url ? (
-                          <a 
-                            href={result.url} 
-                            target="_blank" 
+                          <a
+                            href={result.url}
+                            target="_blank"
                             rel="noopener noreferrer"
-                            className="hover:text-blue-600 transition-colors"
+                            className="transition-colors hover:text-blue-600"
                           >
                             {result.title}
                           </a>
@@ -249,16 +253,14 @@ export function RedisOptimizedSearch() {
                         {result.source.toUpperCase()}
                       </Badge>
                     </div>
-                    
+
                     <p className="text-sm text-muted-foreground">
                       By {result.authors.join(', ')}
                       {result.year && ` • ${result.year}`}
                       {result.journal && ` • ${result.journal}`}
                     </p>
-                    
-                    <p className="text-sm leading-relaxed">
-                      {result.abstract}
-                    </p>
+
+                    <p className="text-sm leading-relaxed">{result.abstract}</p>
 
                     {result.classics_relevance && (
                       <div className="flex items-center gap-2">
@@ -279,13 +281,17 @@ export function RedisOptimizedSearch() {
       )}
 
       {/* No Results */}
-      {searchResults?.ok && searchResults.data.entries.length === 0 && debouncedQuery && (
-        <div className="text-center py-8 text-muted-foreground">
-          <Search className="h-12 w-12 mx-auto mb-4 opacity-50" />
-          <p>No results found for "{debouncedQuery}"</p>
-          <p className="text-sm mt-2">Try different keywords or check your spelling</p>
-        </div>
-      )}
+      {searchResults?.ok &&
+        searchResults.data.entries.length === 0 &&
+        debouncedQuery && (
+          <div className="py-8 text-center text-muted-foreground">
+            <Search className="mx-auto mb-4 h-12 w-12 opacity-50" />
+            <p>No results found for &quot;{debouncedQuery}&quot;</p>
+            <p className="mt-2 text-sm">
+              Try different keywords or check your spelling
+            </p>
+          </div>
+        )}
     </div>
   )
 }

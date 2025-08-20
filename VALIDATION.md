@@ -1,12 +1,14 @@
 # System Validation Checklist
 
 ## 🔧 Quick Setup Validation
+
 - [ ] `npm install` - Dependencies installed
 - [ ] `npm run dev` - Development server starts
 - [ ] `npm run build` - Production build succeeds
 - [ ] Environment variables configured (KV_REST_API_URL, KV_REST_API_TOKEN, MISTRAL_API_KEY)
 
 ## 🧪 API Endpoint Tests
+
 - [ ] GET `/api/health` - Returns system status
 - [ ] GET `/api/test-connection` - KV connection test
 - [ ] GET `/api/articles` - Lists articles
@@ -17,6 +19,7 @@
 - [ ] POST `/api/research-assistant` - AI assistant responds
 
 ## 🖥️ Frontend Feature Tests
+
 - [ ] Home page loads with navigation
 - [ ] Articles page displays articles from API
 - [ ] Submit article form works
@@ -27,6 +30,7 @@
 - [ ] Information page displays content
 
 ## 🔐 Authentication Flow
+
 - [ ] Login page accessible
 - [ ] Authentication state managed
 - [ ] Private routes protected
@@ -34,6 +38,7 @@
 - [ ] Logout functionality
 
 ## 🎨 UI/UX Validation
+
 - [ ] Dark theme applied consistently
 - [ ] Responsive design on mobile/desktop
 - [ ] Loading states display properly
@@ -41,6 +46,7 @@
 - [ ] Navigation works across all pages
 
 ## 🚀 Production Readiness
+
 - [ ] Security headers configured
 - [ ] Performance optimizations enabled
 - [ ] Error boundaries in place

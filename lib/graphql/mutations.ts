@@ -38,8 +38,6 @@ export const DELETE_ARTICLE = gql`
   }
 `
 
-
-
 // Bulk Operations
 export const BULK_UPDATE_ARTICLES = gql`
   mutation BulkUpdateArticles($ids: [ID!]!, $updates: ArticleUpdateInput!) {

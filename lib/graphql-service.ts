@@ -1,14 +1,14 @@
 import { apolloClient } from './apollo-client'
-import { 
-  GET_ARTICLES, 
-  GET_ARTICLE_BY_ID, 
-  SEARCH_PAPERS, 
-  GET_HEALTH_STATUS 
+import {
+  GET_ARTICLES,
+  GET_ARTICLE_BY_ID,
+  SEARCH_PAPERS,
+  GET_HEALTH_STATUS,
 } from './graphql/queries'
-import { 
-  CREATE_ARTICLE, 
-  UPDATE_ARTICLE_STATUS, 
-  DELETE_ARTICLE 
+import {
+  CREATE_ARTICLE,
+  UPDATE_ARTICLE_STATUS,
+  DELETE_ARTICLE,
 } from './graphql/mutations'
 import type { Article, ArticleCreate, HealthStatus } from './api'
 
@@ -79,7 +79,9 @@ export class GraphQLService {
     }
   }
 
-  async deleteArticle(id: string): Promise<{ success: boolean; message?: string }> {
+  async deleteArticle(
+    id: string
+  ): Promise<{ success: boolean; message?: string }> {
     try {
       const { data } = await apolloClient.mutate({
         mutation: DELETE_ARTICLE,

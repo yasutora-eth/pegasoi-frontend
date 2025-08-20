@@ -18,7 +18,7 @@
     "url": "https://github.com/yasutora-eth/pegasoi-frontend.git"
   },
   "scripts": {
-    "build": "next build",
+    "build": "NODE_ENV=production next build",
     "build:production": "NODE_ENV=production next build",
     "dev": "next dev",
     "start": "next start",

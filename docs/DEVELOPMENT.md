@@ -33,6 +33,7 @@ npm run dev
 ### IDE/Editor Configuration
 
 #### VS Code (Recommended)
+
 Install these essential extensions:
 
 ```json
@@ -51,6 +52,7 @@ Install these essential extensions:
 ```
 
 #### VS Code Settings
+
 Add to your workspace settings (`.vscode/settings.json`):
 
 ```json
@@ -72,11 +74,13 @@ Add to your workspace settings (`.vscode/settings.json`):
 ### TypeScript Configuration
 
 Our TypeScript setup uses:
+
 - **Strict mode** for better type safety
 - **Path mapping** for clean imports
 - **Next.js plugin** for optimized compilation
 
 Key tsconfig.json features:
+
 ```json
 {
   "compilerOptions": {
@@ -118,6 +122,7 @@ npm run test:coverage    # Run tests with coverage
 ### Performance Optimization Tools
 
 #### Bundle Analyzer
+
 ```bash
 # Add to package.json scripts
 "analyze": "cross-env ANALYZE=true next build"
@@ -127,6 +132,7 @@ npm install -D @next/bundle-analyzer cross-env
 ```
 
 #### Core Web Vitals Monitoring
+
 ```bash
 # Lighthouse CI for performance testing
 npm install -D @lhci/cli
@@ -138,6 +144,7 @@ npm install web-vitals
 ### Debugging Configuration
 
 #### VS Code Launch Configuration
+
 Create `.vscode/launch.json`:
 
 ```json
@@ -166,6 +173,7 @@ Create `.vscode/launch.json`:
 ### Wallet Setup for Development
 
 #### MetaMask Configuration
+
 1. Install MetaMask browser extension
 2. Create a development wallet
 3. Add test networks:
@@ -191,6 +199,7 @@ Create `.vscode/launch.json`:
 ```
 
 #### Development Wallet Security
+
 - **Never use real funds** in development wallets
 - Use **testnet tokens** only
 - Keep separate wallets for **development and personal use**
@@ -198,6 +207,7 @@ Create `.vscode/launch.json`:
 ### Web3 Development Tools
 
 #### Essential Web3 Packages
+
 ```bash
 # Core Web3 libraries
 npm install wagmi viem @tanstack/react-query
@@ -215,6 +225,7 @@ npm install -D @foundry-rs/easy-foundryup hardhat @nomiclabs/hardhat-ethers
 #### Local Blockchain Setup
 
 **Option 1: Hardhat Network**
+
 ```bash
 # Install Hardhat
 npm install -D hardhat
@@ -227,6 +238,7 @@ npx hardhat node
 ```
 
 **Option 2: Anvil (Foundry)**
+
 ```bash
 # Install Foundry
 curl -L https://foundry.paradigm.xyz | bash
@@ -239,6 +251,7 @@ anvil
 ### Web3 Environment Configuration
 
 #### Development Environment Variables
+
 ```bash
 # .env.local for Web3 development
 
@@ -264,6 +277,7 @@ NEXT_PUBLIC_LOCAL_RPC_URL=http://localhost:8545
 ```
 
 #### Web3 Provider Setup
+
 Create `lib/web3/config.ts`:
 
 ```typescript
@@ -290,6 +304,7 @@ export const config = createConfig({
 ### Smart Contract Development
 
 #### Directory Structure for Contracts
+
 ```
 contracts/
 ├── src/
@@ -307,6 +322,7 @@ contracts/
 ```
 
 #### Web3 Development Scripts
+
 ```bash
 # Smart contract development
 npm run contracts:compile   # Compile contracts
@@ -328,6 +344,7 @@ npm run test:wallet        # Test wallet connections
 ### Git Workflow for Teams
 
 #### Branch Naming Convention
+
 ```bash
 # Next.js features
 feature/nextjs-performance-optimization
@@ -345,6 +362,7 @@ feature/api-integration
 ```
 
 #### Pre-commit Hooks Setup
+
 We use Husky for git hooks:
 
 ```bash
@@ -360,7 +378,9 @@ npx husky add .husky/commit-msg "npx commitlint --edit $1"
 ### Code Quality Tools
 
 #### ESLint Configuration
+
 Our `.eslintrc.json` includes:
+
 - Next.js specific rules
 - React hooks rules
 - TypeScript rules
@@ -368,7 +388,9 @@ Our `.eslintrc.json` includes:
 - Web3 security rules
 
 #### Prettier Configuration
+
 Consistent code formatting with:
+
 - 2-space indentation
 - Single quotes
 - Semicolons
@@ -378,6 +400,7 @@ Consistent code formatting with:
 ### Testing Strategy
 
 #### Unit Testing Setup
+
 ```bash
 # Install testing dependencies
 npm install -D jest @testing-library/react @testing-library/jest-dom
@@ -388,6 +411,7 @@ npm install -D @wagmi/core/test
 ```
 
 #### Test File Structure
+
 ```
 __tests__/
 ├── components/
@@ -403,18 +427,21 @@ __tests__/
 ### Environment-Specific Configuration
 
 #### Development Environment
+
 - Hot reload enabled
 - Source maps enabled
 - Verbose error messages
 - Development-only debugging tools
 
 #### Staging Environment
+
 - Production build
 - Test data
 - Analytics disabled
 - Testnet blockchain connections
 
 #### Production Environment
+
 - Optimized build
 - Error tracking enabled
 - Analytics enabled
@@ -423,6 +450,7 @@ __tests__/
 ## 📊 Monitoring and Analytics
 
 ### Performance Monitoring
+
 ```bash
 # Core Web Vitals
 npm install web-vitals
@@ -435,6 +463,7 @@ npm install -D @next/profiler
 ```
 
 ### Error Tracking
+
 ```bash
 # Error monitoring (choose one)
 npm install @sentry/nextjs
@@ -443,6 +472,7 @@ npm install @bugsnag/js @bugsnag/plugin-react
 ```
 
 ### Web3 Monitoring
+
 ```bash
 # Transaction monitoring
 npm install @web3-onboard/core @web3-onboard/injected-wallets
@@ -456,11 +486,13 @@ npm install gas-price-oracle
 ### Common Next.js Issues
 
 **Hydration Errors**
+
 - Check server/client rendering differences
 - Ensure consistent state between SSR and client
 - Use `suppressHydrationWarning` sparingly
 
 **Build Errors**
+
 - Clear `.next` folder and rebuild
 - Check TypeScript errors
 - Verify all imports are correct
@@ -468,16 +500,19 @@ npm install gas-price-oracle
 ### Common Web3 Issues
 
 **Wallet Connection Failures**
+
 - Check network configuration
 - Verify RPC URLs are accessible
 - Ensure wallet is unlocked and connected
 
 **Transaction Failures**
+
 - Check gas limits and prices
 - Verify contract addresses
 - Ensure sufficient balance
 
 **CORS Issues with RPC**
+
 - Use server-side API routes for sensitive calls
 - Configure CORS properly
 - Use authenticated RPC endpoints
