@@ -58,7 +58,7 @@ export function RedisOptimizedSearch() {
   }, [query, debouncedSearch])
 
   // GraphQL query with Redis caching
-  const { data, loading, error, refetch } = useQuery<{ searchPapers: SearchResponse }>(
+  const { data, loading, error } = useQuery<{ searchPapers: SearchResponse }>(
     SEARCH_PAPERS,
     {
       variables: { 

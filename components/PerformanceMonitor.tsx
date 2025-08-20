@@ -91,11 +91,11 @@ export function PerformanceMonitor() {
     }
   }
 
-  const getPerformanceLevel = (value: number, thresholds: [number, number]) => {
-    if (value >= thresholds[1]) return 'excellent'
-    if (value >= thresholds[0]) return 'good'
-    return 'needs-attention'
-  }
+  // const getPerformanceLevel = (value: number, thresholds: [number, number]) => {
+  //   if (value >= thresholds[1]) return 'excellent'
+  //   if (value >= thresholds[0]) return 'good'
+  //   return 'needs-attention'
+  // }
 
   return (
     <div className="space-y-6">

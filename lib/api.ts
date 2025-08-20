@@ -117,6 +117,11 @@ class ApiService {
     })
   }
 
+  // General update method for article updates
+  async updateArticle(id: string, data: ArticleUpdate): Promise<Article> {
+    return this.updateArticleStatus(id, data.status)
+  }
+
   async deleteArticle(id: string): Promise<{ message?: string }> {
     return this.request<{ message?: string }>(`/api/v1/articles/${id}`, {
       method: "DELETE",

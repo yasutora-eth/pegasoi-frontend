@@ -221,14 +221,14 @@ export function ResearchAssistant() {
           ) : articles.length > 0 ? (
             <div className="space-y-4">
               {articles.map((article) => (
-                <div key={article.article_id} className="p-4 bg-accent/10 rounded-lg">
+                <div key={article.articleId} className="p-4 bg-accent/10 rounded-lg">
                   <h4 className="font-semibold text-primary">{article.title}</h4>
                   <p className="text-sm text-muted-foreground">By {article.authors.join(", ")}</p>
                   <p className="mt-2 text-sm font-medium">Abstract:</p>
                   <p className="mt-1 text-sm">{article.abstract.substring(0, 150)}...</p>
                   <div className="flex justify-between text-xs text-muted-foreground mt-2">
                     <span>Status: {article.status}</span>
-                    <span>{new Date(article.created_at).toLocaleDateString()}</span>
+                    <span>{new Date(article.createdAt).toLocaleDateString()}</span>
                   </div>
                   {article.keywords.length > 0 && (
                     <div className="flex gap-1 mt-2 flex-wrap">

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useQuery, useMutation } from '@apollo/client'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -21,7 +21,7 @@ export function GraphQLArticleManager() {
   const [statusFilter, setStatusFilter] = useState<string>('all')
 
   // GraphQL Query
-  const { data: articlesData, loading, error, refetch } = useQuery(GET_ARTICLES, {
+  const { data: articlesData, loading, error } = useQuery(GET_ARTICLES, {
     variables: { 
       status: statusFilter === 'all' ? undefined : statusFilter,
       limit: 100 

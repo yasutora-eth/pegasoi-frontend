@@ -149,11 +149,11 @@ export function RealDataProcessor() {
   }
 
   const renderDoajResults = (data: Record<string, unknown>) => {
-    if (!data?.ok || !data.data?.results) {
+    if (!data?.ok || !(data as any).data?.results) {
       return <div className="text-destructive">DOAJ data unavailable</div>
     }
 
-    const articles: DoajArticle[] = data.data.results.slice(0, 5)
+    const articles: DoajArticle[] = (data as any).data.results.slice(0, 5)
 
     return (
       <div className="space-y-4">
@@ -207,11 +207,11 @@ export function RealDataProcessor() {
   }
 
   const renderCrossrefResults = (data: Record<string, unknown>) => {
-    if (!data?.ok || !data.data?.message?.items) {
+    if (!data?.ok || !(data as any).data?.message?.items) {
       return <div className="text-destructive">Crossref data unavailable</div>
     }
 
-    const items: CrossrefItem[] = data.data.message.items.slice(0, 5)
+    const items: CrossrefItem[] = (data as any).data.message.items.slice(0, 5)
 
     return (
       <div className="space-y-4">
@@ -268,7 +268,7 @@ export function RealDataProcessor() {
       return (
         <Alert>
           <AlertDescription>
-            Getty API: {data?.error || "Service may be unavailable or require authentication"}
+            Getty API: {String((data as any)?.error || "Service may be unavailable or require authentication")}
           </AlertDescription>
         </Alert>
       )
@@ -307,13 +307,13 @@ export function RealDataProcessor() {
               <CardTitle className="flex items-center gap-2">
                 <LinkIcon className="h-5 w-5 text-blue-500" />
                 ArXiv Results (XML → Parsed)
-                <Badge variant={results.arxiv?.ok ? "default" : "destructive"}>
-                  {results.arxiv?.ok ? "Success" : "Error"}
+                <Badge variant={(results.arxiv as any)?.ok ? "default" : "destructive"}>
+                  {(results.arxiv as any)?.ok ? "Success" : "Error"}
                 </Badge>
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <ScrollArea className="h-96">{renderArxivResults(results.arxiv)}</ScrollArea>
+              <ScrollArea className="h-96">{renderArxivResults(results.arxiv as Record<string, unknown>)}</ScrollArea>
             </CardContent>
           </Card>
 
@@ -323,13 +323,13 @@ export function RealDataProcessor() {
               <CardTitle className="flex items-center gap-2">
                 <LinkIcon className="h-5 w-5 text-green-500" />
                 DOAJ Results (JSON → Processed)
-                <Badge variant={results.doaj?.ok ? "default" : "destructive"}>
-                  {results.doaj?.ok ? "Success" : "Error"}
+                <Badge variant={(results.doaj as any)?.ok ? "default" : "destructive"}>
+                  {(results.doaj as any)?.ok ? "Success" : "Error"}
                 </Badge>
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <ScrollArea className="h-96">{renderDoajResults(results.doaj)}</ScrollArea>
+              <ScrollArea className="h-96">{renderDoajResults(results.doaj as Record<string, unknown>)}</ScrollArea>
             </CardContent>
           </Card>
 
@@ -339,13 +339,13 @@ export function RealDataProcessor() {
               <CardTitle className="flex items-center gap-2">
                 <LinkIcon className="h-5 w-5 text-purple-500" />
                 Crossref Results (JSON → Processed)
-                <Badge variant={results.crossref?.ok ? "default" : "destructive"}>
-                  {results.crossref?.ok ? "Success" : "Error"}
+                <Badge variant={(results.crossref as any)?.ok ? "default" : "destructive"}>
+                  {(results.crossref as any)?.ok ? "Success" : "Error"}
                 </Badge>
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <ScrollArea className="h-96">{renderCrossrefResults(results.crossref)}</ScrollArea>
+              <ScrollArea className="h-96">{renderCrossrefResults(results.crossref as Record<string, unknown>)}</ScrollArea>
             </CardContent>
           </Card>
 
@@ -355,12 +355,12 @@ export function RealDataProcessor() {
               <CardTitle className="flex items-center gap-2">
                 <LinkIcon className="h-5 w-5 text-orange-500" />
                 Getty Results
-                <Badge variant={results.getty?.ok ? "default" : "destructive"}>
-                  {results.getty?.ok ? "Success" : "Error"}
+                <Badge variant={(results.getty as any)?.ok ? "default" : "destructive"}>
+                  {(results.getty as any)?.ok ? "Success" : "Error"}
                 </Badge>
               </CardTitle>
             </CardHeader>
-            <CardContent>{renderGettyResults(results.getty)}</CardContent>
+            <CardContent>{renderGettyResults(results.getty as Record<string, unknown>)}</CardContent>
           </Card>
         </div>
       )}

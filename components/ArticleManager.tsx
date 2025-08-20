@@ -91,14 +91,14 @@ export function ArticleManager() {
 
     try {
       await apiService.deleteArticle(id)
-      setArticles(articles.filter((a) => a.article_id !== id))
+      setArticles(articles.filter((a) => a.articleId !== id))
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to delete article")
     }
   }
 
   const handleBatchStatusUpdate = async (status: string) => {
-    const selectedIds = articles.filter((a) => a.status !== status).map((a) => a.article_id)
+    const selectedIds = articles.filter((a) => a.status !== status).map((a) => a.articleId)
     if (selectedIds.length === 0) return
 
     try {
@@ -243,8 +243,8 @@ export function ArticleManager() {
             </div>
             <Input
               type="date"
-              value={formData.publication_date.split('T')[0]}
-              onChange={(e) => setFormData({ ...formData, publication_date: e.target.value + 'T00:00:00' })}
+              value={formData.publicationDate.split('T')[0]}
+              onChange={(e) => setFormData({ ...formData, publicationDate: e.target.value + 'T00:00:00' })}
             />
             <div className="flex gap-2">
               <Button onClick={handleCreate}>
@@ -263,13 +263,13 @@ export function ArticleManager() {
       {/* Articles List */}
       <div className="space-y-4">
         {articles.map((article) => (
-          <Card key={article.article_id}>
+          <Card key={article.articleId}>
             <CardHeader>
               <div className="flex justify-between items-start">
                 <div>
                   <CardTitle className="text-lg">{article.title}</CardTitle>
                   <p className="text-sm text-muted-foreground">
-                    By {article.authors.join(", ")} • {new Date(article.created_at).toLocaleDateString()}
+                    By {article.authors.join(", ")} • {new Date(article.createdAt).toLocaleDateString()}
                   </p>
                   {article.keywords.length > 0 && (
                     <div className="flex gap-1 mt-1 flex-wrap">
@@ -284,19 +284,19 @@ export function ArticleManager() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Badge variant={getStatusColor(article.status)}>{article.status}</Badge>
-                  <Button size="sm" variant="outline" onClick={() => setEditingId(article.article_id)}>
+                  <Button size="sm" variant="outline" onClick={() => setEditingId(article.articleId)}>
                     <Edit className="h-4 w-4" />
                   </Button>
-                  <Button size="sm" variant="destructive" onClick={() => handleDelete(article.article_id)}>
+                  <Button size="sm" variant="destructive" onClick={() => handleDelete(article.articleId)}>
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </div>
               </div>
             </CardHeader>
             <CardContent>
-              {editingId === article.article_id ? (
+              {editingId === article.articleId ? (
                 <div className="space-y-4">
-                  <Select value={article.status} onValueChange={(status) => handleUpdate(article.article_id, { status })}>
+                  <Select value={article.status} onValueChange={(status) => handleUpdate(article.articleId, { status })}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>

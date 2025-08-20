@@ -44,7 +44,7 @@ export function MultiSourceSearch() {
       return (
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
-          <AlertDescription>Error: {data.error || "Unknown error"}</AlertDescription>
+          <AlertDescription>Error: {String((data as any).error || "Unknown error")}</AlertDescription>
         </Alert>
       )
     }

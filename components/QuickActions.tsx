@@ -101,17 +101,17 @@ export function QuickActions() {
               <div key={actionName} className="text-xs p-2 bg-muted/50 rounded">
                 <div className="flex items-center gap-2 mb-1">
                   <span className="font-medium">{actionName}</span>
-                  <Badge variant={result.success ? "default" : "destructive"}>
-                    {result.success ? "Success" : "Error"}
+                  <Badge variant={(result as any).success ? "default" : "destructive"}>
+                    {(result as any).success ? "Success" : "Error"}
                   </Badge>
                 </div>
-                {result.success ? (
+                {(result as any).success ? (
                   <pre className="text-xs overflow-auto">
-                    {JSON.stringify(result.data, null, 2).substring(0, 200)}
-                    {JSON.stringify(result.data, null, 2).length > 200 ? "..." : ""}
+                    {JSON.stringify((result as any).data, null, 2).substring(0, 200)}
+                    {JSON.stringify((result as any).data, null, 2).length > 200 ? "..." : ""}
                   </pre>
                 ) : (
-                  <div className="text-destructive">{result.error}</div>
+                  <div className="text-destructive">{String((result as any).error)}</div>
                 )}
               </div>
             ))}

@@ -7,7 +7,7 @@ This guide provides detailed setup instructions for both Next.js and Web3 develo
 ### System Requirements
 
 - **Node.js**: >= 18.0.0 (LTS recommended)
-- **Package Manager**: pnpm >= 8.0.0 (preferred) or npm >= 9.0.0
+- **Package Manager**: npm >= 9.0.0 (included with Node.js)
 - **Git**: Latest version
 - **OS**: Windows 10+, macOS 10.15+, or Linux (Ubuntu 18.04+)
 
@@ -19,13 +19,13 @@ git clone https://github.com/yasutora-eth/pegasoi-frontend.git
 cd pegasoi-frontend
 
 # Install dependencies
-pnpm install
+npm install
 
 # Copy environment configuration
 cp .env.example .env.local
 
 # Start development server
-pnpm dev
+npm run dev
 ```
 
 ## 🔵 Next.js Development Setup
@@ -96,23 +96,23 @@ Key tsconfig.json features:
 
 ```bash
 # Development
-pnpm dev              # Start dev server with hot reload
-pnpm dev:turbo        # Start with Turbopack (experimental)
+npm run dev              # Start dev server with hot reload
+npm run dev:turbo        # Start with Turbopack (experimental)
 
 # Building
-pnpm build            # Production build
-pnpm build:analyze    # Build with bundle analyzer
+npm run build            # Production build
+npm run build:analyze    # Build with bundle analyzer
 
 # Code Quality
-pnpm lint             # Run ESLint
-pnpm lint:fix         # Fix auto-fixable issues
-pnpm type-check       # TypeScript type checking
-pnpm format           # Format code with Prettier
+npm run lint             # Run ESLint
+npm run lint:fix         # Fix auto-fixable issues
+npm run type-check       # TypeScript type checking
+npm run format           # Format code with Prettier
 
 # Testing
-pnpm test             # Run tests
-pnpm test:watch       # Run tests in watch mode
-pnpm test:coverage    # Run tests with coverage
+npm run test             # Run tests
+npm run test:watch       # Run tests in watch mode
+npm run test:coverage    # Run tests with coverage
 ```
 
 ### Performance Optimization Tools
@@ -123,16 +123,16 @@ pnpm test:coverage    # Run tests with coverage
 "analyze": "cross-env ANALYZE=true next build"
 
 # Install analyzer
-pnpm add -D @next/bundle-analyzer cross-env
+npm install -D @next/bundle-analyzer cross-env
 ```
 
 #### Core Web Vitals Monitoring
 ```bash
 # Lighthouse CI for performance testing
-pnpm add -D @lhci/cli
+npm install -D @lhci/cli
 
 # Web Vitals reporting
-pnpm add web-vitals
+npm install web-vitals
 ```
 
 ### Debugging Configuration
@@ -200,16 +200,16 @@ Create `.vscode/launch.json`:
 #### Essential Web3 Packages
 ```bash
 # Core Web3 libraries
-pnpm add wagmi viem @tanstack/react-query
+npm install wagmi viem @tanstack/react-query
 
 # Wallet connectors
-pnpm add @wagmi/connectors @walletconnect/ethereum-provider
+npm install @wagmi/connectors @walletconnect/ethereum-provider
 
 # UI libraries
-pnpm add @rainbow-me/rainbowkit connectkit
+npm install @rainbow-me/rainbowkit connectkit
 
 # Development tools
-pnpm add -D @foundry-rs/easy-foundryup hardhat @nomiclabs/hardhat-ethers
+npm install -D @foundry-rs/easy-foundryup hardhat @nomiclabs/hardhat-ethers
 ```
 
 #### Local Blockchain Setup
@@ -217,7 +217,7 @@ pnpm add -D @foundry-rs/easy-foundryup hardhat @nomiclabs/hardhat-ethers
 **Option 1: Hardhat Network**
 ```bash
 # Install Hardhat
-pnpm add -D hardhat
+npm install -D hardhat
 
 # Initialize Hardhat
 npx hardhat
@@ -309,18 +309,18 @@ contracts/
 #### Web3 Development Scripts
 ```bash
 # Smart contract development
-pnpm contracts:compile   # Compile contracts
-pnpm contracts:test      # Run contract tests
-pnpm contracts:deploy    # Deploy to testnet
-pnpm contracts:verify    # Verify on block explorer
+npm run contracts:compile   # Compile contracts
+npm run contracts:test      # Run contract tests
+npm run contracts:deploy    # Deploy to testnet
+npm run contracts:verify    # Verify on block explorer
 
 # IPFS operations
-pnpm ipfs:upload         # Upload files to IPFS
-pnpm ipfs:pin           # Pin files for persistence
+npm run ipfs:upload         # Upload files to IPFS
+npm run ipfs:pin           # Pin files for persistence
 
 # Web3 testing
-pnpm test:web3          # Test Web3 integrations
-pnpm test:wallet        # Test wallet connections
+npm run test:web3          # Test Web3 integrations
+npm run test:wallet        # Test wallet connections
 ```
 
 ## 🛠️ Development Workflow
@@ -349,7 +349,7 @@ We use Husky for git hooks:
 
 ```bash
 # Install Husky
-pnpm add -D husky lint-staged
+npm install -D husky lint-staged
 
 # Setup hooks
 npx husky install
@@ -380,11 +380,11 @@ Consistent code formatting with:
 #### Unit Testing Setup
 ```bash
 # Install testing dependencies
-pnpm add -D jest @testing-library/react @testing-library/jest-dom
-pnpm add -D jest-environment-jsdom @testing-library/user-event
+npm install -D jest @testing-library/react @testing-library/jest-dom
+npm install -D jest-environment-jsdom @testing-library/user-event
 
 # Web3 testing mocks
-pnpm add -D @wagmi/core/test
+npm install -D @wagmi/core/test
 ```
 
 #### Test File Structure
@@ -425,30 +425,30 @@ __tests__/
 ### Performance Monitoring
 ```bash
 # Core Web Vitals
-pnpm add web-vitals
+npm install web-vitals
 
 # Bundle analysis
-pnpm add -D @next/bundle-analyzer
+npm install -D @next/bundle-analyzer
 
 # Performance profiling
-pnpm add -D @next/profiler
+npm install -D @next/profiler
 ```
 
 ### Error Tracking
 ```bash
 # Error monitoring (choose one)
-pnpm add @sentry/nextjs
+npm install @sentry/nextjs
 # or
-pnpm add @bugsnag/js @bugsnag/plugin-react
+npm install @bugsnag/js @bugsnag/plugin-react
 ```
 
 ### Web3 Monitoring
 ```bash
 # Transaction monitoring
-pnpm add @web3-onboard/core @web3-onboard/injected-wallets
+npm install @web3-onboard/core @web3-onboard/injected-wallets
 
 # Gas tracking
-pnpm add gas-price-oracle
+npm install gas-price-oracle
 ```
 
 ## 🔧 Troubleshooting

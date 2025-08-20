@@ -53,7 +53,7 @@ A Next.js-powered frontend for the Pegasoi Research Platform, designed for Web3 
 ### Prerequisites
 
 - **Node.js** >= 18.0.0
-- **pnpm** >= 8.0.0 (recommended) or npm
+- **npm** (included with Node.js)
 - **Git**
 
 ### Installation
@@ -66,7 +66,7 @@ cd pegasoi-frontend
 
 2. **Install dependencies**
 ```bash
-pnpm install
+npm install
 ```
 
 3. **Set up environment variables**
@@ -87,7 +87,7 @@ CLERK_SECRET_KEY=your_secret_here
 
 4. **Start the development server**
 ```bash
-pnpm dev
+npm run dev
 ```
 
 5. **Open your browser**
@@ -148,12 +148,12 @@ Prepared for Web3 integration with:
 ### Scripts
 
 ```bash
-pnpm dev          # Start development server
-pnpm build        # Build for production
-pnpm start        # Start production server
-pnpm lint         # Run ESLint
-pnpm lint:fix     # Fix ESLint issues
-pnpm type-check   # Check TypeScript types
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run start        # Start production server
+npm run lint         # Run ESLint
+npm run lint:fix     # Fix ESLint issues
+npm run type-check   # Check TypeScript types
 ```
 
 ### Code Quality

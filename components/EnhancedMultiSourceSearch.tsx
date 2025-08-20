@@ -31,6 +31,20 @@ interface ParsedEntry {
   [key: string]: unknown
 }
 
+interface SearchEntry {
+  title: string
+  authors: string[]
+  published?: string
+  summary?: string
+  abstract?: string
+  link?: string
+  url?: string
+  source: string
+  classics_relevance?: number
+  getty_uri?: string
+  [key: string]: unknown
+}
+
 interface SearchResponse {
   ok: boolean
   data?: {
@@ -60,7 +74,7 @@ export function EnhancedMultiSourceSearch() {
     try {
       // Try backend first
       let response: Response
-      let data: SearchResponse
+      let data: Record<string, SearchResponse>
 
       try {
         response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/search?query=${encodeURIComponent(query.trim())}`, {
@@ -467,12 +481,12 @@ export function EnhancedMultiSourceSearch() {
       // Handle DOAJ response structure
       let results = []
 
-      if (data.results) {
-        results = data.results
-      } else if (data.response?.docs) {
-        results = data.response.docs
-      } else if (data.docs) {
-        results = data.docs
+      if ((data as any).results) {
+        results = (data as any).results as any[]
+      } else if ((data as any).response?.docs) {
+        results = (data as any).response.docs as any[]
+      } else if ((data as any).docs) {
+        results = (data as any).docs as any[]
       } else if (Array.isArray(data)) {
         results = data
       }
@@ -562,7 +576,7 @@ export function EnhancedMultiSourceSearch() {
 
   const parseCrossrefResponse = (data: Record<string, unknown>) => {
     try {
-      const items = data.message?.items || []
+      const items = (data as any).message?.items || []
       const parsed: SearchEntry[] = []
 
       for (const item of items.slice(0, 30)) {
@@ -609,7 +623,7 @@ export function EnhancedMultiSourceSearch() {
       const objects = data.data || []
       const parsed: SearchEntry[] = []
 
-      for (const obj of objects.slice(0, 30)) {
+      for (const obj of (objects as any[]).slice(0, 30)) {
         const title = obj.title || "Getty Museum Object"
         const description = obj.description || ""
         const medium = obj.medium || ""
@@ -656,7 +670,7 @@ export function EnhancedMultiSourceSearch() {
     }
   }
 
-  const renderSourceResults = (data: SearchResponse, sourceColor: string, sourceIcon: React.ComponentType) => {
+  const renderSourceResults = (data: SearchResponse, sourceColor: string, sourceIcon: React.ReactNode) => {
     if (!data.ok || !data.data?.entries || data.data.entries.length === 0) {
       return (
         <Alert>
@@ -753,19 +767,19 @@ export function EnhancedMultiSourceSearch() {
                     {entry.published.includes("T") ? new Date(entry.published).toLocaleDateString() : entry.published}
                   </div>
                 )}
-                {entry.journal && <Badge variant="outline">{entry.journal}</Badge>}
+                {entry.journal && <Badge variant="outline">{String(entry.journal)}</Badge>}
               </div>
               {(entry.summary || entry.abstract) && (
                 <p className="text-sm">{(entry.summary || entry.abstract).substring(0, 300)}...</p>
               )}
-              {entry.doi && <div className="text-xs text-muted-foreground">DOI: {entry.doi}</div>}
+              {entry.doi && <div className="text-xs text-muted-foreground">DOI: {String(entry.doi)}</div>}
               {entry.getty_uri && (
                 <div className="text-xs text-muted-foreground">
                   Getty URI: <code className="bg-muted px-1 rounded">{entry.getty_uri.split("/").pop()}</code>
                 </div>
               )}
               <div className="flex flex-wrap gap-1">
-                {(entry.categories || entry.subjects)?.slice(0, 5).map((item: string, i: number) => (
+                {((entry.categories || entry.subjects) as any[])?.slice(0, 5).map((item: string, i: number) => (
                   <Badge key={i} variant="outline" className="text-xs">
                     {item}
                   </Badge>
@@ -853,54 +867,54 @@ export function EnhancedMultiSourceSearch() {
         <Tabs defaultValue="crossref" className="w-full">
           <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="crossref" className="flex items-center gap-2">
-              {getSourceStatus(results.crossref)}
-              Crossref ({results.crossref?.data?.total || 0})
+              {getSourceStatus(results?.crossref)}
+              Crossref ({results?.crossref?.data?.total || 0})
             </TabsTrigger>
             <TabsTrigger value="doaj" className="flex items-center gap-2">
-              {getSourceStatus(results.doaj)}
-              DOAJ ({results.doaj?.data?.total || 0})
-              {results.doaj?.fallback && (
+              {getSourceStatus(results?.doaj)}
+              DOAJ ({results?.doaj?.data?.total || 0})
+              {results?.doaj?.fallback && (
                 <Badge variant="secondary" className="text-xs ml-1">
                   Curated
                 </Badge>
               )}
             </TabsTrigger>
             <TabsTrigger value="getty" className="flex items-center gap-2">
-              {getSourceStatus(results.getty)}
-              Getty ({results.getty?.data?.total || 0})
-              {results.getty?.fallback && (
+              {getSourceStatus(results?.getty)}
+              Getty ({results?.getty?.data?.total || 0})
+              {results?.getty?.fallback && (
                 <Badge variant="secondary" className="text-xs ml-1">
                   Curated
                 </Badge>
               )}
             </TabsTrigger>
             <TabsTrigger value="arxiv" className="flex items-center gap-2">
-              {getSourceStatus(results.arxiv)}
-              ArXiv ({results.arxiv?.data?.total || 0})
+              {getSourceStatus(results?.arxiv)}
+              ArXiv ({results?.arxiv?.data?.total || 0})
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="crossref" className="mt-4">
             <ScrollArea className="h-[600px]">
-              {renderSourceResults(results.crossref, "purple", <BookOpen className="h-5 w-5 mt-1 text-purple-500" />)}
+              {results?.crossref && renderSourceResults(results.crossref, "purple", <BookOpen className="h-5 w-5 mt-1 text-purple-500" />)}
             </ScrollArea>
           </TabsContent>
 
           <TabsContent value="doaj" className="mt-4">
             <ScrollArea className="h-[600px]">
-              {renderSourceResults(results.doaj, "green", <BookOpen className="h-5 w-5 mt-1 text-green-500" />)}
+              {results?.doaj && renderSourceResults(results.doaj, "green", <BookOpen className="h-5 w-5 mt-1 text-green-500" />)}
             </ScrollArea>
           </TabsContent>
 
           <TabsContent value="getty" className="mt-4">
             <ScrollArea className="h-[600px]">
-              {renderSourceResults(results.getty, "orange", <Palette className="h-5 w-5 mt-1 text-orange-500" />)}
+              {results?.getty && renderSourceResults(results.getty, "orange", <Palette className="h-5 w-5 mt-1 text-orange-500" />)}
             </ScrollArea>
           </TabsContent>
 
           <TabsContent value="arxiv" className="mt-4">
             <ScrollArea className="h-[600px]">
-              {renderSourceResults(results.arxiv, "blue", <BookOpen className="h-5 w-5 mt-1 text-blue-500" />)}
+              {results?.arxiv && renderSourceResults(results.arxiv, "blue", <BookOpen className="h-5 w-5 mt-1 text-blue-500" />)}
             </ScrollArea>
           </TabsContent>
         </Tabs>

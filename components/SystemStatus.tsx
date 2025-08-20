@@ -85,10 +85,10 @@ export function SystemStatus() {
           <div className="space-y-2">
             <h4 className="text-sm font-medium">Backend Connection</h4>
             <div className="p-2 bg-muted/50 rounded text-xs">
-              <div>✅ Service: {connectionTest.service}</div>
-              <div>✅ Version: {connectionTest.version}</div>
-              <div>✅ Environment: {connectionTest.environment}</div>
-              <div>✅ CORS: {connectionTest.cors_origins?.length || 0} origins configured</div>
+              <div>✅ Service: {String((connectionTest as any).service)}</div>
+              <div>✅ Version: {String((connectionTest as any).version)}</div>
+              <div>✅ Environment: {String((connectionTest as any).environment)}</div>
+              <div>✅ CORS: {((connectionTest as any).cors_origins?.length || 0)} origins configured</div>
             </div>
           </div>
         )}

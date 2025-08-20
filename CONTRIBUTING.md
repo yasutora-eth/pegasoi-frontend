@@ -15,7 +15,7 @@ We have a collaborative team with specialized expertise:
 ### Prerequisites
 
 - Node.js >= 18.0.0
-- pnpm >= 8.0.0 (preferred) or npm
+- npm (included with Node.js)
 - Git
 - GitHub CLI (optional but recommended)
 
@@ -27,13 +27,13 @@ git clone https://github.com/yasutora-eth/pegasoi-frontend.git
 cd pegasoi-frontend
 
 # Install dependencies
-pnpm install
+npm install
 
 # Copy environment file
 cp .env.example .env.local
 
 # Start development server
-pnpm dev
+npm run dev
 ```
 
 ## 🎯 Expertise-Specific Guidelines
@@ -81,10 +81,10 @@ lib/                  # Utilities and hooks
 **Development Workflow:**
 ```bash
 # Next.js specific commands
-pnpm dev              # Development with fast refresh
-pnpm build            # Production build
-pnpm analyze          # Bundle analyzer (to be added)
-pnpm lighthouse       # Performance testing (to be added)
+npm run dev              # Development with fast refresh
+npm run build            # Production build
+npm run analyze          # Bundle analyzer (to be added)
+npm run lighthouse       # Performance testing (to be added)
 ```
 
 ### 🟣 For Web3 Experts
@@ -131,10 +131,10 @@ app/web3/            # Web3-specific pages (to be created)
 **Development Workflow:**
 ```bash
 # Web3 specific commands (to be added)
-pnpm web3:dev         # Development with Web3 tools
-pnpm web3:test        # Web3 integration tests
-pnpm contracts:deploy # Smart contract deployment
-pnpm ipfs:upload      # IPFS file uploads
+npm run web3:dev         # Development with Web3 tools
+npm run web3:test        # Web3 integration tests
+npm run contracts:deploy # Smart contract deployment
+npm run ipfs:upload      # IPFS file uploads
 ```
 
 ## 🏗️ Architecture Overview
@@ -196,28 +196,28 @@ perf(nextjs): optimize bundle size with code splitting
 ### Next.js Testing
 ```bash
 # Unit tests for components
-pnpm test:components
+npm run test:components
 
 # Integration tests for pages
-pnpm test:pages
+npm run test:pages
 
 # E2E tests with Playwright
-pnpm test:e2e
+npm run test:e2e
 
 # Performance testing
-pnpm test:lighthouse
+npm run test:lighthouse
 ```
 
 ### Web3 Testing
 ```bash
 # Smart contract tests
-pnpm test:contracts
+npm run test:contracts
 
 # Web3 integration tests
-pnpm test:web3
+npm run test:web3
 
 # Wallet connection tests
-pnpm test:wallet
+npm run test:wallet
 ```
 
 ## 📋 Code Standards
