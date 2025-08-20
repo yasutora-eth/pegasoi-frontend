@@ -5,15 +5,6 @@ import './globals.css'
 
 // Force dynamic rendering for all pages
 export const dynamic = 'force-dynamic'
-import { ClerkProvider } from '@clerk/nextjs'
-import { ApolloProvider } from '@apollo/client'
-import { apolloClient } from '@/lib/apollo-client'
-import { AuthProvider } from '@/components/AuthProvider'
-import { Header } from '@/components/Header'
-import { Footer } from '@/components/Footer'
-import { ErrorBoundary } from '@/components/ErrorBoundary'
-import { CookieConsent } from '@/components/CookieConsent'
-import { BackToTop } from '@/components/BackToTop'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -33,30 +24,22 @@ export const viewport = {
   themeColor: '#00ffff',
 }
 
+import { MockAuthProvider } from '@/components/MockAuthProvider'
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <ClerkProvider>
-      <ApolloProvider client={apolloClient}>
-        <html lang="en" className="dark">
-          <body className={inter.className}>
-            <AuthProvider>
-              <ErrorBoundary>
-                <div className="flex min-h-screen flex-col">
-                  <Header />
-                  <main className="flex-1">{children}</main>
-                  <Footer />
-                </div>
-                <CookieConsent />
-                <BackToTop />
-              </ErrorBoundary>
-            </AuthProvider>
-          </body>
-        </html>
-      </ApolloProvider>
-    </ClerkProvider>
+    <html lang="en" className="dark">
+      <body className={inter.className}>
+        <MockAuthProvider>
+          <div className="flex min-h-screen flex-col">
+            <main className="flex-1">{children}</main>
+          </div>
+        </MockAuthProvider>
+      </body>
+    </html>
   )
 }

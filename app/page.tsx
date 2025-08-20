@@ -27,7 +27,7 @@ import {
   Cpu,
   Activity,
 } from 'lucide-react'
-import { useAuth } from '@/components/AuthProvider'
+import { useAuth } from '@/components/MockAuthProvider'
 
 // User type definitions - keeping for future use
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
