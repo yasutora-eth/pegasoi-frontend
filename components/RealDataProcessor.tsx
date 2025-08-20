@@ -1,12 +1,19 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Loader2, ExternalLink, BookOpen, Calendar, User, LinkIcon } from "lucide-react"
+import { useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { Alert, AlertDescription } from '@/components/ui/alert'
+import {
+  Loader2,
+  ExternalLink,
+  BookOpen,
+  Calendar,
+  User,
+  LinkIcon,
+} from 'lucide-react'
 
 interface ArxivEntry {
   title: string
@@ -32,24 +39,26 @@ interface DoajArticle {
 interface CrossrefItem {
   title: string[]
   author?: Array<{ given: string; family: string }>
-  published?: { "date-parts": number[][] }
+  published?: { 'date-parts': number[][] }
   URL?: string
   subject?: string[]
-  "container-title"?: string[]
+  'container-title'?: string[]
 }
 
 export function RealDataProcessor() {
-  const [results, setResults] = useState<any>(null)
+  const [results, setResults] = useState<Record<string, unknown> | null>(null)
   const [loading, setLoading] = useState(false)
-  const [query, setQuery] = useState("quantum computing")
+  const [query, setQuery] = useState('quantum computing')
 
   const testRealAPIs = async () => {
     setLoading(true)
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/search?query=${encodeURIComponent(query)}`)
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/search?query=${encodeURIComponent(query)}`
+      )
       const data = await response.json()
       setResults(data)
-    } catch (error) {
+    } catch {
       // API test failed, handle gracefully
     } finally {
       setLoading(false)
@@ -59,43 +68,55 @@ export function RealDataProcessor() {
   const parseArxivXML = (xmlString: string): ArxivEntry[] => {
     try {
       const parser = new DOMParser()
-      const xmlDoc = parser.parseFromString(xmlString, "text/xml")
-      const entries = xmlDoc.getElementsByTagName("entry")
+      const xmlDoc = parser.parseFromString(xmlString, 'text/xml')
+      const entries = xmlDoc.getElementsByTagName('entry')
 
       const parsed: ArxivEntry[] = []
       for (let i = 0; i < Math.min(entries.length, 5); i++) {
         const entry = entries[i]
-        const title = entry.getElementsByTagName("title")[0]?.textContent?.trim() || "No title"
-        const summary = entry.getElementsByTagName("summary")[0]?.textContent?.trim() || "No summary"
-        const published = entry.getElementsByTagName("published")[0]?.textContent?.trim() || ""
-        const link = entry.getElementsByTagName("id")[0]?.textContent?.trim() || ""
+        const title =
+          entry.getElementsByTagName('title')[0]?.textContent?.trim() ||
+          'No title'
+        const summary =
+          entry.getElementsByTagName('summary')[0]?.textContent?.trim() ||
+          'No summary'
+        const published =
+          entry.getElementsByTagName('published')[0]?.textContent?.trim() || ''
+        const link =
+          entry.getElementsByTagName('id')[0]?.textContent?.trim() || ''
 
         const authors: string[] = []
-        const authorElements = entry.getElementsByTagName("author")
+        const authorElements = entry.getElementsByTagName('author')
         for (let j = 0; j < authorElements.length; j++) {
-          const name = authorElements[j].getElementsByTagName("name")[0]?.textContent?.trim()
+          const name = authorElements[j]
+            .getElementsByTagName('name')[0]
+            ?.textContent?.trim()
           if (name) authors.push(name)
         }
 
         const categories: string[] = []
-        const categoryElements = entry.getElementsByTagName("category")
+        const categoryElements = entry.getElementsByTagName('category')
         for (let j = 0; j < categoryElements.length; j++) {
-          const term = categoryElements[j].getAttribute("term")
+          const term = categoryElements[j].getAttribute('term')
           if (term) categories.push(term)
         }
 
         parsed.push({ title, summary, authors, published, link, categories })
       }
       return parsed
-    } catch (error) {
+    } catch {
       // ArXiv XML parsing error, return empty result
       return []
     }
   }
 
-  const renderArxivResults = (data: any) => {
-    if (!data?.ok || typeof data.data !== "string") {
-      return <div className="text-destructive">ArXiv data unavailable or invalid format</div>
+  const renderArxivResults = (data: Record<string, unknown>) => {
+    if (!data?.ok || typeof data.data !== 'string') {
+      return (
+        <div className="text-destructive">
+          ArXiv data unavailable or invalid format
+        </div>
+      )
     }
 
     const entries = parseArxivXML(data.data)
@@ -105,13 +126,18 @@ export function RealDataProcessor() {
         {entries.map((entry, index) => (
           <Card key={index} className="border-l-4 border-l-blue-500">
             <CardHeader className="pb-2">
-              <CardTitle className="text-lg flex items-start gap-2">
-                <BookOpen className="h-5 w-5 mt-1 text-blue-500" />
+              <CardTitle className="flex items-start gap-2 text-lg">
+                <BookOpen className="mt-1 h-5 w-5 text-blue-500" />
                 <div className="flex-1">
                   {entry.title}
                   {entry.link && (
-                    <a href={entry.link} target="_blank" rel="noopener noreferrer" className="ml-2">
-                      <ExternalLink className="h-4 w-4 inline text-blue-500 hover:text-blue-700" />
+                    <a
+                      href={entry.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="ml-2"
+                    >
+                      <ExternalLink className="inline h-4 w-4 text-blue-500 hover:text-blue-700" />
                     </a>
                   )}
                 </div>
@@ -122,8 +148,9 @@ export function RealDataProcessor() {
                 {entry.authors.length > 0 && (
                   <div className="flex items-center gap-1">
                     <User className="h-4 w-4" />
-                    {entry.authors.slice(0, 3).join(", ")}
-                    {entry.authors.length > 3 && ` +${entry.authors.length - 3} more`}
+                    {entry.authors.slice(0, 3).join(', ')}
+                    {entry.authors.length > 3 &&
+                      ` +${entry.authors.length - 3} more`}
                   </div>
                 )}
                 {entry.published && (
@@ -148,25 +175,30 @@ export function RealDataProcessor() {
     )
   }
 
-  const renderDoajResults = (data: any) => {
-    if (!data?.ok || !data.data?.results) {
+  const renderDoajResults = (data: Record<string, unknown>) => {
+    if (!data?.ok || !(data as any).data?.results) {
       return <div className="text-destructive">DOAJ data unavailable</div>
     }
 
-    const articles: DoajArticle[] = data.data.results.slice(0, 5)
+    const articles: DoajArticle[] = (data as any).data.results.slice(0, 5)
 
     return (
       <div className="space-y-4">
         {articles.map((article, index) => (
           <Card key={index} className="border-l-4 border-l-green-500">
             <CardHeader className="pb-2">
-              <CardTitle className="text-lg flex items-start gap-2">
-                <BookOpen className="h-5 w-5 mt-1 text-green-500" />
+              <CardTitle className="flex items-start gap-2 text-lg">
+                <BookOpen className="mt-1 h-5 w-5 text-green-500" />
                 <div className="flex-1">
-                  {article.bibjson.title || "No title"}
+                  {article.bibjson.title || 'No title'}
                   {article.bibjson.link?.[0]?.url && (
-                    <a href={article.bibjson.link[0].url} target="_blank" rel="noopener noreferrer" className="ml-2">
-                      <ExternalLink className="h-4 w-4 inline text-green-500 hover:text-green-700" />
+                    <a
+                      href={article.bibjson.link[0].url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="ml-2"
+                    >
+                      <ExternalLink className="inline h-4 w-4 text-green-500 hover:text-green-700" />
                     </a>
                   )}
                 </div>
@@ -180,7 +212,7 @@ export function RealDataProcessor() {
                     {article.bibjson.author
                       .slice(0, 3)
                       .map((a) => a.name)
-                      .join(", ")}
+                      .join(', ')}
                   </div>
                 )}
                 {article.bibjson.year && (
@@ -189,9 +221,17 @@ export function RealDataProcessor() {
                     {article.bibjson.year}
                   </div>
                 )}
-                {article.bibjson.journal?.title && <Badge variant="outline">{article.bibjson.journal.title}</Badge>}
+                {article.bibjson.journal?.title && (
+                  <Badge variant="outline">
+                    {article.bibjson.journal.title}
+                  </Badge>
+                )}
               </div>
-              {article.bibjson.abstract && <p className="text-sm">{article.bibjson.abstract.substring(0, 300)}...</p>}
+              {article.bibjson.abstract && (
+                <p className="text-sm">
+                  {article.bibjson.abstract.substring(0, 300)}...
+                </p>
+              )}
               <div className="flex flex-wrap gap-1">
                 {article.bibjson.subject?.slice(0, 5).map((subj, i) => (
                   <Badge key={i} variant="outline" className="text-xs">
@@ -206,25 +246,30 @@ export function RealDataProcessor() {
     )
   }
 
-  const renderCrossrefResults = (data: any) => {
-    if (!data?.ok || !data.data?.message?.items) {
+  const renderCrossrefResults = (data: Record<string, unknown>) => {
+    if (!data?.ok || !(data as any).data?.message?.items) {
       return <div className="text-destructive">Crossref data unavailable</div>
     }
 
-    const items: CrossrefItem[] = data.data.message.items.slice(0, 5)
+    const items: CrossrefItem[] = (data as any).data.message.items.slice(0, 5)
 
     return (
       <div className="space-y-4">
         {items.map((item, index) => (
           <Card key={index} className="border-l-4 border-l-purple-500">
             <CardHeader className="pb-2">
-              <CardTitle className="text-lg flex items-start gap-2">
-                <BookOpen className="h-5 w-5 mt-1 text-purple-500" />
+              <CardTitle className="flex items-start gap-2 text-lg">
+                <BookOpen className="mt-1 h-5 w-5 text-purple-500" />
                 <div className="flex-1">
-                  {item.title?.[0] || "No title"}
+                  {item.title?.[0] || 'No title'}
                   {item.URL && (
-                    <a href={item.URL} target="_blank" rel="noopener noreferrer" className="ml-2">
-                      <ExternalLink className="h-4 w-4 inline text-purple-500 hover:text-purple-700" />
+                    <a
+                      href={item.URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="ml-2"
+                    >
+                      <ExternalLink className="inline h-4 w-4 text-purple-500 hover:text-purple-700" />
                     </a>
                   )}
                 </div>
@@ -238,16 +283,18 @@ export function RealDataProcessor() {
                     {item.author
                       .slice(0, 3)
                       .map((a) => `${a.given} ${a.family}`)
-                      .join(", ")}
+                      .join(', ')}
                   </div>
                 )}
-                {item.published?.["date-parts"]?.[0] && (
+                {item.published?.['date-parts']?.[0] && (
                   <div className="flex items-center gap-1">
                     <Calendar className="h-4 w-4" />
-                    {item.published["date-parts"][0][0]}
+                    {item.published['date-parts'][0][0]}
                   </div>
                 )}
-                {item["container-title"]?.[0] && <Badge variant="outline">{item["container-title"][0]}</Badge>}
+                {item['container-title']?.[0] && (
+                  <Badge variant="outline">{item['container-title'][0]}</Badge>
+                )}
               </div>
               <div className="flex flex-wrap gap-1">
                 {item.subject?.slice(0, 5).map((subj, i) => (
@@ -263,18 +310,26 @@ export function RealDataProcessor() {
     )
   }
 
-  const renderGettyResults = (data: any) => {
+  const renderGettyResults = (data: Record<string, unknown>) => {
     if (!data?.ok) {
       return (
         <Alert>
           <AlertDescription>
-            Getty API: {data?.error || "Service may be unavailable or require authentication"}
+            Getty API:{' '}
+            {String(
+              (data as any)?.error ||
+                'Service may be unavailable or require authentication'
+            )}
           </AlertDescription>
         </Alert>
       )
     }
 
-    return <div className="text-muted-foreground">Getty API response received (format varies)</div>
+    return (
+      <div className="text-muted-foreground">
+        Getty API response received (format varies)
+      </div>
+    )
   }
 
   return (
@@ -289,11 +344,15 @@ export function RealDataProcessor() {
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="flex-1 px-3 py-2 border rounded"
+              className="flex-1 rounded border px-3 py-2"
               placeholder="Enter search query..."
             />
             <Button onClick={testRealAPIs} disabled={loading}>
-              {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Test Real APIs"}
+              {loading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                'Test Real APIs'
+              )}
             </Button>
           </div>
         </CardContent>
@@ -307,13 +366,19 @@ export function RealDataProcessor() {
               <CardTitle className="flex items-center gap-2">
                 <LinkIcon className="h-5 w-5 text-blue-500" />
                 ArXiv Results (XML → Parsed)
-                <Badge variant={results.arxiv?.ok ? "default" : "destructive"}>
-                  {results.arxiv?.ok ? "Success" : "Error"}
+                <Badge
+                  variant={
+                    (results.arxiv as any)?.ok ? 'default' : 'destructive'
+                  }
+                >
+                  {(results.arxiv as any)?.ok ? 'Success' : 'Error'}
                 </Badge>
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <ScrollArea className="h-96">{renderArxivResults(results.arxiv)}</ScrollArea>
+              <ScrollArea className="h-96">
+                {renderArxivResults(results.arxiv as Record<string, unknown>)}
+              </ScrollArea>
             </CardContent>
           </Card>
 
@@ -323,13 +388,19 @@ export function RealDataProcessor() {
               <CardTitle className="flex items-center gap-2">
                 <LinkIcon className="h-5 w-5 text-green-500" />
                 DOAJ Results (JSON → Processed)
-                <Badge variant={results.doaj?.ok ? "default" : "destructive"}>
-                  {results.doaj?.ok ? "Success" : "Error"}
+                <Badge
+                  variant={
+                    (results.doaj as any)?.ok ? 'default' : 'destructive'
+                  }
+                >
+                  {(results.doaj as any)?.ok ? 'Success' : 'Error'}
                 </Badge>
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <ScrollArea className="h-96">{renderDoajResults(results.doaj)}</ScrollArea>
+              <ScrollArea className="h-96">
+                {renderDoajResults(results.doaj as Record<string, unknown>)}
+              </ScrollArea>
             </CardContent>
           </Card>
 
@@ -339,13 +410,21 @@ export function RealDataProcessor() {
               <CardTitle className="flex items-center gap-2">
                 <LinkIcon className="h-5 w-5 text-purple-500" />
                 Crossref Results (JSON → Processed)
-                <Badge variant={results.crossref?.ok ? "default" : "destructive"}>
-                  {results.crossref?.ok ? "Success" : "Error"}
+                <Badge
+                  variant={
+                    (results.crossref as any)?.ok ? 'default' : 'destructive'
+                  }
+                >
+                  {(results.crossref as any)?.ok ? 'Success' : 'Error'}
                 </Badge>
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <ScrollArea className="h-96">{renderCrossrefResults(results.crossref)}</ScrollArea>
+              <ScrollArea className="h-96">
+                {renderCrossrefResults(
+                  results.crossref as Record<string, unknown>
+                )}
+              </ScrollArea>
             </CardContent>
           </Card>
 
@@ -355,12 +434,18 @@ export function RealDataProcessor() {
               <CardTitle className="flex items-center gap-2">
                 <LinkIcon className="h-5 w-5 text-orange-500" />
                 Getty Results
-                <Badge variant={results.getty?.ok ? "default" : "destructive"}>
-                  {results.getty?.ok ? "Success" : "Error"}
+                <Badge
+                  variant={
+                    (results.getty as any)?.ok ? 'default' : 'destructive'
+                  }
+                >
+                  {(results.getty as any)?.ok ? 'Success' : 'Error'}
                 </Badge>
               </CardTitle>
             </CardHeader>
-            <CardContent>{renderGettyResults(results.getty)}</CardContent>
+            <CardContent>
+              {renderGettyResults(results.getty as Record<string, unknown>)}
+            </CardContent>
           </Card>
         </div>
       )}

@@ -1,0 +1,9 @@
+HTTP/1.1 307 Temporary Redirect
+Content-Length: 0
+Date: Wed, 20 Aug 2025 03:06:19 GMT
+Location: http://pegasoibackend-production.up.railway.app/graphql/
+Server: railway-edge
+X-Correlation-Id: d4ee4bc3
+X-Railway-Edge: railway/us-east4-eqdc4a
+X-Railway-Request-Id: D9tpMhsMQJmDzqgrwoOzXw
+

@@ -1,9 +1,9 @@
-"use client"
+'use client'
 
-import { useState, useEffect } from "react"
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Loader2 } from "lucide-react"
+import { useState, useEffect } from 'react'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Loader2 } from 'lucide-react'
 
 interface Article {
   id: string
@@ -27,12 +27,12 @@ export default function Articles() {
 
   const fetchArticles = async () => {
     try {
-      const response = await fetch("/api/articles")
-      if (!response.ok) throw new Error("Failed to fetch")
+      const response = await fetch('/api/articles')
+      if (!response.ok) throw new Error('Failed to fetch')
       const data = await response.json()
       setArticles(data)
-    } catch (err) {
-      setError("Failed to load articles")
+    } catch {
+      setError('Failed to load articles')
     } finally {
       setLoading(false)
     }
@@ -40,7 +40,7 @@ export default function Articles() {
 
   if (loading) {
     return (
-      <div className="container mx-auto px-4 py-8 flex items-center justify-center">
+      <div className="container mx-auto flex items-center justify-center px-4 py-8">
         <Loader2 className="h-8 w-8 animate-spin" />
         <span className="ml-2">Loading articles...</span>
       </div>
@@ -51,7 +51,7 @@ export default function Articles() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="text-center">
-          <p className="text-destructive mb-4">{error}</p>
+          <p className="mb-4 text-destructive">{error}</p>
           <Button onClick={fetchArticles}>Try Again</Button>
         </div>
       </div>
@@ -60,23 +60,29 @@ export default function Articles() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-8">Articles</h1>
+      <h1 className="mb-8 text-4xl font-bold">Articles</h1>
 
       {articles.length === 0 ? (
         <p className="text-muted-foreground">No articles found.</p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {articles.map((article) => (
             <Card key={article.id}>
               <CardHeader>
                 <CardTitle className="text-lg">{article.title}</CardTitle>
-                <p className="text-sm text-muted-foreground">By {article.author}</p>
+                <p className="text-sm text-muted-foreground">
+                  By {article.author}
+                </p>
               </CardHeader>
               <CardContent>
-                <p className="text-sm mb-4">{article.content.substring(0, 150)}...</p>
-                <div className="flex justify-between items-center text-xs text-muted-foreground">
+                <p className="mb-4 text-sm">
+                  {article.content.substring(0, 150)}...
+                </p>
+                <div className="flex items-center justify-between text-xs text-muted-foreground">
                   <span>Status: {article.status}</span>
-                  <span>{new Date(article.createdAt).toLocaleDateString()}</span>
+                  <span>
+                    {new Date(article.createdAt).toLocaleDateString()}
+                  </span>
                 </div>
               </CardContent>
             </Card>

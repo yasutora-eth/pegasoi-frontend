@@ -1,27 +1,33 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { apiService } from "@/lib/api"
-import { Loader2, Database, TestTube, Zap, CheckCircle } from "lucide-react"
+import { useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { apiService } from '@/lib/api'
+import { Loader2, Database, TestTube, Zap, CheckCircle } from 'lucide-react'
 
 export function QuickActions() {
   const [loading, setLoading] = useState<string | null>(null)
-  const [results, setResults] = useState<Record<string, any>>({})
+  const [results, setResults] = useState<Record<string, unknown>>({})
 
-  const runAction = async (actionName: string, action: () => Promise<any>) => {
+  const runAction = async (
+    actionName: string,
+    action: () => Promise<unknown>
+  ) => {
     setLoading(actionName)
     try {
       const result = await action()
-      setResults((prev) => ({ ...prev, [actionName]: { success: true, data: result } }))
+      setResults((prev) => ({
+        ...prev,
+        [actionName]: { success: true, data: result },
+      }))
     } catch (error) {
       setResults((prev) => ({
         ...prev,
         [actionName]: {
           success: false,
-          error: error instanceof Error ? error.message : "Unknown error",
+          error: error instanceof Error ? error.message : 'Unknown error',
         },
       }))
     } finally {
@@ -31,34 +37,37 @@ export function QuickActions() {
 
   const actions = [
     {
-      name: "testConnection",
-      label: "Test KV Connection",
+      name: 'testConnection',
+      label: 'Test KV Connection',
       icon: <Database className="h-4 w-4" />,
-      action: () => fetch("/api/test-connection").then((r) => r.json()),
+      action: () => fetch('/api/test-connection').then((r) => r.json()),
     },
     {
-      name: "healthCheck",
-      label: "Health Check",
+      name: 'healthCheck',
+      label: 'Health Check',
       icon: <TestTube className="h-4 w-4" />,
-      action: () => fetch("/api/health").then((r) => r.json()),
+      action: () => fetch('/api/health').then((r) => r.json()),
     },
     {
-      name: "loadArticles",
-      label: "Load Articles",
+      name: 'loadArticles',
+      label: 'Load Articles',
       icon: <Zap className="h-4 w-4" />,
       action: () => apiService.getArticles(),
     },
     {
-      name: "createSample",
-      label: "Create Sample Article",
+      name: 'createSample',
+      label: 'Create Sample Article',
       icon: <CheckCircle className="h-4 w-4" />,
       action: async () => {
         const sample = {
           title: `Sample Article ${Date.now()}`,
           content:
-            "This is a sample article created for testing purposes. It demonstrates the article creation functionality.",
-          author: "System Test",
-          reference: "Quick Actions Test",
+            'This is a sample article created for testing purposes. It demonstrates the article creation functionality.',
+          abstract: 'A sample article for testing the article creation system.',
+          authors: ['System Test'],
+          keywords: ['test', 'sample', 'demo'],
+          publicationDate: new Date().toISOString(), // Backend expects camelCase
+          journal: 'Test Journal',
         }
         return apiService.createArticle(sample)
       },
@@ -82,7 +91,7 @@ export function QuickActions() {
               className="justify-start"
             >
               {loading === action.name ? (
-                <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               ) : (
                 <span className="mr-2">{action.icon}</span>
               )}
@@ -95,20 +104,31 @@ export function QuickActions() {
           <div className="space-y-2">
             <h4 className="text-sm font-medium">Results:</h4>
             {Object.entries(results).map(([actionName, result]) => (
-              <div key={actionName} className="text-xs p-2 bg-muted/50 rounded">
-                <div className="flex items-center gap-2 mb-1">
+              <div key={actionName} className="rounded bg-muted/50 p-2 text-xs">
+                <div className="mb-1 flex items-center gap-2">
                   <span className="font-medium">{actionName}</span>
-                  <Badge variant={result.success ? "default" : "destructive"}>
-                    {result.success ? "Success" : "Error"}
+                  <Badge
+                    variant={
+                      (result as any).success ? 'default' : 'destructive'
+                    }
+                  >
+                    {(result as any).success ? 'Success' : 'Error'}
                   </Badge>
                 </div>
-                {result.success ? (
-                  <pre className="text-xs overflow-auto">
-                    {JSON.stringify(result.data, null, 2).substring(0, 200)}
-                    {JSON.stringify(result.data, null, 2).length > 200 ? "..." : ""}
+                {(result as any).success ? (
+                  <pre className="overflow-auto text-xs">
+                    {JSON.stringify((result as any).data, null, 2).substring(
+                      0,
+                      200
+                    )}
+                    {JSON.stringify((result as any).data, null, 2).length > 200
+                      ? '...'
+                      : ''}
                   </pre>
                 ) : (
-                  <div className="text-destructive">{result.error}</div>
+                  <div className="text-destructive">
+                    {String((result as any).error)}
+                  </div>
                 )}
               </div>
             ))}

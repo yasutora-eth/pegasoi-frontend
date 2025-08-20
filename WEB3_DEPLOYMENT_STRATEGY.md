@@ -1,6 +1,7 @@
 # 🌐 Pegasoi Frontend - Web3 Deployment Strategy
 
 ## 📋 **Current Status**
+
 - **✅ Frontend isolated** and running locally (http://localhost:3001)
 - **✅ Railway backend connected** (https://pegasoibackend-production.up.railway.app)
 - **✅ Core pages working** (home, research-gallery)
@@ -13,6 +14,7 @@
 ### **1️⃣ Fleek (Best for Web3 + Next.js) 🥇**
 
 **Why Fleek?**
+
 - ✅ **IPFS + Filecoin** distributed storage
 - ✅ **ENS domains** (.eth support)
 - ✅ **Next.js optimized** build process
@@ -21,6 +23,7 @@
 - ✅ **Edge functions** support
 
 **Setup Commands:**
+
 ```bash
 # Install Fleek CLI
 npm install -g @fleek-platform/cli
@@ -34,6 +37,7 @@ fleek sites deploy
 ```
 
 **Configuration:**
+
 - Build Command: `npm run build`
 - Output Directory: `.next` (or `out` for static)
 - Environment Variables: Copy from `.env.local`
@@ -43,12 +47,14 @@ fleek sites deploy
 ### **2️⃣ Spheron Protocol (Arweave + IPFS) 🥈**
 
 **Features:**
+
 - ✅ **Multi-storage** (Arweave, IPFS, Filecoin)
 - ✅ **Fast deployments** (~2 minutes)
 - ✅ **Auto-scaling** infrastructure
 - ✅ **GitHub integration**
 
 **Setup:**
+
 ```bash
 npm install -g @spheron/cli
 spheron login
@@ -60,6 +66,7 @@ spheron deploy
 ### **3️⃣ 4everland (Arweave Focus) 🥉**
 
 **Features:**
+
 - ✅ **Permanent storage** on Arweave
 - ✅ **Next.js support**
 - ✅ **Web2 performance + Web3 benefits**
@@ -72,6 +79,7 @@ spheron deploy
 ### **4️⃣ IPFS + Pinata (Pure Decentralized)**
 
 **Setup:**
+
 ```bash
 # Build static version
 npm run build
@@ -82,6 +90,7 @@ npm run export
 ```
 
 **Features:**
+
 - ✅ **True decentralization**
 - ✅ **Cost effective**
 - ✅ **Full control**
@@ -99,6 +108,7 @@ npm run export
    - Need to handle `useAuth` calls properly
 
 2. **Next.js Static Export Setup**
+
    ```javascript
    // next.config.mjs
    {
@@ -117,12 +127,14 @@ npm run export
 ## 🛠 **Quick Web3 Deployment Path**
 
 ### **Option A: Fleek Serverless (Recommended)**
+
 - Keep current Next.js structure
 - Deploy with server-side rendering
 - Use Fleek's edge functions
 - **Timeline:** 30 minutes
 
 ### **Option B: Pure Static IPFS**
+
 - Convert to static export
 - Fix auth to be client-side only
 - Deploy to IPFS via Fleek/Pinata
@@ -133,16 +145,19 @@ npm run export
 ## 🌟 **Web3 Features We Can Add**
 
 ### **Phase 1: Basic Web3**
+
 - IPFS hosting
 - ENS domain (.eth)
 - Distributed content delivery
 
 ### **Phase 2: Enhanced Web3**
+
 - Wallet authentication (alongside Clerk)
 - IPFS content storage for articles
 - Decentralized search indexing
 
 ### **Phase 3: Full Web3**
+
 - Smart contract integration
 - Token-gated research access
 - DAO governance features
@@ -152,6 +167,7 @@ npm run export
 ## 🚀 **Recommended Immediate Actions**
 
 ### **1. Quick Fleek Deployment (30 mins)**
+
 ```bash
 # Fix auth pages first (disable static export)
 # Then deploy to Fleek with serverless
@@ -161,11 +177,13 @@ fleek sites deploy
 ```
 
 ### **2. Get ENS Domain**
+
 - Register: `pegasoi.eth` or `pegasoi-research.eth`
 - Point to Fleek deployment
 - Instant Web3 credibility
 
 ### **3. Environment Setup**
+
 ```bash
 # Fleek environment variables
 NEXT_PUBLIC_API_URL=https://pegasoibackend-production.up.railway.app
@@ -177,12 +195,12 @@ NEXT_PUBLIC_APP_NAME=Pegasoi Research Platform
 
 ## 💰 **Cost Comparison**
 
-| Platform | Cost | Storage | Performance |
-|----------|------|---------|-------------|
-| Fleek | $0-29/month | IPFS+CDN | Excellent |
-| Spheron | $0-25/month | Multi-chain | Very Good |
-| 4everland | $0-20/month | Arweave | Good |
-| Pinata | $0-20/month | IPFS only | Good |
+| Platform  | Cost        | Storage     | Performance |
+| --------- | ----------- | ----------- | ----------- |
+| Fleek     | $0-29/month | IPFS+CDN    | Excellent   |
+| Spheron   | $0-25/month | Multi-chain | Very Good   |
+| 4everland | $0-20/month | Arweave     | Good        |
+| Pinata    | $0-20/month | IPFS only   | Good        |
 
 ---
 
@@ -200,12 +218,15 @@ NEXT_PUBLIC_APP_NAME=Pegasoi Research Platform
 ## ⚡ **Next Steps Decision Matrix**
 
 ### **Want to deploy TODAY?**
+
 → **Use Fleek with current setup** (serverless mode)
 
 ### **Want pure decentralization?**
+
 → **Fix auth pages, then IPFS static deployment**
 
 ### **Want advanced Web3 features?**
+
 → **Start with Fleek, add wallet integration later**
 
 ---

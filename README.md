@@ -12,23 +12,27 @@ A Next.js-powered frontend for the Pegasoi Research Platform, designed for Web3 
 ## 🌟 Features
 
 ### 🔍 **Multi-Source Academic Search**
+
 - **ArXiv Integration** - Physics, Mathematics, Computer Science papers
-- **DOAJ Support** - Open Access journals and articles  
+- **DOAJ Support** - Open Access journals and articles
 - **Crossref API** - DOI metadata and citation information
 - **Getty Vocabulary** - Cultural and art history resources
 
 ### 🎨 **Modern UI/UX**
+
 - **Shadcn/ui Components** - Beautiful, accessible design system
 - **Dark/Light Mode** - Theme switching with next-themes
 - **Responsive Design** - Mobile-first approach
 - **Loading States** - Smooth user experience
 
 ### 🔐 **Authentication & Security**
+
 - **Clerk Integration** - Secure user authentication
 - **Role-based Access** - Admin and researcher roles
 - **Session Management** - Persistent login state
 
 ### 🚀 **Web3 Ready Architecture**
+
 - **Blockchain Integration Ready** - Prepared for wallet connections
 - **Decentralized Identity** - Compatible with Web3 auth patterns
 - **Future-Proof Design** - Built with Web3 principles in mind
@@ -53,23 +57,26 @@ A Next.js-powered frontend for the Pegasoi Research Platform, designed for Web3 
 ### Prerequisites
 
 - **Node.js** >= 18.0.0
-- **pnpm** >= 8.0.0 (recommended) or npm
+- **npm** (included with Node.js)
 - **Git**
 
 ### Installation
 
 1. **Clone the repository**
+
 ```bash
 git clone https://github.com/yasutora-eth/pegasoi-frontend.git
 cd pegasoi-frontend
 ```
 
 2. **Install dependencies**
+
 ```bash
-pnpm install
+npm install
 ```
 
 3. **Set up environment variables**
+
 ```bash
 cp .env.example .env.local
 ```
@@ -86,8 +93,9 @@ CLERK_SECRET_KEY=your_secret_here
 ```
 
 4. **Start the development server**
+
 ```bash
-pnpm dev
+npm run dev
 ```
 
 5. **Open your browser**
@@ -148,12 +156,12 @@ Prepared for Web3 integration with:
 ### Scripts
 
 ```bash
-pnpm dev          # Start development server
-pnpm build        # Build for production
-pnpm start        # Start production server
-pnpm lint         # Run ESLint
-pnpm lint:fix     # Fix ESLint issues
-pnpm type-check   # Check TypeScript types
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run start        # Start production server
+npm run lint         # Run ESLint
+npm run lint:fix     # Fix ESLint issues
+npm run type-check   # Check TypeScript types
 ```
 
 ### Code Quality

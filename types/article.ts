@@ -1,6 +1,21 @@
-export type ArticleStatus = "draft" | "in_review" | "published" | "archived"
+// Re-export types from API to maintain consistency
+export type {
+  Article,
+  ArticleCreate,
+  ArticleUpdate,
+  SearchResult,
+  HealthStatus,
+} from '@/lib/api'
 
-export interface Article {
+// Legacy types for backward compatibility
+export type ArticleStatus =
+  | 'draft'
+  | 'in_review'
+  | 'published'
+  | 'archived'
+  | 'rejected'
+
+export interface LegacyArticle {
   id: string
   title: string
   content: string
