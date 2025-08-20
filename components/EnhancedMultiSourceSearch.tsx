@@ -28,7 +28,7 @@ interface ParsedEntry {
   source: string
   classics_relevance?: number
   getty_uri?: string
-  [key: string]: any
+  [key: string]: unknown
 }
 
 interface SearchResponse {
@@ -60,7 +60,7 @@ export function EnhancedMultiSourceSearch() {
     try {
       // Try backend first
       let response: Response
-      let data: any
+      let data: SearchResponse
 
       try {
         response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/search?query=${encodeURIComponent(query.trim())}`, {
@@ -75,7 +75,7 @@ export function EnhancedMultiSourceSearch() {
         }
 
         data = await response.json()
-      } catch (backendError) {
+      } catch {
         // Backend unavailable, trying direct API calls
         setUsingFallback(true)
 
@@ -211,7 +211,7 @@ export function EnhancedMultiSourceSearch() {
       } else {
         results.arxiv = { ok: false, error: `ArXiv API error: ${arxivResponse.status}` }
       }
-    } catch (error) {
+    } catch {
       results.arxiv = { ok: false, error: "ArXiv connection failed (CORS or network issue)" }
     }
 
@@ -243,7 +243,7 @@ export function EnhancedMultiSourceSearch() {
             break
           }
         }
-      } catch (error) {
+      } catch {
         continue
       }
     }
@@ -277,7 +277,7 @@ export function EnhancedMultiSourceSearch() {
       } else {
         results.crossref = { ok: false, error: `Crossref API error: ${crossrefResponse.status}` }
       }
-    } catch (error) {
+    } catch {
       results.crossref = { ok: false, error: "Crossref connection failed (CORS or network issue)" }
     }
 
@@ -307,7 +307,7 @@ export function EnhancedMultiSourceSearch() {
       } else {
         throw new Error(`Getty Museum API error: ${gettyResponse.status}`)
       }
-    } catch (error) {
+    } catch {
       // Use curated Getty Museum data with working links
       results.getty = {
         ok: true,
@@ -423,7 +423,7 @@ export function EnhancedMultiSourceSearch() {
       const xmlDoc = parser.parseFromString(xmlString, "text/xml")
       const entries = xmlDoc.getElementsByTagName("entry")
 
-      const parsed: any[] = []
+      const parsed: SearchEntry[] = []
       for (let i = 0; i < Math.min(entries.length, 30); i++) {
         const entry = entries[i]
         const title = entry.getElementsByTagName("title")[0]?.textContent?.trim() || "No title"
@@ -457,12 +457,12 @@ export function EnhancedMultiSourceSearch() {
       }
 
       return { entries: parsed, total: parsed.length }
-    } catch (error) {
+    } catch {
       return { entries: [], total: 0, error: "XML parsing failed" }
     }
   }
 
-  const parseDoajResponse = (data: any) => {
+  const parseDoajResponse = (data: Record<string, unknown>) => {
     try {
       // Handle DOAJ response structure
       let results = []
@@ -477,7 +477,7 @@ export function EnhancedMultiSourceSearch() {
         results = data
       }
 
-      const parsed: any[] = []
+      const parsed: SearchEntry[] = []
 
       for (const article of results.slice(0, 30)) {
         const bibjson = article.bibjson || article
@@ -555,15 +555,15 @@ export function EnhancedMultiSourceSearch() {
       }
 
       return { entries: parsed, total: parsed.length }
-    } catch (error) {
+    } catch {
       return { entries: [], total: 0, error: "DOAJ parsing failed" }
     }
   }
 
-  const parseCrossrefResponse = (data: any) => {
+  const parseCrossrefResponse = (data: Record<string, unknown>) => {
     try {
       const items = data.message?.items || []
-      const parsed: any[] = []
+      const parsed: SearchEntry[] = []
 
       for (const item of items.slice(0, 30)) {
         const authors: string[] = []
@@ -599,15 +599,15 @@ export function EnhancedMultiSourceSearch() {
       }
 
       return { entries: parsed, total: parsed.length }
-    } catch (error) {
+    } catch {
       return { entries: [], total: 0, error: "Crossref parsing failed" }
     }
   }
 
-  const parseGettyMuseumResponse = (data: any) => {
+  const parseGettyMuseumResponse = (data: Record<string, unknown>) => {
     try {
       const objects = data.data || []
-      const parsed: any[] = []
+      const parsed: SearchEntry[] = []
 
       for (const obj of objects.slice(0, 30)) {
         const title = obj.title || "Getty Museum Object"
@@ -651,12 +651,12 @@ export function EnhancedMultiSourceSearch() {
       }
 
       return { entries: parsed, total: parsed.length }
-    } catch (error) {
+    } catch {
       return { entries: [], total: 0, error: "Getty Museum parsing failed" }
     }
   }
 
-  const renderSourceResults = (data: SearchResponse, sourceColor: string, sourceIcon: any) => {
+  const renderSourceResults = (data: SearchResponse, sourceColor: string, sourceIcon: React.ComponentType) => {
     if (!data.ok || !data.data?.entries || data.data.entries.length === 0) {
       return (
         <Alert>
@@ -704,7 +704,7 @@ export function EnhancedMultiSourceSearch() {
             </Badge>
           )}
         </div>
-        {data.data.entries.map((entry: any, index: number) => (
+        {data.data.entries.map((entry: SearchEntry, index: number) => (
           <Card key={index} className={`border-l-4 border-l-${sourceColor}-500`}>
             <CardHeader className="pb-2">
               <CardTitle className="text-lg flex items-start gap-2">

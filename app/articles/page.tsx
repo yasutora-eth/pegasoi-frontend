@@ -31,7 +31,7 @@ export default function Articles() {
       if (!response.ok) throw new Error("Failed to fetch")
       const data = await response.json()
       setArticles(data)
-    } catch (err) {
+    } catch {
       setError("Failed to load articles")
     } finally {
       setLoading(false)

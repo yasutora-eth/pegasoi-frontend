@@ -9,7 +9,7 @@ import { apiService, type HealthStatus } from "@/lib/api"
 
 export function SystemStatus() {
   const [health, setHealth] = useState<HealthStatus | null>(null)
-  const [connectionTest, setConnectionTest] = useState<any>(null)
+  const [connectionTest, setConnectionTest] = useState<Record<string, unknown> | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -135,7 +135,7 @@ export function SystemStatus() {
         {!connectionTest && !health && !loading && (
           <div className="text-center py-4">
             <AlertCircle className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
-            <p className="text-sm text-muted-foreground">Click "Check" to test backend connection</p>
+            <p className="text-sm text-muted-foreground">Click &ldquo;Check&rdquo; to test backend connection</p>
           </div>
         )}
       </CardContent>

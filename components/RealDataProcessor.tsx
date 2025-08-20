@@ -39,7 +39,7 @@ interface CrossrefItem {
 }
 
 export function RealDataProcessor() {
-  const [results, setResults] = useState<any>(null)
+  const [results, setResults] = useState<Record<string, unknown> | null>(null)
   const [loading, setLoading] = useState(false)
   const [query, setQuery] = useState("quantum computing")
 
@@ -49,7 +49,7 @@ export function RealDataProcessor() {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/search?query=${encodeURIComponent(query)}`)
       const data = await response.json()
       setResults(data)
-    } catch (error) {
+    } catch {
       // API test failed, handle gracefully
     } finally {
       setLoading(false)
@@ -87,13 +87,13 @@ export function RealDataProcessor() {
         parsed.push({ title, summary, authors, published, link, categories })
       }
       return parsed
-    } catch (error) {
+    } catch {
       // ArXiv XML parsing error, return empty result
       return []
     }
   }
 
-  const renderArxivResults = (data: any) => {
+  const renderArxivResults = (data: Record<string, unknown>) => {
     if (!data?.ok || typeof data.data !== "string") {
       return <div className="text-destructive">ArXiv data unavailable or invalid format</div>
     }
@@ -148,7 +148,7 @@ export function RealDataProcessor() {
     )
   }
 
-  const renderDoajResults = (data: any) => {
+  const renderDoajResults = (data: Record<string, unknown>) => {
     if (!data?.ok || !data.data?.results) {
       return <div className="text-destructive">DOAJ data unavailable</div>
     }
@@ -206,7 +206,7 @@ export function RealDataProcessor() {
     )
   }
 
-  const renderCrossrefResults = (data: any) => {
+  const renderCrossrefResults = (data: Record<string, unknown>) => {
     if (!data?.ok || !data.data?.message?.items) {
       return <div className="text-destructive">Crossref data unavailable</div>
     }
@@ -263,7 +263,7 @@ export function RealDataProcessor() {
     )
   }
 
-  const renderGettyResults = (data: any) => {
+  const renderGettyResults = (data: Record<string, unknown>) => {
     if (!data?.ok) {
       return (
         <Alert>

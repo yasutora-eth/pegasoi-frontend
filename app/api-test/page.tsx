@@ -44,7 +44,7 @@ export default function ApiTestPage() {
       const response = await fetch(`/api/research-assistant?query=${encodeURIComponent(query)}`)
       const data = await response.json()
       setResults(data)
-    } catch (error) {
+    } catch {
       // Error handled by error boundary
     } finally {
       setLoading(false)
@@ -57,8 +57,8 @@ export default function ApiTestPage() {
     try {
       const response = await fetch(`/api/research-assistant?query=${encodeURIComponent(query)}&source=${source}`)
       const data = await response.json()
-      setResults({ [source]: data } as any)
-    } catch (error) {
+      setResults({ [source]: data } as MultiSourceResults)
+    } catch {
       // Error handled by error boundary
     } finally {
       setLoading(false)
@@ -165,7 +165,7 @@ export default function ApiTestPage() {
 
                     <div className="text-sm text-muted-foreground mb-4">Found {result.data?.total || 0} results</div>
 
-                    {result.data?.entries.slice(0, 3).map((entry, index) => (
+                    {result.data?.entries.slice(0, 3).map((entry: NonNullable<SearchResult['data']>['entries'][0], index: number) => (
                       <div key={index} className="border rounded-lg p-4">
                         <h4 className="font-semibold mb-2 line-clamp-2">{entry.title}</h4>
 
@@ -181,9 +181,9 @@ export default function ApiTestPage() {
                           <Badge variant="secondary" className="text-xs">
                             {entry.source}
                           </Badge>
-                          {entry.classics_relevance !== undefined && (
+                          {entry.classics_relevance !== undefined && entry.classics_relevance !== null && (
                             <Badge variant="outline" className="text-xs">
-                              Relevance: {(entry.classics_relevance * 100).toFixed(0)}%
+                              Relevance: {(Number(entry.classics_relevance) * 100).toFixed(0)}%
                             </Badge>
                           )}
                         </div>

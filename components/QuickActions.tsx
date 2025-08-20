@@ -9,9 +9,9 @@ import { Loader2, Database, TestTube, Zap, CheckCircle } from "lucide-react"
 
 export function QuickActions() {
   const [loading, setLoading] = useState<string | null>(null)
-  const [results, setResults] = useState<Record<string, any>>({})
+  const [results, setResults] = useState<Record<string, unknown>>({})
 
-  const runAction = async (actionName: string, action: () => Promise<any>) => {
+  const runAction = async (actionName: string, action: () => Promise<unknown>) => {
     setLoading(actionName)
     try {
       const result = await action()
@@ -57,8 +57,11 @@ export function QuickActions() {
           title: `Sample Article ${Date.now()}`,
           content:
             "This is a sample article created for testing purposes. It demonstrates the article creation functionality.",
-          author: "System Test",
-          reference: "Quick Actions Test",
+          abstract: "A sample article for testing the article creation system.",
+          authors: ["System Test"],
+          keywords: ["test", "sample", "demo"],
+          publicationDate: new Date().toISOString(), // Backend expects camelCase
+          journal: "Test Journal",
         }
         return apiService.createArticle(sample)
       },

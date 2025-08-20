@@ -19,7 +19,8 @@ export default function Login() {
   const [role, setRole] = useState<"user" | "publisher" | "admin">("user")
   // const { login, isAuthenticated } = useAuth()
   const isAuthenticated = false
-  const login = (role: string) => { /* Mock login */ }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const login = (_role: string) => { /* Mock login */ }
   const router = useRouter()
 
   useEffect(() => {

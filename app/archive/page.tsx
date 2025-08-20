@@ -3,11 +3,11 @@
 import { PrivateRoute } from "@/components/PrivateRoute"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import type { Article } from "@/types/article"
+import type { LegacyArticle } from "@/types/article"
 import { useState } from "react"
 // import { useAuth } from "@/components/AuthProvider"
 
-const initialArticles: Article[] = [
+const initialArticles: LegacyArticle[] = [
   {
     id: "1",
     title: "Article 1",
@@ -51,7 +51,7 @@ const initialArticles: Article[] = [
 ]
 
 export default function Archive() {
-  const [articles, setArticles] = useState(initialArticles)
+  const [articles, setArticles] = useState<LegacyArticle[]>(initialArticles)
   // const { user } = useAuth()
   const user = { role: 'admin' } // Mock user for dev mode
 

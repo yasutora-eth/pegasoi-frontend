@@ -21,7 +21,19 @@ import {
   Cpu,
   Activity,
 } from "lucide-react"
-// import { useAuth } from "@/components/AuthProvider"
+import { useAuth } from "@/components/AuthProvider"
+
+// User type definitions - keeping for future use
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+interface AppUser {
+  id: string
+  name: string
+  email: string
+  role: "user" | "publisher" | "admin"
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type UserRole = "user" | "publisher" | "admin"
 
 export function CyberBackground() {
   return (
@@ -53,11 +65,8 @@ export function CyberBackground() {
 }
 
 export default function Home() {
-  // Temporary no-auth version for development
-  const isAuthenticated = false
-  const user = null
-  const toggleAuth = () => {} // Auth disabled for development
-  const setRole = () => {} // Role setting disabled for development
+  // Use Clerk authentication
+  const { isAuthenticated, user, toggleAuth, setRole } = useAuth()
 
   // Content for unauthenticated users
   const PublicContent = () => (
@@ -226,23 +235,23 @@ export default function Home() {
               <ul className="space-y-4 text-base">
                 <li className="flex items-center space-x-3">
                   <div className="w-3 h-3 bg-green-400 rounded-full pulse-glow"></div>
-                  <span className="text-cyan-200">"Roman Architecture in the Imperial Period"</span>
+                  <span className="text-cyan-200">&ldquo;Roman Architecture in the Imperial Period&rdquo;</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <div className="w-3 h-3 bg-green-400 rounded-full pulse-glow"></div>
-                  <span className="text-cyan-200">"Greek Pottery: Styles and Techniques"</span>
+                  <span className="text-cyan-200">&ldquo;Greek Pottery: Styles and Techniques&rdquo;</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <div className="w-3 h-3 bg-green-400 rounded-full pulse-glow"></div>
-                  <span className="text-cyan-200">"Egyptian Hieroglyphic Evolution"</span>
+                  <span className="text-cyan-200">&ldquo;Egyptian Hieroglyphic Evolution&rdquo;</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <div className="w-3 h-3 bg-green-400 rounded-full pulse-glow"></div>
-                  <span className="text-cyan-200">"Classical Literature Analysis"</span>
+                  <span className="text-cyan-200">&ldquo;Classical Literature Analysis&rdquo;</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <div className="w-3 h-3 bg-green-400 rounded-full pulse-glow"></div>
-                  <span className="text-cyan-200">"Byzantine Art and Culture"</span>
+                  <span className="text-cyan-200">&ldquo;Byzantine Art and Culture&rdquo;</span>
                 </li>
               </ul>
               <Button asChild className="mt-8 w-full cyber-button text-lg py-3">
@@ -294,11 +303,11 @@ export default function Home() {
   const AuthenticatedContent = () => (
     <div className="space-y-8 relative z-10">
       <div className="text-center animate-fade-in">
-        <h1 className="text-6xl font-bold mb-6 text-cyber text-glow">Welcome Back, {user?.name}!</h1>
+        <h1 className="text-6xl font-bold mb-6 text-cyber text-glow">Welcome Back, {user?.name || 'User'}!</h1>
         <p className="text-2xl text-cyan-300 mb-6">Classical Studies Research & Publication Platform</p>
         <Badge className="mb-8 cyber-badge pulse-glow px-4 py-2 text-lg data-stream">
           <User className="h-4 w-4 mr-2" />
-          {user?.role?.toUpperCase()} ACCESS GRANTED
+          {user?.role?.toUpperCase() || 'USER'} ACCESS GRANTED
         </Badge>
       </div>
 

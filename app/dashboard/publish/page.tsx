@@ -3,10 +3,10 @@
 import { PrivateRoute } from "@/components/PrivateRoute"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import type { Article } from "@/types/article"
+import type { LegacyArticle } from "@/types/article"
 import { useState } from "react"
 
-const initialArticles: Article[] = [
+const initialArticles: LegacyArticle[] = [
   {
     id: "1",
     title: "Article 1",
@@ -40,7 +40,7 @@ const initialArticles: Article[] = [
 ]
 
 export default function PublishArticles() {
-  const [articles, setArticles] = useState(initialArticles)
+  const [articles, setArticles] = useState<LegacyArticle[]>(initialArticles)
 
   const handlePublish = (id: string) => {
     setArticles(

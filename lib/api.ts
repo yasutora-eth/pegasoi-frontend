@@ -1,42 +1,38 @@
+import { graphqlService } from './graphql-service'
+
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
 
+// Backend uses camelCase - match exactly
 export interface Article {
-  article_id: string
-  id?: string // Keep for compatibility
+  articleId: string
   title: string
   content: string
   authors: string[]
   abstract: string
   keywords: string[]
-  publication_date: string
-  status: "draft" | "in_review" | "published" | "archived" | "rejected"
-  created_at: string
-  updated_at: string
-  doi?: string
-  journal?: string
+  publicationDate: string
+  status: string
+  createdAt: string
+  updatedAt: string
+  doi?: string | null
+  journal?: string | null
 }
 
+// Match backend CreateArticleDTO exactly
 export interface ArticleCreate {
   title: string
   authors: string[]
   abstract: string
   content: string
-  keywords: string[]
-  publication_date: string // ISO format
+  publicationDate: string // ISO format - backend expects camelCase
+  keywords?: string[]
   doi?: string
   journal?: string
 }
 
+// Backend only supports status updates via PATCH
 export interface ArticleUpdate {
-  title?: string
-  authors?: string[]
-  abstract?: string
-  content?: string
-  keywords?: string[]
-  publication_date?: string
-  doi?: string
-  journal?: string
-  status?: string
+  status: string // Backend UpdateArticleDTO only has status field
 }
 
 export interface SearchResult {
@@ -57,6 +53,8 @@ export interface HealthStatus {
 }
 
 class ApiService {
+  private useGraphQL = process.env.NEXT_PUBLIC_USE_GRAPHQL === 'true'
+
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
     const url = endpoint.startsWith("/api") ? endpoint : `${API_BASE_URL}${endpoint}`
 
@@ -91,10 +89,13 @@ class ApiService {
     }
   }
 
-  // Article CRUD - Full backend alignment
+  // Article CRUD - Match backend endpoints exactly
   async getArticles(status?: string): Promise<Article[]> {
-    const params = status ? `?status=${status}` : ""
-    return this.request<Article[]>(`/api/v1/articles${params}`)
+    if (status) {
+      // Use backend's status endpoint: /api/v1/articles/status/{status}
+      return this.request<Article[]>(`/api/v1/articles/status/${status}`)
+    }
+    return this.request<Article[]>(`/api/v1/articles`)
   }
 
   async getArticle(id: string): Promise<Article> {
@@ -102,37 +103,50 @@ class ApiService {
   }
 
   async createArticle(article: ArticleCreate): Promise<Article> {
-    return this.request<Article>(`/api/v1/articles/`, {
+    return this.request<Article>(`/api/v1/articles`, {
       method: "POST",
       body: JSON.stringify(article),
     })
   }
 
-  async updateArticle(id: string, article: ArticleUpdate): Promise<Article> {
-    return this.request<Article>(`/api/v1/articles/${id}`, {
-      method: "PUT",
-      body: JSON.stringify(article),
+  // Backend only supports status updates via PATCH
+  async updateArticleStatus(id: string, status: string): Promise<Article> {
+    return this.request<Article>(`/api/v1/articles/${id}/status`, {
+      method: "PATCH",
+      body: JSON.stringify({ status }),
     })
   }
 
-  async deleteArticle(id: string): Promise<void> {
-    return this.request<void>(`/api/v1/articles/${id}`, {
+  async deleteArticle(id: string): Promise<{ message?: string }> {
+    return this.request<{ message?: string }>(`/api/v1/articles/${id}`, {
       method: "DELETE",
     })
   }
 
+  // New methods to match backend capabilities
+  async addKeywordsToArticle(id: string, keywords: string[]): Promise<Article> {
+    return this.request<Article>(`/api/v1/articles/${id}/keywords`, {
+      method: "POST",
+      body: JSON.stringify({ keywords }),
+    })
+  }
+
+  async searchArticlesByKeywords(keywords: string): Promise<Article[]> {
+    return this.request<Article[]>(`/api/v1/articles/search/keywords?keywords=${encodeURIComponent(keywords)}`)
+  }
+
   // Multi-source search - Enhanced with error handling
-  async searchAllSources(query: string): Promise<SearchResult> {
+  async searchAllSources(query: string, limit: number = 10): Promise<SearchResult> {
     try {
-      return this.request<SearchResult>(`/api/v1/search?query=${encodeURIComponent(query)}`)
+      return this.request<SearchResult>(`/api/v1/search/papers?query=${encodeURIComponent(query)}&limit=${limit}`)
     } catch (error) {
       // Return fallback structure with proper error handling
       throw new Error(`Search service unavailable: ${error instanceof Error ? error.message : "Unknown error"}`)
     }
   }
 
-  async searchSingleSource(query: string, source: "arxiv" | "doaj" | "crossref" | "getty"): Promise<any> {
-    return this.request<any>(`/api/v1/search?query=${encodeURIComponent(query)}&source=${source}`)
+  async searchSingleSource(query: string, source: "arxiv" | "doaj" | "crossref", limit: number = 10): Promise<any> {
+    return this.request<any>(`/api/v1/search/papers?query=${encodeURIComponent(query)}&sources=${source}&limit=${limit}`)
   }
 
   // Health check - Backend alignment

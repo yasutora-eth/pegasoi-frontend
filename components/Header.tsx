@@ -10,7 +10,7 @@ import {
   Menu,
   X,
   User,
-  LogOut,
+
   LogIn,
   Home,
   BookOpen,
@@ -22,11 +22,13 @@ import {
   Archive,
   Zap,
 } from "lucide-react"
+import { useAuth } from "@/components/AuthProvider"
 
 export function Header() {
-  // Temporary no-auth version for development
-  const isAuthenticated = false
-  const user = null
+  // Use Clerk authentication
+  const { isAuthenticated, user, setRole } = useAuth()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { SignInButton, SignOutButton, UserButton } = useAuth()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const publicNavItems = [
@@ -39,11 +41,12 @@ export function Header() {
   const authenticatedNavItems = [
     { href: "/", label: "Home", icon: Home },
     { href: "/dashboard", label: "Dashboard", icon: BarChart3 },
+    { href: "/graphql-dashboard", label: "GraphQL", icon: Zap },
     { href: "/articles", label: "Articles", icon: BookOpen },
     { href: "/submit-article", label: "Submit Article", icon: PenTool },
     { href: "/research-gallery", label: "Research Gallery", icon: Search },
     { href: "/archive", label: "Archive", icon: Archive },
-    { href: "/system-check", label: "System Check", icon: Zap },
+    { href: "/system-check", label: "System Check", icon: Settings },
     { href: "/information", label: "Information", icon: Info },
   ]
 
@@ -87,9 +90,9 @@ export function Header() {
               <div className="hidden md:flex items-center space-x-3">
                 <Badge className="cyber-badge px-3 py-1">
                   <User className="h-3 w-3 mr-1" />
-                  {user.name}
+                  {user?.name || 'Guest'}
                 </Badge>
-                <Select value={user.role} onValueChange={setRole}>
+                <Select value={user?.role || 'user'} onValueChange={setRole}>
                   <SelectTrigger className="w-32 bg-black/50 text-cyan-300 border-cyan-500/30">
                     <SelectValue />
                   </SelectTrigger>
@@ -153,9 +156,9 @@ export function Header() {
               <div className="mt-4 pt-4 border-t border-cyan-500/30 space-y-3">
                 <Badge className="cyber-badge px-3 py-1">
                   <User className="h-3 w-3 mr-1" />
-                  {user.name}
+                  {user?.name || 'Guest'}
                 </Badge>
-                <Select value={user.role} onValueChange={setRole}>
+                <Select value={user?.role || 'user'} onValueChange={setRole}>
                   <SelectTrigger className="w-full bg-black/50 text-cyan-300 border-cyan-500/30">
                     <SelectValue />
                   </SelectTrigger>

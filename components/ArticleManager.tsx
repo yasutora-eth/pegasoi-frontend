@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -25,16 +25,12 @@ export function ArticleManager() {
     abstract: "",
     content: "",
     keywords: [],
-    publication_date: new Date().toISOString().split('T')[0] + 'T00:00:00',
+    publicationDate: new Date().toISOString().split('T')[0] + 'T00:00:00',
     doi: "",
     journal: "",
   })
 
-  useEffect(() => {
-    fetchArticles()
-  }, [statusFilter])
-
-  const fetchArticles = async () => {
+  const fetchArticles = useCallback(async () => {
     setLoading(true)
     setError(null)
     try {
@@ -45,7 +41,11 @@ export function ArticleManager() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [statusFilter])
+
+  useEffect(() => {
+    fetchArticles()
+  }, [fetchArticles])
 
   const handleCreate = async () => {
     if (!formData.title.trim() || !formData.content.trim() || !formData.abstract.trim()) return
@@ -56,7 +56,7 @@ export function ArticleManager() {
       const cleanedData = {
         ...formData,
         authors: formData.authors.filter(author => author.trim() !== ""),
-        keywords: formData.keywords.filter(keyword => keyword.trim() !== "")
+        keywords: formData.keywords?.filter(keyword => keyword.trim() !== "") || []
       }
       const newArticle = await apiService.createArticle(cleanedData)
       setArticles([newArticle, ...articles])
@@ -66,7 +66,7 @@ export function ArticleManager() {
         abstract: "",
         content: "",
         keywords: [],
-        publication_date: new Date().toISOString().split('T')[0] + 'T00:00:00',
+        publicationDate: new Date().toISOString().split('T')[0] + 'T00:00:00',
         doi: "",
         journal: "",
       })
@@ -78,8 +78,8 @@ export function ArticleManager() {
 
   const handleUpdate = async (id: string, updates: ArticleUpdate) => {
     try {
-      const updatedArticle = await apiService.updateArticle(id, updates)
-      setArticles(articles.map((a) => (a.article_id === id ? updatedArticle : a)))
+      const updatedArticle = await apiService.updateArticleStatus(id, updates.status)
+      setArticles(articles.map((a) => (a.articleId === id ? updatedArticle : a)))
       setEditingId(null)
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to update article")

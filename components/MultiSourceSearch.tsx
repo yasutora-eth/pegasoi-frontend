@@ -37,7 +37,7 @@ export function MultiSourceSearch() {
     }
   }
 
-  const renderSourceResults = (source: string, data: any) => {
+  const renderSourceResults = (source: string, data: Record<string, unknown>) => {
     if (!data) return <div className="text-muted-foreground">No data available</div>
 
     if (!data.ok) {
@@ -77,7 +77,7 @@ export function MultiSourceSearch() {
     return <div className="text-muted-foreground">Unexpected data format</div>
   }
 
-  const getSourceIcon = (source: string, data: any) => {
+  const getSourceIcon = (source: string, data: Record<string, unknown>) => {
     if (!data) return <AlertCircle className="h-4 w-4 text-muted-foreground" />
     return data.ok ? (
       <CheckCircle className="h-4 w-4 text-green-500" />

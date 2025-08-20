@@ -35,7 +35,7 @@ export default function Submit() {
 
       setMessage("Article submitted successfully!")
       setFormData({ title: "", content: "", author: "", reference: "" })
-    } catch (err) {
+    } catch {
       setMessage("Failed to submit article")
     } finally {
       setLoading(false)

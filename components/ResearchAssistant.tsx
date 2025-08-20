@@ -35,7 +35,7 @@ export function ResearchAssistant() {
     try {
       const data = await apiService.getArticles("published")
       setArticles(data.slice(0, 5))
-    } catch (error) {
+    } catch {
       // Error fetching articles, handle gracefully
       setError("Failed to fetch articles. Please try again later.")
     } finally {
@@ -71,7 +71,7 @@ export function ResearchAssistant() {
       }
 
       setMessages((prev) => [...prev, assistantMessage])
-    } catch (error) {
+    } catch {
       // Error occurred, handle gracefully
       setError("Failed to get response from research assistant. Please try again.")
     } finally {
@@ -150,7 +150,7 @@ export function ResearchAssistant() {
               <div className="text-center text-muted-foreground py-8">
                 <Search className="h-12 w-12 mx-auto mb-4 opacity-50" />
                 <p>Ask me about classical studies research!</p>
-                <p className="text-sm mt-2">Try topics like "Ancient Egypt", "Greek philosophy", or "Roman history"</p>
+                <p className="text-sm mt-2">Try topics like &ldquo;Ancient Egypt&rdquo;, &ldquo;Greek philosophy&rdquo;, or &ldquo;Roman history&rdquo;</p>
               </div>
             ) : (
               <div className="space-y-4">
