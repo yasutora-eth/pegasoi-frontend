@@ -1,7 +1,10 @@
 import type React from 'react'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import './globals.css'
+import { DevAuthProvider } from '@/components/DevAuthProvider'
+import { Header } from '@/components/Header'
+import { DevToggle } from '@/components/DevToggle'
+import '../styles/globals.css'
 
 // Force dynamic rendering for all pages
 export const dynamic = 'force-dynamic'
@@ -24,22 +27,22 @@ export const viewport = {
   themeColor: '#00ffff',
 }
 
-import { MockAuthProvider } from '@/components/MockAuthProvider'
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className={inter.className}>
-        <MockAuthProvider>
+    <DevAuthProvider>
+      <html lang="en" className="dark">
+        <body className={inter.className}>
           <div className="flex min-h-screen flex-col">
+            <Header />
             <main className="flex-1">{children}</main>
+            <DevToggle />
           </div>
-        </MockAuthProvider>
-      </body>
-    </html>
+        </body>
+      </html>
+    </DevAuthProvider>
   )
 }

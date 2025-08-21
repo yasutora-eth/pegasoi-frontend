@@ -3,11 +3,12 @@
 import { PrivateRoute } from '@/components/PrivateRoute'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import Link from 'next/link'
-// import { useAuth } from "@/components/AuthProvider"
+import { useUser } from '@/components/DevAuthProvider'
 
 export default function Dashboard() {
-  // const { user } = useAuth()
-  const user = { role: 'admin' } // Mock user for dev mode
+  const { user } = useUser()
+  // Default to 'user' role if no role is set
+  const userRole = user?.role || 'user'
 
   return (
     <PrivateRoute>
@@ -53,7 +54,7 @@ export default function Dashboard() {
               </Link>
             </CardContent>
           </Card>
-          {user?.role === 'admin' && (
+          {userRole === 'admin' && (
             <Card>
               <CardHeader>
                 <CardTitle>Archive</CardTitle>
@@ -65,7 +66,7 @@ export default function Dashboard() {
               </CardContent>
             </Card>
           )}
-          {user?.role === 'publisher' && (
+          {userRole === 'publisher' && (
             <Card>
               <CardHeader>
                 <CardTitle>Publish Articles</CardTitle>

@@ -27,11 +27,13 @@ export default function Articles() {
 
   const fetchArticles = async () => {
     try {
-      const response = await fetch('/api/articles')
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://pegasoibackend-production.up.railway.app'
+      const response = await fetch(`${apiUrl}/api/articles`)
       if (!response.ok) throw new Error('Failed to fetch')
       const data = await response.json()
       setArticles(data)
-    } catch {
+    } catch (err) {
+      console.error('Error fetching articles:', err)
       setError('Failed to load articles')
     } finally {
       setLoading(false)
