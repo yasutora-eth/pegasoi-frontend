@@ -212,3 +212,6 @@ railway-frontend.json
 PRODUCTION-DEPLOYMENT.md
 DEPLOYMENT_OPTIONS.md
 WEB3_DEPLOYMENT_STRATEGY.md
+
+# clerk configuration (can include secrets)
+/.clerk/

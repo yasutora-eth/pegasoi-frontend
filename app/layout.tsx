@@ -1,19 +1,14 @@
 import type React from 'react'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { ApolloWrapper } from '@/components/ApolloWrapper'
+import { DevAuthProvider } from '@/components/DevAuthProvider'
+import { Header } from '@/components/Header'
+import { DevToggle } from '@/components/DevToggle'
 import './globals.css'
 
 // Force dynamic rendering for all pages
 export const dynamic = 'force-dynamic'
-import { ClerkProvider } from '@clerk/nextjs'
-import { ApolloProvider } from '@apollo/client'
-import { apolloClient } from '@/lib/apollo-client'
-import { AuthProvider } from '@/components/AuthProvider'
-import { Header } from '@/components/Header'
-import { Footer } from '@/components/Footer'
-import { ErrorBoundary } from '@/components/ErrorBoundary'
-import { CookieConsent } from '@/components/CookieConsent'
-import { BackToTop } from '@/components/BackToTop'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -39,24 +34,18 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <ClerkProvider>
-      <ApolloProvider client={apolloClient}>
+    <ApolloWrapper>
+      <DevAuthProvider>
         <html lang="en" className="dark">
           <body className={inter.className}>
-            <AuthProvider>
-              <ErrorBoundary>
-                <div className="flex min-h-screen flex-col">
-                  <Header />
-                  <main className="flex-1">{children}</main>
-                  <Footer />
-                </div>
-                <CookieConsent />
-                <BackToTop />
-              </ErrorBoundary>
-            </AuthProvider>
+            <div className="flex min-h-screen flex-col">
+              <Header />
+              <main className="flex-1">{children}</main>
+              <DevToggle />
+            </div>
           </body>
         </html>
-      </ApolloProvider>
-    </ClerkProvider>
+      </DevAuthProvider>
+    </ApolloWrapper>
   )
 }

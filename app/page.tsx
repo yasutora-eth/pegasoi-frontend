@@ -1,657 +1,386 @@
 'use client'
 
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import React from 'react'
 import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { CyberLoading, LoadingState } from '@/components/ui/loading'
+import { CyberError, ErrorState } from '@/components/ui/error'
 import {
   BookOpen,
-  PenTool,
   Search,
   Settings,
   Zap,
   User,
   Shield,
   Crown,
-  BarChart3,
-  Archive,
-  Terminal,
   Database,
-  Cpu,
   Activity,
 } from 'lucide-react'
-import { useAuth } from '@/components/AuthProvider'
-
-// User type definitions - keeping for future use
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface AppUser {
-  id: string
-  name: string
-  email: string
-  role: 'user' | 'publisher' | 'admin'
-}
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-type UserRole = 'user' | 'publisher' | 'admin'
 
 export function CyberBackground() {
   return (
     <div className="pointer-events-none fixed inset-0 z-0">
-      {/* Cyberpunk floating orbs */}
       <div className="floating-element absolute left-20 top-20 h-32 w-32 rounded-full bg-gradient-to-br from-cyan-400/20 to-purple-600/10 blur-xl"></div>
-      <div
-        className="to-cyan-400/8 floating-element absolute right-32 top-1/3 h-24 w-24 rounded-full bg-gradient-to-br from-pink-400/15 blur-lg"
-        style={{ animationDelay: '2s' }}
-      ></div>
-      <div
-        className="to-pink-400/8 floating-element absolute bottom-32 left-1/4 h-40 w-40 rounded-full bg-gradient-to-br from-purple-600/15 blur-2xl"
-        style={{ animationDelay: '4s' }}
-      ></div>
-      <div
-        className="from-cyan-400/12 to-purple-600/6 floating-element absolute bottom-1/3 right-1/3 h-28 w-28 rounded-full bg-gradient-to-br blur-xl"
-        style={{ animationDelay: '1s' }}
-      ></div>
-      <div
-        className="from-pink-400/18 floating-element absolute left-10 top-1/2 h-16 w-16 rounded-full bg-gradient-to-br to-transparent blur-md"
-        style={{ animationDelay: '3s' }}
-      ></div>
-      <div
-        className="from-cyan-400/12 floating-element absolute right-20 top-3/4 h-20 w-20 rounded-full bg-gradient-to-br to-transparent blur-lg"
-        style={{ animationDelay: '5s' }}
-      ></div>
+      <div className="floating-element absolute right-20 top-1/3 h-24 w-24 rounded-full bg-gradient-to-br from-purple-500/15 to-cyan-400/10 blur-lg" style={{ animationDelay: '2s' }}></div>
+      <div className="floating-element absolute left-1/3 bottom-20 h-28 w-28 rounded-full bg-gradient-to-br from-cyan-300/10 to-purple-400/15 blur-xl" style={{ animationDelay: '4s' }}></div>
     </div>
   )
 }
 
 export default function Home() {
-  // Use Clerk authentication
-  const { isAuthenticated, user, toggleAuth, setRole } = useAuth()
+  const isAuthenticated = false
 
-  // Content for unauthenticated users
   const PublicContent = () => (
     <div className="relative z-10 space-y-8">
       <div className="animate-fade-in text-center">
-        <h1 className="text-cyber text-glow mb-6 text-6xl font-bold">
-          Research Portal
-        </h1>
+        <div className="mb-6 flex items-center justify-center gap-4">
+          <img 
+            src="/pegasus-logo.svg" 
+            alt="Pegasus Logo" 
+            className="h-16 w-16 animate-pulse"
+          />
+          <h1 className="text-cyber text-glow text-6xl font-bold">
+            Pegasoi Research Portal
+          </h1>
+        </div>
         <p className="mb-6 text-2xl text-cyan-300">
           Classical Studies Research & Publication Platform
         </p>
-        <Badge className="cyber-badge pulse-glow data-stream mb-8">
-          <Terminal className="mr-2 h-4 w-4" />
-          Public Access - Initialize Login Protocol
+        <Badge variant="cyber">
+          PUBLIC ACCESS • INITIALIZE LOGIN PROTOCOL
         </Badge>
       </div>
 
-      <section className="animate-slide-up">
-        <h2 className="text-glow mb-10 text-center text-4xl font-semibold text-cyan-300">
-          System Access Points
-        </h2>
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-          <Card className="cyber-card hover:cyber-glow animate-scale-in holographic transition-all duration-300">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3 text-lg text-cyan-300">
-                <BookOpen className="h-6 w-6 text-cyan-400" />
-                Browse Articles
-              </CardTitle>
-              <CardDescription className="text-base text-cyan-400/80">
-                Explore published research in classical studies
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button asChild className="cyber-button w-full py-3 text-lg">
-                <Link href="/articles">Access Database</Link>
-              </Button>
-            </CardContent>
-          </Card>
-
-          <Card
-            className="cyber-card hover:cyber-glow animate-scale-in holographic transition-all duration-300"
-            style={{ animationDelay: '0.1s' }}
-          >
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3 text-lg text-cyan-300">
-                <Search className="h-6 w-6 text-cyan-400" />
-                Information
-              </CardTitle>
-              <CardDescription className="text-base text-cyan-400/80">
-                Learn about our platform and services
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button asChild className="cyber-button w-full py-3 text-lg">
-                <Link href="/information">Learn More</Link>
-              </Button>
-            </CardContent>
-          </Card>
-
-          <Card
-            className="cyber-card hover:cyber-glow animate-scale-in holographic transition-all duration-300"
-            style={{ animationDelay: '0.2s' }}
-          >
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3 text-lg text-cyan-300">
-                <Settings className="h-6 w-6 text-cyan-400" />
-                API Testing
-              </CardTitle>
-              <CardDescription className="text-base text-cyan-400/80">
-                Test our research APIs and integrations
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button asChild className="cyber-button w-full py-3 text-lg">
-                <Link href="/api-testing">Run Tests</Link>
-              </Button>
-            </CardContent>
-          </Card>
-
-          <Card
-            className="cyber-card hover:cyber-glow animate-scale-in holographic transition-all duration-300"
-            style={{ animationDelay: '0.3s' }}
-          >
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3 text-lg text-cyan-300">
-                <Zap className="h-6 w-6 text-cyan-400" />
-                Initialize
-              </CardTitle>
-              <CardDescription className="text-base text-cyan-400/80">
-                Join our research community
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button
-                onClick={toggleAuth}
-                className="cyber-button w-full py-3 text-lg"
-              >
-                Boot System
-              </Button>
-            </CardContent>
-          </Card>
+      {/* Component Showcase */}
+      <div className="space-y-8">
+        <div className="text-center">
+          <h2 className="text-3xl font-bold text-cyan-400 mb-4">
+            Enhanced Cyber Components
+          </h2>
+          <p className="text-cyan-300/70">
+            Showcasing the new cyber variants and improved functionality
+          </p>
         </div>
-      </section>
 
-      <section className="animate-slide-up" style={{ animationDelay: '0.2s' }}>
-        <h2 className="text-glow mb-10 text-center text-4xl font-semibold text-cyan-300">
+        {/* Button Variants */}
+        <div className="space-y-4">
+          <h3 className="text-xl font-semibold text-cyan-400">Button Variants</h3>
+          <div className="flex flex-wrap gap-4">
+            <Button variant="default">Default Button</Button>
+            <Button variant="cyber">Cyber Button</Button>
+            <Button variant="outline">Outline Button</Button>
+            <Button variant="ghost">Ghost Button</Button>
+          </div>
+        </div>
+
+        {/* Card Variants */}
+        <div className="space-y-4">
+          <h3 className="text-xl font-semibold text-cyan-400">Card Variants</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Default Card</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  Standard card component with default styling.
+                </p>
+              </CardContent>
+            </Card>
+            <Card variant="cyber">
+              <CardHeader>
+                <CardTitle className="text-cyan-400">Cyber Card</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-cyan-300/70">
+                  Enhanced cyber-themed card with glowing effects.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
+        {/* Badge Variants */}
+        <div className="space-y-4">
+          <h3 className="text-xl font-semibold text-cyan-400">Badge Variants</h3>
+          <div className="flex flex-wrap gap-4">
+            <Badge>Default Badge</Badge>
+            <Badge variant="cyber">Cyber Badge</Badge>
+            <Badge variant="outline">Outline Badge</Badge>
+            <Badge variant="secondary">Secondary Badge</Badge>
+          </div>
+        </div>
+
+        {/* Select Component */}
+        <div className="space-y-4">
+          <h3 className="text-xl font-semibold text-cyan-400">Select Components</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-md">
+            <Select>
+              <SelectTrigger>
+                <SelectValue placeholder="Default Select" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="option1">Option 1</SelectItem>
+                <SelectItem value="option2">Option 2</SelectItem>
+                <SelectItem value="option3">Option 3</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select>
+              <SelectTrigger variant="cyber">
+                <SelectValue placeholder="Cyber Select" />
+              </SelectTrigger>
+              <SelectContent variant="cyber">
+                <SelectItem value="option1">Cyber Option 1</SelectItem>
+                <SelectItem value="option2">Cyber Option 2</SelectItem>
+                <SelectItem value="option3">Cyber Option 3</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
+        {/* Loading States */}
+        <div className="space-y-4">
+          <h3 className="text-xl font-semibold text-cyan-400">Loading States</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <LoadingState message="Loading data..." />
+            <CyberLoading message="ACCESSING DATABASE..." />
+          </div>
+        </div>
+
+        {/* Error States */}
+        <div className="space-y-4">
+          <h3 className="text-xl font-semibold text-cyan-400">Error States</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <ErrorState 
+              title="Standard Error"
+              message="Something went wrong with the operation."
+              onRetry={() => console.log('Retry clicked')}
+            />
+            <CyberError
+              title="SYSTEM MALFUNCTION"
+              message="Critical error detected in the neural network interface."
+              errorCode="SYS_001"
+              onRetry={() => console.log('Cyber retry clicked')}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* System Access Points */}
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <Card variant="cyber">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-cyan-400">
+              <BookOpen className="h-5 w-5" />
+              Browse Articles
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="mb-4 text-sm text-gray-300">
+              Explore published research in classical studies
+            </p>
+            <Link href="/articles">
+              <Button variant="cyber" className="w-full">
+                ACCESS DATABASE
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
+
+        <Card variant="cyber">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-cyan-400">
+              <Search className="h-5 w-5" />
+              Information
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="mb-4 text-sm text-cyan-300/70">
+              Learn about our platform and services
+            </p>
+            <Link href="/information">
+              <Button variant="cyber" className="w-full">
+                LEARN MORE
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
+
+        <Card variant="cyber">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-cyan-400">
+              <Settings className="h-5 w-5" />
+              API Testing
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="mb-4 text-sm text-cyan-300/70">
+              Test our research APIs and integrations
+            </p>
+            <Link href="/api-testing">
+              <Button variant="cyber" className="w-full">
+                RUN TESTS
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
+
+        <Card variant="cyber">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-cyan-400">
+              <Zap className="h-5 w-5" />
+              Initialize
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="mb-4 text-sm text-cyan-300/70">
+              Join our research community
+            </p>
+            <Button variant="cyber" className="w-full">
+              BOOT SYSTEM
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Access Level Selection */}
+      <div className="space-y-6">
+        <h2 className="text-center text-3xl font-bold text-cyan-400">
           Access Level Selection
         </h2>
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-          <Card className="cyber-card hover:cyber-glow holographic text-center transition-all duration-300">
-            <CardHeader className="pb-6">
-              <User className="mx-auto mb-6 h-16 w-16 text-blue-400" />
-              <CardTitle className="text-xl text-cyan-300">
-                User Access
-              </CardTitle>
-              <CardDescription className="text-base text-cyan-400/80">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+          <Card className="border-blue-400/30 bg-gray-900/60 backdrop-blur-sm">
+            <CardHeader className="text-center">
+              <User className="mx-auto h-12 w-12 text-blue-400" />
+              <CardTitle className="text-blue-400">User Access</CardTitle>
+            </CardHeader>
+            <CardContent className="text-center">
+              <p className="mb-4 text-sm text-gray-300">
                 Browse and search research articles
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button
-                onClick={() => {
-                  toggleAuth()
-                  setTimeout(() => setRole('user'), 100)
-                }}
-                className="cyber-button w-full py-3 text-lg"
+              </p>
+              <Button 
+                variant="outline" 
+                className="w-full border-blue-400 text-blue-400"
               >
-                Initialize User Mode
+                INITIALIZE USER MODE
               </Button>
             </CardContent>
           </Card>
 
-          <Card className="cyber-card hover:cyber-glow holographic text-center transition-all duration-300">
-            <CardHeader className="pb-6">
-              <Shield className="mx-auto mb-6 h-16 w-16 text-green-400" />
-              <CardTitle className="text-xl text-cyan-300">
-                Publisher Access
-              </CardTitle>
-              <CardDescription className="text-base text-cyan-400/80">
+          <Card className="border-green-400/30 bg-gray-900/60 backdrop-blur-sm">
+            <CardHeader className="text-center">
+              <Shield className="mx-auto h-12 w-12 text-green-400" />
+              <CardTitle className="text-green-400">Publisher Access</CardTitle>
+            </CardHeader>
+            <CardContent className="text-center">
+              <p className="mb-4 text-sm text-gray-300">
                 Submit and manage articles
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button
-                onClick={() => {
-                  toggleAuth()
-                  setTimeout(() => setRole('publisher'), 100)
-                }}
-                className="cyber-button w-full py-3 text-lg"
+              </p>
+              <Button 
+                variant="outline" 
+                className="w-full border-green-400 text-green-400"
               >
-                Initialize Publisher Mode
+                INITIALIZE PUBLISHER MODE
               </Button>
             </CardContent>
           </Card>
 
-          <Card className="cyber-card hover:cyber-glow holographic text-center transition-all duration-300">
-            <CardHeader className="pb-6">
-              <Crown className="mx-auto mb-6 h-16 w-16 text-yellow-400" />
-              <CardTitle className="text-xl text-cyan-300">
-                Admin Access
-              </CardTitle>
-              <CardDescription className="text-base text-cyan-400/80">
-                Full platform management
-              </CardDescription>
+          <Card className="border-yellow-400/30 bg-gray-900/60 backdrop-blur-sm">
+            <CardHeader className="text-center">
+              <Crown className="mx-auto h-12 w-12 text-yellow-400" />
+              <CardTitle className="text-yellow-400">Admin Access</CardTitle>
             </CardHeader>
-            <CardContent>
-              <Button
-                onClick={() => {
-                  toggleAuth()
-                  setTimeout(() => setRole('admin'), 100)
-                }}
-                className="cyber-button w-full py-3 text-lg"
+            <CardContent className="text-center">
+              <p className="mb-4 text-sm text-gray-300">
+                Full platform management
+              </p>
+              <Button 
+                variant="outline" 
+                className="w-full border-yellow-400 text-yellow-400"
               >
-                Initialize Admin Mode
+                INITIALIZE ADMIN MODE
               </Button>
             </CardContent>
           </Card>
         </div>
-      </section>
+      </div>
 
-      <section className="animate-slide-up" style={{ animationDelay: '0.4s' }}>
-        <h2 className="text-glow mb-10 text-center text-4xl font-semibold text-cyan-300">
+      {/* System Status */}
+      <div className="space-y-6">
+        <h2 className="text-center text-3xl font-bold text-cyan-400">
           System Status
         </h2>
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-          <Card className="cyber-card holographic">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <Card className="border-cyan-400/20 bg-gray-900/50 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle className="text-xl text-cyan-300">
-                Latest Publications
+              <CardTitle className="flex items-center gap-2 text-cyan-400">
+                <Database className="h-5 w-5" />
+                Recent Publications
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <ul className="space-y-4 text-base">
-                <li className="flex items-center space-x-3">
-                  <div className="pulse-glow h-3 w-3 rounded-full bg-green-400"></div>
-                  <span className="text-cyan-200">
-                    &ldquo;Roman Architecture in the Imperial Period&rdquo;
-                  </span>
-                </li>
-                <li className="flex items-center space-x-3">
-                  <div className="pulse-glow h-3 w-3 rounded-full bg-green-400"></div>
-                  <span className="text-cyan-200">
-                    &ldquo;Greek Pottery: Styles and Techniques&rdquo;
-                  </span>
-                </li>
-                <li className="flex items-center space-x-3">
-                  <div className="pulse-glow h-3 w-3 rounded-full bg-green-400"></div>
-                  <span className="text-cyan-200">
-                    &ldquo;Egyptian Hieroglyphic Evolution&rdquo;
-                  </span>
-                </li>
-                <li className="flex items-center space-x-3">
-                  <div className="pulse-glow h-3 w-3 rounded-full bg-green-400"></div>
-                  <span className="text-cyan-200">
-                    &ldquo;Classical Literature Analysis&rdquo;
-                  </span>
-                </li>
-                <li className="flex items-center space-x-3">
-                  <div className="pulse-glow h-3 w-3 rounded-full bg-green-400"></div>
-                  <span className="text-cyan-200">
-                    &ldquo;Byzantine Art and Culture&rdquo;
-                  </span>
-                </li>
+              <ul className="space-y-2 text-sm text-gray-300">
+                - • &ldquo;Roman Architecture in the Imperial Period&rdquo;
+                - • &ldquo;Greek Pottery: Styles and Techniques&rdquo;
+                - • &ldquo;Egyptian Hieroglyphic Evolution&rdquo;
+                - • &ldquo;Classical Literature Analysis&rdquo;
+                - • &ldquo;Byzantine Art and Culture&rdquo;
               </ul>
-              <Button asChild className="cyber-button mt-8 w-full py-3 text-lg">
-                <Link href="/articles">Access Full Database</Link>
-              </Button>
+              <Link href="/articles">
+                <Button variant="outline" className="mt-4 w-full border-cyan-400 text-cyan-400">
+                  Access Full Database
+                </Button>
+              </Link>
             </CardContent>
           </Card>
 
-          <Card className="cyber-card holographic">
+          <Card className="border-cyan-400/20 bg-gray-900/50 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle className="flex items-center gap-3 text-xl text-cyan-300">
-                <Activity className="h-6 w-6" />
+              <CardTitle className="flex items-center gap-2 text-cyan-400">
+                <Activity className="h-5 w-5" />
                 System Diagnostics
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-5 text-base">
-                <div className="flex items-center justify-between">
-                  <span className="text-cyan-200">API Status:</span>
-                  <Badge className="border-green-500/50 bg-green-500/30 px-3 py-1 text-green-300">
-                    OPERATIONAL
-                  </Badge>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-gray-300">Database Status</span>
+                  <span className="text-green-400">ONLINE</span>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-cyan-200">Database:</span>
-                  <Badge className="border-green-500/50 bg-green-500/30 px-3 py-1 text-green-300">
-                    CONNECTED
-                  </Badge>
+                <div className="flex justify-between">
+                  <span className="text-gray-300">API Services</span>
+                  <span className="text-green-400">ACTIVE</span>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-cyan-200">AI Assistant:</span>
-                  <Badge className="border-green-500/50 bg-green-500/30 px-3 py-1 text-green-300">
-                    READY
-                  </Badge>
+                <div className="flex justify-between">
+                  <span className="text-gray-300">Search Engine</span>
+                  <span className="text-green-400">OPERATIONAL</span>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-cyan-200">Authentication:</span>
-                  <Badge className="border-yellow-500/50 bg-yellow-500/30 px-3 py-1 text-yellow-300">
-                    DEMO MODE
-                  </Badge>
+                <div className="flex justify-between">
+                  <span className="text-gray-300">Authentication</span>
+                  <span className="text-yellow-400">STANDBY</span>
                 </div>
               </div>
-              <Button asChild className="cyber-button mt-8 w-full py-3 text-lg">
-                <Link href="/system-check">
-                  <Zap className="mr-2 h-5 w-5" />
+              <Link href="/system-check">
+                <Button variant="outline" className="mt-4 w-full border-cyan-400 text-cyan-400">
                   Run Full Diagnostics
-                </Link>
-              </Button>
+                </Button>
+              </Link>
             </CardContent>
           </Card>
         </div>
-      </section>
-    </div>
-  )
-
-  // Content for authenticated users
-  const AuthenticatedContent = () => (
-    <div className="relative z-10 space-y-8">
-      <div className="animate-fade-in text-center">
-        <h1 className="text-cyber text-glow mb-6 text-6xl font-bold">
-          Welcome Back, {user?.name || 'User'}!
-        </h1>
-        <p className="mb-6 text-2xl text-cyan-300">
-          Classical Studies Research & Publication Platform
-        </p>
-        <Badge className="cyber-badge pulse-glow data-stream mb-8 px-4 py-2 text-lg">
-          <User className="mr-2 h-4 w-4" />
-          {user?.role?.toUpperCase() || 'USER'} ACCESS GRANTED
-        </Badge>
       </div>
-
-      <Tabs defaultValue="dashboard" className="animate-slide-up w-full">
-        <TabsList className="cyber-tabs grid h-auto w-full grid-cols-4 p-2">
-          <TabsTrigger
-            value="dashboard"
-            className="cyber-tab-trigger py-3 text-base"
-          >
-            <Database className="mr-2 h-5 w-5" />
-            Dashboard
-          </TabsTrigger>
-          <TabsTrigger
-            value="research"
-            className="cyber-tab-trigger py-3 text-base"
-          >
-            <Search className="mr-2 h-5 w-5" />
-            Research
-          </TabsTrigger>
-          <TabsTrigger
-            value="publish"
-            className="cyber-tab-trigger py-3 text-base"
-          >
-            <PenTool className="mr-2 h-5 w-5" />
-            Publish
-          </TabsTrigger>
-          <TabsTrigger
-            value="manage"
-            className="cyber-tab-trigger py-3 text-base"
-          >
-            <Settings className="mr-2 h-5 w-5" />
-            Manage
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent
-          value="dashboard"
-          className="animate-slide-up mt-8 space-y-8"
-        >
-          <h2 className="text-glow text-4xl font-semibold text-cyan-300">
-            System Dashboard
-          </h2>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            <Card className="cyber-card hover:cyber-glow holographic transition-all duration-300">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3 text-xl text-cyan-300">
-                  <BarChart3 className="h-6 w-6 text-cyan-400" />
-                  My Articles
-                </CardTitle>
-                <CardDescription className="text-base text-cyan-400/80">
-                  Manage your published research
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-glow mb-4 text-4xl font-bold text-cyan-400">
-                  12
-                </div>
-                <Button asChild className="cyber-button w-full py-3 text-lg">
-                  <Link href="/dashboard/my-articles">Access Articles</Link>
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="cyber-card hover:cyber-glow holographic transition-all duration-300">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3 text-xl text-cyan-300">
-                  <PenTool className="h-6 w-6 text-orange-400" />
-                  In Review
-                </CardTitle>
-                <CardDescription className="text-base text-cyan-400/80">
-                  Articles pending review
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-glow mb-4 text-4xl font-bold text-orange-400">
-                  3
-                </div>
-                <Button asChild className="cyber-button w-full py-3 text-lg">
-                  <Link href="/dashboard/in-review">Check Status</Link>
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="cyber-card hover:cyber-glow holographic transition-all duration-300">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3 text-xl text-cyan-300">
-                  <Cpu className="h-6 w-6 text-green-400" />
-                  System Status
-                </CardTitle>
-                <CardDescription className="text-base text-cyan-400/80">
-                  Platform health monitoring
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-glow mb-4 text-4xl font-bold text-green-400">
-                  ✓
-                </div>
-                <Button asChild className="cyber-button w-full py-3 text-lg">
-                  <Link href="/system-check">Run Diagnostics</Link>
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-
-        <TabsContent
-          value="research"
-          className="animate-slide-up mt-8 space-y-8"
-        >
-          <h2 className="text-glow text-4xl font-semibold text-cyan-300">
-            Research Tools
-          </h2>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-            <Card className="cyber-card hover:cyber-glow holographic transition-all duration-300">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3 text-xl text-cyan-300">
-                  <Search className="h-6 w-6 text-cyan-400" />
-                  Research Gallery
-                </CardTitle>
-                <CardDescription className="text-base text-cyan-400/80">
-                  AI-powered research assistance and multi-source search
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button asChild className="cyber-button w-full py-3 text-lg">
-                  <Link href="/research-gallery">Initialize Research</Link>
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="cyber-card hover:cyber-glow holographic transition-all duration-300">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3 text-xl text-cyan-300">
-                  <BookOpen className="h-6 w-6 text-blue-400" />
-                  Browse Articles
-                </CardTitle>
-                <CardDescription className="text-base text-cyan-400/80">
-                  Explore published research and academic papers
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button asChild className="cyber-button w-full py-3 text-lg">
-                  <Link href="/articles">Access Database</Link>
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-
-        <TabsContent
-          value="publish"
-          className="animate-slide-up mt-8 space-y-8"
-        >
-          <h2 className="text-glow text-4xl font-semibold text-cyan-300">
-            Publishing Tools
-          </h2>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-            <Card className="cyber-card hover:cyber-glow holographic transition-all duration-300">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3 text-xl text-cyan-300">
-                  <PenTool className="h-6 w-6 text-green-400" />
-                  Submit Article
-                </CardTitle>
-                <CardDescription className="text-base text-cyan-400/80">
-                  Submit new research for publication
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button asChild className="cyber-button w-full py-3 text-lg">
-                  <Link href="/submit-article">Initialize Upload</Link>
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="cyber-card hover:cyber-glow holographic transition-all duration-300">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3 text-xl text-cyan-300">
-                  <BookOpen className="h-6 w-6 text-blue-400" />
-                  Published Works
-                </CardTitle>
-                <CardDescription className="text-base text-cyan-400/80">
-                  View and manage your published articles
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button asChild className="cyber-button w-full py-3 text-lg">
-                  <Link href="/dashboard/published">Access Published</Link>
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="manage" className="animate-slide-up mt-8 space-y-8">
-          <h2 className="text-glow text-4xl font-semibold text-cyan-300">
-            Management Tools
-          </h2>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-            <Card className="cyber-card hover:cyber-glow holographic transition-all duration-300">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3 text-xl text-cyan-300">
-                  <Archive className="h-6 w-6 text-yellow-400" />
-                  Archive
-                </CardTitle>
-                <CardDescription className="text-base text-cyan-400/80">
-                  Manage archived content and historical data
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button asChild className="cyber-button w-full py-3 text-lg">
-                  <Link href="/archive">Access Archive</Link>
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="cyber-card hover:cyber-glow holographic transition-all duration-300">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3 text-xl text-cyan-300">
-                  <Terminal className="h-6 w-6 text-pink-400" />
-                  API Testing
-                </CardTitle>
-                <CardDescription className="text-base text-cyan-400/80">
-                  Test platform integrations and external APIs
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button asChild className="cyber-button w-full py-3 text-lg">
-                  <Link href="/api-testing">Run Tests</Link>
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-      </Tabs>
-
-      <section className="animate-slide-up" style={{ animationDelay: '0.2s' }}>
-        <h2 className="text-glow mb-10 text-center text-4xl font-semibold text-cyan-300">
-          Activity Matrix
-        </h2>
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
-          <Card className="cyber-card pulse-glow holographic text-center">
-            <CardHeader className="pb-6">
-              <CardTitle className="text-glow mb-2 text-5xl font-bold text-cyan-400">
-                12
-              </CardTitle>
-              <CardDescription className="text-base text-cyan-300">
-                Articles Submitted
-              </CardDescription>
-            </CardHeader>
-          </Card>
-          <Card className="cyber-card pulse-glow holographic text-center">
-            <CardHeader className="pb-6">
-              <CardTitle className="text-glow mb-2 text-5xl font-bold text-green-400">
-                8
-              </CardTitle>
-              <CardDescription className="text-base text-cyan-300">
-                Published Works
-              </CardDescription>
-            </CardHeader>
-          </Card>
-          <Card className="cyber-card pulse-glow holographic text-center">
-            <CardHeader className="pb-6">
-              <CardTitle className="text-glow mb-2 text-5xl font-bold text-blue-400">
-                156
-              </CardTitle>
-              <CardDescription className="text-base text-cyan-300">
-                Research Queries
-              </CardDescription>
-            </CardHeader>
-          </Card>
-          <Card className="cyber-card pulse-glow holographic text-center">
-            <CardHeader className="pb-6">
-              <CardTitle className="text-glow mb-2 text-5xl font-bold text-pink-400">
-                2.4k
-              </CardTitle>
-              <CardDescription className="text-base text-cyan-300">
-                Article Views
-              </CardDescription>
-            </CardHeader>
-          </Card>
-        </div>
-      </section>
     </div>
   )
 
   return (
-    <div className="container relative mx-auto px-6 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
       <CyberBackground />
-      {isAuthenticated ? <AuthenticatedContent /> : <PublicContent />}
+      <div className="container mx-auto px-4 py-12">
+        {!isAuthenticated ? <PublicContent /> : null}
+      </div>
     </div>
   )
 }
