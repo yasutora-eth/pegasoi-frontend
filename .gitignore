@@ -202,3 +202,13 @@ auto-generated/
 
 # Husky
 .husky/_
+
+# Production environment and deployment configs
+.env.production
+railway.json
+railway-frontend.json
+
+# Private documentation
+PRODUCTION-DEPLOYMENT.md
+DEPLOYMENT_OPTIONS.md
+WEB3_DEPLOYMENT_STRATEGY.md

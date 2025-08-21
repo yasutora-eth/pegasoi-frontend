@@ -2,7 +2,7 @@
 
 > **Web3-Ready Academic Research Platform Frontend**
 
-A Next.js-powered frontend for the Pegasoi Research Platform, designed for Web3 integration and academic paper discovery. This application connects to our FastAPI backend and provides a modern, responsive interface for researchers to explore academic literature across multiple sources.
+A Next.js-powered frontend for the Pegasoi Research Platform, designed for Web3 integration and academic paper discovery. This application provides a modern, responsive interface for researchers to explore academic literature across multiple sources.
 
 [![Built with Next.js](https://img.shields.io/badge/Next.js-14.2-black?logo=next.js)](https://nextjs.org/)
 [![Powered by Shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-Latest-blue)](https://ui.shadcn.com/)
@@ -85,7 +85,7 @@ Edit `.env.local` with your configuration:
 
 ```env
 # Backend API
-NEXT_PUBLIC_API_URL=https://pegasoibackend-production.up.railway.app
+NEXT_PUBLIC_API_URL=http://localhost:8000
 
 # Clerk Authentication (get from clerk.com)
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_key_here
@@ -121,11 +121,7 @@ pegasoi-frontend/
 
 ## 🔗 **Backend Integration**
 
-This frontend connects to our FastAPI backend:
-
-- **Repository**: [GraydonKappes/pegasoibackend](https://github.com/GraydonKappes/pegasoibackend)
-- **Live API**: [pegasoibackend-production.up.railway.app](https://pegasoibackend-production.up.railway.app)
-- **API Docs**: [pegasoibackend-production.up.railway.app/docs](https://pegasoibackend-production.up.railway.app/docs)
+This frontend connects to a FastAPI backend that provides:
 
 ### Key Endpoints
 
@@ -182,7 +178,7 @@ Recommended platforms:
 ### Environment Variables for Production
 
 ```env
-NEXT_PUBLIC_API_URL=https://your-backend.railway.app
+NEXT_PUBLIC_API_URL=https://your-backend-url.com
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_...
 CLERK_SECRET_KEY=sk_live_...
 ```
@@ -204,9 +200,6 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ## 🔗 **Links**
 
 - **Frontend Repository**: [yasutora-eth/pegasoi-frontend](https://github.com/yasutora-eth/pegasoi-frontend)
-- **Backend Repository**: [GraydonKappes/pegasoibackend](https://github.com/GraydonKappes/pegasoibackend)
-- **Live Backend API**: [pegasoibackend-production.up.railway.app](https://pegasoibackend-production.up.railway.app)
-- **API Documentation**: [pegasoibackend-production.up.railway.app/docs](https://pegasoibackend-production.up.railway.app/docs)
 
 ---
 
