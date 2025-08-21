@@ -5,7 +5,7 @@ import { ApolloWrapper } from '@/components/ApolloWrapper'
 import { DevAuthProvider } from '@/components/DevAuthProvider'
 import { Header } from '@/components/Header'
 import { DevToggle } from '@/components/DevToggle'
-import '../styles/globals.css'
+import './globals.css'
 
 // Force dynamic rendering for all pages
 export const dynamic = 'force-dynamic'

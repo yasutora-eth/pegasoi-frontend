@@ -8,6 +8,21 @@ import { Badge } from '@/components/ui/badge'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { CyberLoading, LoadingState } from '@/components/ui/loading'
 import { CyberError, ErrorState } from '@/components/ui/error'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { Progress } from '@/components/ui/progress'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Separator } from '@/components/ui/separator'
+import { Checkbox } from '@/components/ui/checkbox'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { Switch } from '@/components/ui/switch'
+import { Slider } from '@/components/ui/slider'
+import { Toggle } from '@/components/ui/toggle'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { EnhancedBackground, MicroTextureOverlay } from '@/components/ui/enhanced-background'
 import {
   BookOpen,
   Search,
@@ -22,11 +37,22 @@ import {
 
 export function CyberBackground() {
   return (
-    <div className="pointer-events-none fixed inset-0 z-0">
-      <div className="floating-element absolute left-20 top-20 h-32 w-32 rounded-full bg-gradient-to-br from-cyan-400/20 to-purple-600/10 blur-xl"></div>
-      <div className="floating-element absolute right-20 top-1/3 h-24 w-24 rounded-full bg-gradient-to-br from-purple-500/15 to-cyan-400/10 blur-lg" style={{ animationDelay: '2s' }}></div>
-      <div className="floating-element absolute left-1/3 bottom-20 h-28 w-28 rounded-full bg-gradient-to-br from-cyan-300/10 to-purple-400/15 blur-xl" style={{ animationDelay: '4s' }}></div>
-    </div>
+    <>
+      {/* Enhanced background layers */}
+      <EnhancedBackground intensity="subtle" />
+      <MicroTextureOverlay />
+      
+      {/* Ultra-subtle floating elements */}
+      <div className="pointer-events-none fixed inset-0 z-0">
+        <div className="floating-element absolute left-20 top-20 h-32 w-32 rounded-full bg-gradient-to-br from-cyan-400/8 to-purple-600/4 blur-xl opacity-60"></div>
+        <div className="floating-element absolute right-20 top-1/3 h-24 w-24 rounded-full bg-gradient-to-br from-purple-500/6 to-cyan-400/4 blur-lg opacity-50" style={{ animationDelay: '2s' }}></div>
+        <div className="floating-element absolute left-1/3 bottom-20 h-28 w-28 rounded-full bg-gradient-to-br from-cyan-300/5 to-purple-400/6 blur-xl opacity-70" style={{ animationDelay: '4s' }}></div>
+        
+        {/* Additional micro-elements for depth */}
+        <div className="absolute top-1/2 left-1/4 w-16 h-16 rounded-full bg-gradient-to-br from-cyan-400/3 to-transparent blur-lg opacity-40" style={{ animation: 'float-cyber 12s ease-in-out infinite', animationDelay: '1s' }}></div>
+        <div className="absolute bottom-1/3 right-1/4 w-20 h-20 rounded-full bg-gradient-to-br from-purple-500/4 to-transparent blur-xl opacity-30" style={{ animation: 'float-cyber 15s ease-in-out infinite', animationDelay: '3s' }}></div>
+      </div>
+    </>
   )
 }
 
@@ -132,32 +158,203 @@ export default function CyberEnhancedHome() {
                   </div>
                 </div>
 
-                {/* Select Components */}
+                {/* Form Components */}
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold text-cyan-400">Select Components</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-md">
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Default Select" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="option1">Standard Option 1</SelectItem>
-                        <SelectItem value="option2">Standard Option 2</SelectItem>
-                        <SelectItem value="option3">Standard Option 3</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <Select>
-                      <SelectTrigger variant="cyber">
-                        <SelectValue placeholder="Cyber Select" />
-                      </SelectTrigger>
-                      <SelectContent variant="cyber">
-                        <SelectItem value="option1">Cyber Option 1</SelectItem>
-                        <SelectItem value="option2">Cyber Option 2</SelectItem>
-                        <SelectItem value="option3">Cyber Option 3</SelectItem>
-                      </SelectContent>
-                    </Select>
+                  <h3 className="text-xl font-semibold text-cyan-400">Form Components</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label>Default Input</Label>
+                        <Input placeholder="Enter text..." />
+                      </div>
+                      <div className="space-y-2">
+                        <Label variant="cyber">Cyber Input</Label>
+                        <Input variant="cyber" placeholder="ENTER DATA..." />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Default Select</Label>
+                        <Select>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Choose option" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="option1">Option 1</SelectItem>
+                            <SelectItem value="option2">Option 2</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label variant="cyber">Cyber Textarea</Label>
+                        <Textarea variant="cyber" placeholder="ENTER DETAILED INFORMATION..." />
+                      </div>
+                      <div className="space-y-2">
+                        <Label variant="cyber">Cyber Select</Label>
+                        <Select>
+                          <SelectTrigger variant="cyber">
+                            <SelectValue placeholder="SELECT PROTOCOL..." />
+                          </SelectTrigger>
+                          <SelectContent variant="cyber">
+                            <SelectItem value="alpha">ALPHA PROTOCOL</SelectItem>
+                            <SelectItem value="beta">BETA PROTOCOL</SelectItem>
+                            <SelectItem value="gamma">GAMMA PROTOCOL</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
                   </div>
                 </div>
+
+                {/* Progress & Avatar Components */}
+                <div className="space-y-4">
+                  <h3 className="text-xl font-semibold text-cyan-400">Progress & Avatar Components</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label>Default Progress</Label>
+                        <Progress value={65} />
+                      </div>
+                      <div className="space-y-2">
+                        <Label variant="cyber">Cyber Progress</Label>
+                        <Progress variant="cyber" value={85} />
+                      </div>
+                    </div>
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label variant="cyber">Avatar Components</Label>
+                        <div className="flex items-center gap-4">
+                          <Avatar>
+                            <AvatarImage src="https://i.pravatar.cc/150?img=1" />
+                            <AvatarFallback>JD</AvatarFallback>
+                          </Avatar>
+                          <Avatar variant="cyber" size="lg">
+                            <AvatarImage src="https://i.pravatar.cc/150?img=2" />
+                            <AvatarFallback>AI</AvatarFallback>
+                          </Avatar>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Advanced Form Components */}
+                <div className="space-y-4">
+                  <h3 className="text-xl font-semibold text-cyan-400">Advanced Form Components</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label variant="cyber">Checkbox Options</Label>
+                        <div className="space-y-2">
+                          <div className="flex items-center space-x-2">
+                            <Checkbox id="cyber1" variant="cyber" />
+                            <Label htmlFor="cyber1">Enable Neural Interface</Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Checkbox id="cyber2" variant="cyber" />
+                            <Label htmlFor="cyber2">Activate Quantum Protocols</Label>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <Label variant="cyber">Radio Selection</Label>
+                        <RadioGroup variant="cyber" defaultValue="alpha">
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem variant="cyber" value="alpha" id="alpha" />
+                            <Label htmlFor="alpha">Alpha Protocol</Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem variant="cyber" value="beta" id="beta" />
+                            <Label htmlFor="beta">Beta Protocol</Label>
+                          </div>
+                        </RadioGroup>
+                      </div>
+                    </div>
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label variant="cyber">System Controls</Label>
+                        <div className="flex items-center space-x-2">
+                          <Switch variant="cyber" id="system-power" />
+                          <Label htmlFor="system-power">System Power</Label>
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <Label variant="cyber">Power Level: 75%</Label>
+                        <Slider variant="cyber" defaultValue={[75]} max={100} step={1} />
+                      </div>
+                      <div className="space-y-2">
+                        <Label variant="cyber">Toggle Controls</Label>
+                        <div className="flex gap-2">
+                          <Toggle variant="cyber" size="sm">Neural</Toggle>
+                          <Toggle variant="cyber" size="sm">Quantum</Toggle>
+                          <Toggle variant="cyber" size="sm">Cyber</Toggle>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Interactive Components */}
+                <div className="space-y-4">
+                  <h3 className="text-xl font-semibold text-cyan-400">Interactive Components</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-4">
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button variant="cyber">Hover for Info</Button>
+                          </TooltipTrigger>
+                          <TooltipContent variant="cyber">
+                            <p>This is a cyber-themed tooltip with enhanced styling</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                      
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="cyber">System Menu</Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent variant="cyber">
+                          <DropdownMenuItem variant="cyber">Neural Interface</DropdownMenuItem>
+                          <DropdownMenuItem variant="cyber">Quantum Protocols</DropdownMenuItem>
+                          <DropdownMenuItem variant="cyber">System Diagnostics</DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
+                    <div className="space-y-4">
+                      <Tabs defaultValue="neural" className="w-full">
+                        <TabsList variant="cyber">
+                          <TabsTrigger variant="cyber" value="neural">Neural</TabsTrigger>
+                          <TabsTrigger variant="cyber" value="quantum">Quantum</TabsTrigger>
+                          <TabsTrigger variant="cyber" value="cyber">Cyber</TabsTrigger>
+                        </TabsList>
+                        <TabsContent value="neural" className="mt-4">
+                          <Card variant="cyber">
+                            <CardContent className="p-4">
+                              <p className="text-cyan-300">Neural interface protocols active. All systems operational.</p>
+                            </CardContent>
+                          </Card>
+                        </TabsContent>
+                        <TabsContent value="quantum" className="mt-4">
+                          <Card variant="cyber">
+                            <CardContent className="p-4">
+                              <p className="text-cyan-300">Quantum entanglement established. Data transmission secure.</p>
+                            </CardContent>
+                          </Card>
+                        </TabsContent>
+                        <TabsContent value="cyber" className="mt-4">
+                          <Card variant="cyber">
+                            <CardContent className="p-4">
+                              <p className="text-cyan-300">Cybernetic enhancement modules loaded. Ready for deployment.</p>
+                            </CardContent>
+                          </Card>
+                        </TabsContent>
+                      </Tabs>
+                    </div>
+                  </div>
+                </div>
+
+                <Separator variant="cyber" className="my-8" />
 
                 {/* Loading States */}
                 <div className="space-y-4">

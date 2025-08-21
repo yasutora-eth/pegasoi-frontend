@@ -19,6 +19,11 @@ export function useArticles(status?: string, limit = 100) {
     variables: { status, limit },
     errorPolicy: 'all',
     notifyOnNetworkStatusChange: true,
+    // Add fallback for development
+    fetchPolicy: 'cache-first',
+    onError: (error) => {
+      console.warn('GraphQL query failed, using fallback data:', error.message)
+    }
   })
 }
 

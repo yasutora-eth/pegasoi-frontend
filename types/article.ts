@@ -5,6 +5,10 @@ export type {
   ArticleUpdate,
   SearchResult,
   HealthStatus,
+  ArxivData,
+  DoajData,
+  CrossrefData,
+  GettyData,
 } from '@/lib/api'
 
 // Legacy types for backward compatibility

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -24,6 +26,14 @@
     --input: 220 13% 15%;
     --ring: 280 100% 70%;
     --radius: 0.75rem;
+    
+    /* Ultra-subtle background animation variables */
+    --bg-noise-opacity: 0.008;
+    --bg-grain-opacity: 0.012;
+    --bg-static-opacity: 0.006;
+    --bg-drift-speed: 180s;
+    --bg-pulse-speed: 240s;
+    --bg-micro-movement: 0.3px;
   }
 
   .dark {
@@ -56,36 +66,43 @@
   body {
     @apply bg-background text-foreground;
     background:
+      /* Ultra-subtle noise texture */
       radial-gradient(
-        circle at 20% 80%,
-        rgba(120, 119, 198, 0.3) 0%,
-        transparent 50%
+        ellipse 800px 600px at 25% 75%,
+        rgba(120, 119, 198, 0.08) 0%,
+        transparent 35%
       ),
       radial-gradient(
-        circle at 80% 20%,
-        rgba(255, 119, 198, 0.15) 0%,
-        transparent 50%
+        ellipse 600px 800px at 75% 25%,
+        rgba(255, 119, 198, 0.06) 0%,
+        transparent 40%
       ),
       radial-gradient(
-        circle at 40% 40%,
-        rgba(120, 119, 198, 0.1) 0%,
-        transparent 50%
+        ellipse 400px 400px at 45% 55%,
+        rgba(168, 85, 247, 0.04) 0%,
+        transparent 45%
       ),
+      /* Micro-gradient shifts */
       linear-gradient(
-        135deg,
+        137deg,
         #0a0a0f 0%,
-        #1a0d1f 25%,
-        #0f0a15 50%,
+        #0f0a12 15%,
+        #1a0d1f 30%,
+        #12091a 45%,
+        #0f0a15 60%,
         #1a0d1f 75%,
+        #0d0a13 90%,
         #0a0a0f 100%
       );
     background-attachment: fixed;
     min-height: 100vh;
     position: relative;
+    /* Imperceptible texture animation */
+    animation: subtle-drift var(--bg-drift-speed) ease-in-out infinite alternate;
   }
 }
 
-/* Cyberpunk grid overlay */
+/* Ultra-subtle grain texture overlay */
 body::before {
   content: '';
   position: fixed;
@@ -94,43 +111,36 @@ body::before {
   width: 100%;
   height: 100%;
   background-image:
-    linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(rgba(255, 0, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 0, 255, 0.02) 1px, transparent 1px);
+    /* Micro-grid - barely visible */
+    linear-gradient(rgba(0, 255, 255, var(--bg-grain-opacity)) 0.5px, transparent 0.5px),
+    linear-gradient(90deg, rgba(0, 255, 255, var(--bg-grain-opacity)) 0.5px, transparent 0.5px),
+    /* Finer grain */
+    linear-gradient(rgba(255, 0, 255, var(--bg-static-opacity)) 0.25px, transparent 0.25px),
+    linear-gradient(90deg, rgba(255, 0, 255, var(--bg-static-opacity)) 0.25px, transparent 0.25px),
+    /* Noise pattern */
+    radial-gradient(circle at 33% 67%, rgba(168, 85, 247, var(--bg-noise-opacity)) 1px, transparent 1px),
+    radial-gradient(circle at 67% 33%, rgba(0, 255, 255, var(--bg-noise-opacity)) 1px, transparent 1px);
   background-size:
-    100px 100px,
-    100px 100px,
-    20px 20px,
-    20px 20px;
+    120px 120px,
+    120px 120px,
+    8px 8px,
+    8px 8px,
+    40px 40px,
+    60px 60px;
   background-position:
     0 0,
     0 0,
     0 0,
-    0 0;
+    0 0,
+    0 0,
+    20px 20px;
   pointer-events: none;
   z-index: -1;
-  animation: grid-move 20s linear infinite;
+  opacity: 0.7;
+  animation: micro-drift 45s ease-in-out infinite alternate;
 }
 
-@keyframes grid-move {
-  0% {
-    background-position:
-      0 0,
-      0 0,
-      0 0,
-      0 0;
-  }
-  100% {
-    background-position:
-      100px 100px,
-      100px 100px,
-      20px 20px,
-      20px 20px;
-  }
-}
-
-/* Cyberpunk scan lines */
+/* Imperceptible static noise layer */
 body::after {
   content: '';
   position: fixed;
@@ -138,24 +148,104 @@ body::after {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    transparent 50%,
-    rgba(0, 255, 255, 0.03) 50%,
-    rgba(0, 255, 255, 0.03) 51%,
-    transparent 51%
-  );
-  background-size: 100% 4px;
+  background: 
+    /* Ultra-fine scan lines */
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 1px,
+      rgba(0, 255, 255, 0.003) 1px,
+      rgba(0, 255, 255, 0.003) 2px
+    ),
+    /* Diagonal noise */
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 3px,
+      rgba(255, 0, 255, 0.002) 3px,
+      rgba(255, 0, 255, 0.002) 4px
+    );
   pointer-events: none;
   z-index: -1;
-  animation: scan-lines 0.1s linear infinite;
+  opacity: 0.6;
+  animation: static-flicker 8s ease-in-out infinite;
 }
 
-@keyframes scan-lines {
+/* Micro-movement animations - barely perceptible */
+@keyframes subtle-drift {
   0% {
-    background-position: 0 0;
+    background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+    filter: brightness(1) contrast(1);
+  }
+  25% {
+    background-position: 0.2% 0.1%, 0.1% 0.2%, 0.3% 0.1%, 0% 0%;
+    filter: brightness(1.002) contrast(1.001);
+  }
+  50% {
+    background-position: 0.1% 0.3%, 0.3% 0.1%, 0.1% 0.2%, 0.2% 0.1%;
+    filter: brightness(1.001) contrast(1.002);
+  }
+  75% {
+    background-position: 0.3% 0.2%, 0.2% 0.3%, 0.2% 0.3%, 0.1% 0.2%;
+    filter: brightness(1.003) contrast(1.001);
   }
   100% {
-    background-position: 0 4px;
+    background-position: 0.2% 0.1%, 0.1% 0.1%, 0.1% 0.1%, 0.3% 0.2%;
+    filter: brightness(1) contrast(1);
+  }
+}
+
+@keyframes micro-drift {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.7;
+  }
+  33% {
+    transform: translate(var(--bg-micro-movement), calc(var(--bg-micro-movement) * -0.7)) scale(1.0002);
+    opacity: 0.65;
+  }
+  66% {
+    transform: translate(calc(var(--bg-micro-movement) * -0.8), var(--bg-micro-movement)) scale(0.9999);
+    opacity: 0.72;
+  }
+  100% {
+    transform: translate(calc(var(--bg-micro-movement) * 0.5), calc(var(--bg-micro-movement) * -0.3)) scale(1.0001);
+    opacity: 0.68;
+  }
+}
+
+@keyframes static-flicker {
+  0%, 100% {
+    opacity: 0.6;
+    filter: brightness(1);
+  }
+  12% {
+    opacity: 0.58;
+    filter: brightness(1.001);
+  }
+  25% {
+    opacity: 0.62;
+    filter: brightness(0.999);
+  }
+  37% {
+    opacity: 0.59;
+    filter: brightness(1.002);
+  }
+  50% {
+    opacity: 0.61;
+    filter: brightness(1);
+  }
+  63% {
+    opacity: 0.57;
+    filter: brightness(1.001);
+  }
+  75% {
+    opacity: 0.63;
+    filter: brightness(0.998);
+  }
+  87% {
+    opacity: 0.6;
+    filter: brightness(1.001);
   }
 }
 
