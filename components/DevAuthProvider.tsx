@@ -111,7 +111,7 @@ export function useAuth() {
 // Mock Clerk components for development
 export function SignInButton({ children }: { children?: ReactNode }) {
   const { login } = useAuth()
-  return <button onClick={login}>{children || "Sign In"}</button>
+  return <div onClick={() => login()} style={{ cursor: 'pointer' }}>{children || "Sign In"}</div>
 }
 
 export function UserButton() {
