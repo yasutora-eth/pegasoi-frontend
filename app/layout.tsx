@@ -1,6 +1,7 @@
 import type React from 'react'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { ApolloWrapper } from '@/components/ApolloWrapper'
 import { DevAuthProvider } from '@/components/DevAuthProvider'
 import { Header } from '@/components/Header'
 import { DevToggle } from '@/components/DevToggle'
@@ -33,16 +34,18 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <DevAuthProvider>
-      <html lang="en" className="dark">
-        <body className={inter.className}>
-          <div className="flex min-h-screen flex-col">
-            <Header />
-            <main className="flex-1">{children}</main>
-            <DevToggle />
-          </div>
-        </body>
-      </html>
-    </DevAuthProvider>
+    <ApolloWrapper>
+      <DevAuthProvider>
+        <html lang="en" className="dark">
+          <body className={inter.className}>
+            <div className="flex min-h-screen flex-col">
+              <Header />
+              <main className="flex-1">{children}</main>
+              <DevToggle />
+            </div>
+          </body>
+        </html>
+      </DevAuthProvider>
+    </ApolloWrapper>
   )
 }

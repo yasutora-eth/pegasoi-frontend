@@ -10,6 +10,10 @@ import { onError } from '@apollo/client/link/error'
 // HTTP Link to GraphQL endpoint
 const httpLink = createHttpLink({
   uri: process.env.NEXT_PUBLIC_GRAPHQL_URL || 'http://localhost:8000/graphql',
+  credentials: 'include',
+  headers: {
+    'Content-Type': 'application/json',
+  },
 })
 
 // Auth link to add JWT token to requests
