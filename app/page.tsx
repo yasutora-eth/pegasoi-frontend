@@ -323,11 +323,11 @@ export default function Home() {
             </CardHeader>
             <CardContent>
               <ul className="space-y-2 text-sm text-gray-300">
-                <li>• "Roman Architecture in the Imperial Period"</li>
-                <li>• "Greek Pottery: Styles and Techniques"</li>
-                <li>• "Egyptian Hieroglyphic Evolution"</li>
-                <li>• "Classical Literature Analysis"</li>
-                <li>• "Byzantine Art and Culture"</li>
+                - • &ldquo;Roman Architecture in the Imperial Period&rdquo;
+                - • &ldquo;Greek Pottery: Styles and Techniques&rdquo;
+                - • &ldquo;Egyptian Hieroglyphic Evolution&rdquo;
+                - • &ldquo;Classical Literature Analysis&rdquo;
+                - • &ldquo;Byzantine Art and Culture&rdquo;
               </ul>
               <Link href="/articles">
                 <Button variant="outline" className="mt-4 w-full border-cyan-400 text-cyan-400">

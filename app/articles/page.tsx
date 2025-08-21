@@ -27,11 +27,63 @@ export default function Articles() {
 
   const fetchArticles = async () => {
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://pegasoibackend-production.up.railway.app'
-      const response = await fetch(`${apiUrl}/api/articles`)
-      if (!response.ok) throw new Error('Failed to fetch')
-      const data = await response.json()
-      setArticles(data)
+      // Use mock data for development since API endpoint is not available
+      const mockArticles: Article[] = [
+        {
+          id: '1',
+          title: 'Roman Architecture in the Imperial Period',
+          content: 'An extensive study of architectural developments during the height of the Roman Empire, examining the evolution of construction techniques, materials, and design principles that defined imperial Roman architecture.',
+          author: 'Dr. Marcus Aurelius',
+          reference: 'Journal of Classical Architecture, Vol. 15',
+          status: 'published',
+          createdAt: '2024-01-15T10:00:00Z',
+          updatedAt: '2024-01-15T10:00:00Z'
+        },
+        {
+          id: '2',
+          title: 'Greek Pottery: Styles and Techniques',
+          content: 'A comprehensive analysis of ancient Greek pottery traditions, exploring the various styles, decorative techniques, and cultural significance of ceramic arts in classical antiquity.',
+          author: 'Prof. Helena Athena',
+          reference: 'Classical Studies Quarterly, Issue 42',
+          status: 'published',
+          createdAt: '2024-01-20T14:30:00Z',
+          updatedAt: '2024-01-20T14:30:00Z'
+        },
+        {
+          id: '3',
+          title: 'Egyptian Hieroglyphic Evolution',
+          content: 'Tracing the development of hieroglyphic writing systems from early dynastic periods through the Ptolemaic era, examining linguistic changes and cultural influences.',
+          author: 'Dr. Anubis Thoth',
+          reference: 'Egyptian Studies Review, Vol. 8',
+          status: 'published',
+          createdAt: '2024-01-25T09:15:00Z',
+          updatedAt: '2024-01-25T09:15:00Z'
+        },
+        {
+          id: '4',
+          title: 'Classical Literature Analysis',
+          content: 'A detailed examination of narrative structures and literary devices employed in classical Greek and Roman literature, with focus on epic poetry and dramatic works.',
+          author: 'Prof. Sophia Minerva',
+          reference: 'Literary Classics Today, Vol. 12',
+          status: 'published',
+          createdAt: '2024-02-01T16:45:00Z',
+          updatedAt: '2024-02-01T16:45:00Z'
+        },
+        {
+          id: '5',
+          title: 'Byzantine Art and Culture',
+          content: 'Exploring the artistic and cultural achievements of the Byzantine Empire, from religious iconography to architectural innovations that bridged classical and medieval periods.',
+          author: 'Dr. Constantine Justinian',
+          reference: 'Byzantine Studies International, Issue 28',
+          status: 'published',
+          createdAt: '2024-02-10T11:20:00Z',
+          updatedAt: '2024-02-10T11:20:00Z'
+        }
+      ]
+      
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 500))
+      setArticles(mockArticles)
     } catch (err) {
       console.error('Error fetching articles:', err)
       setError('Failed to load articles')

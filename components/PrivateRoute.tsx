@@ -1,11 +1,10 @@
 'use client'
 
 import type React from 'react'
-import { useAuth } from './DevAuthProvider'
-import { CyberError } from './ui/error'
+import { useUser, SignInButton, useAuth } from '@/components/DevAuthProvider'
 import { Button } from './ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
-import { Shield, LogIn, User, Crown } from 'lucide-react'
+import { Shield, LogIn } from 'lucide-react'
 import type { UserRole } from '@/types/graphql'
 
 interface PrivateRouteProps {
@@ -66,12 +65,22 @@ export function PrivateRoute({
     if (userLevel < requiredLevel) {
       return (
         <div className="min-h-screen flex items-center justify-center p-4">
-          <CyberError
-            title="ACCESS DENIED"
-            message={`Insufficient privileges. Required role: ${requiredRole.toUpperCase()}`}
-            errorCode="AUTH_403"
-            className="max-w-md"
-          />
+          <Card variant="cyber" className="max-w-md w-full">
+            <CardHeader className="text-center">
+              <Shield className="h-12 w-12 text-red-400 mx-auto mb-4" />
+              <CardTitle className="text-red-400 text-glow">
+                ACCESS DENIED
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="text-center space-y-4">
+              <p className="text-red-300/70">
+                Insufficient privileges. Required role: {requiredRole.toUpperCase()}
+              </p>
+              <p className="text-xs text-red-400/50">
+                ERROR CODE: AUTH_403
+              </p>
+            </CardContent>
+          </Card>
         </div>
       )
     }
