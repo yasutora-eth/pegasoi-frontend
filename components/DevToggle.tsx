@@ -80,10 +80,17 @@ export function DevToggle() {
         )}
 
         {/* Toggle Button */}
-        <Button 
+        <Button
           variant="cyber"
           size="sm"
-          onClick={toggleAuth}
+          onClick={() => {
+            console.log('DevToggle clicked, current state:', isAuthenticated);
+            toggleAuth();
+            // Force a small delay to ensure state updates
+            setTimeout(() => {
+              console.log('Auth state after toggle:', localStorage.getItem('dev-auth-state'));
+            }, 100);
+          }}
           className="w-full gap-2"
         >
           {isAuthenticated ? (

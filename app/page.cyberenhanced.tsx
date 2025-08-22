@@ -247,11 +247,11 @@ export default function CyberEnhancedHome() {
                         <Label variant="cyber">Checkbox Options</Label>
                         <div className="space-y-2">
                           <div className="flex items-center space-x-2">
-                            <Checkbox id="cyber1" variant="cyber" />
+                            <Checkbox variant="cyber" />
                             <Label htmlFor="cyber1">Enable Neural Interface</Label>
                           </div>
                           <div className="flex items-center space-x-2">
-                            <Checkbox id="cyber2" variant="cyber" />
+                            <Checkbox variant="cyber" />
                             <Label htmlFor="cyber2">Activate Quantum Protocols</Label>
                           </div>
                         </div>
@@ -260,11 +260,11 @@ export default function CyberEnhancedHome() {
                         <Label variant="cyber">Radio Selection</Label>
                         <RadioGroup variant="cyber" defaultValue="alpha">
                           <div className="flex items-center space-x-2">
-                            <RadioGroupItem variant="cyber" value="alpha" id="alpha" />
+                            <RadioGroupItem variant="cyber" value="alpha" />
                             <Label htmlFor="alpha">Alpha Protocol</Label>
                           </div>
                           <div className="flex items-center space-x-2">
-                            <RadioGroupItem variant="cyber" value="beta" id="beta" />
+                            <RadioGroupItem variant="cyber" value="beta" />
                             <Label htmlFor="beta">Beta Protocol</Label>
                           </div>
                         </RadioGroup>
@@ -274,20 +274,20 @@ export default function CyberEnhancedHome() {
                       <div className="space-y-2">
                         <Label variant="cyber">System Controls</Label>
                         <div className="flex items-center space-x-2">
-                          <Switch variant="cyber" id="system-power" />
+                          <Switch variant="cyber" />
                           <Label htmlFor="system-power">System Power</Label>
                         </div>
                       </div>
                       <div className="space-y-2">
                         <Label variant="cyber">Power Level: 75%</Label>
-                        <Slider variant="cyber" defaultValue={[75]} max={100} step={1} />
+                        <Slider variant="cyber" />
                       </div>
                       <div className="space-y-2">
                         <Label variant="cyber">Toggle Controls</Label>
                         <div className="flex gap-2">
-                          <Toggle variant="cyber" size="sm">Neural</Toggle>
-                          <Toggle variant="cyber" size="sm">Quantum</Toggle>
-                          <Toggle variant="cyber" size="sm">Cyber</Toggle>
+                          <Toggle variant="cyber" size="sm" />
+                          <Toggle variant="cyber" size="sm" />
+                          <Toggle variant="cyber" size="sm" />
                         </div>
                       </div>
                     </div>
@@ -354,7 +354,7 @@ export default function CyberEnhancedHome() {
                   </div>
                 </div>
 
-                <Separator variant="cyber" className="my-8" />
+                <Separator variant="cyber" />
 
                 {/* Loading States */}
                 <div className="space-y-4">

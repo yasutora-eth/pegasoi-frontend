@@ -46,8 +46,10 @@ export function DevAuthProvider({ children }: { children: ReactNode }) {
     if (savedAuth) {
       try {
         const { isAuthenticated: savedIsAuth, user: savedUser } = JSON.parse(savedAuth)
-        setIsAuthenticated(savedIsAuth)
-        setUser(savedUser)
+        if (savedIsAuth !== isAuthenticated || JSON.stringify(savedUser) !== JSON.stringify(user)) {
+          setIsAuthenticated(savedIsAuth)
+          setUser(savedUser)
+        }
       } catch (error) {
         console.warn('Failed to restore auth state:', error)
       }

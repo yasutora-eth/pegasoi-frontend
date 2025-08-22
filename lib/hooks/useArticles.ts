@@ -103,14 +103,7 @@ export function useDeleteArticle() {
   const [deleteArticleMutation, { loading, error }] = useMutation<
     { deleteArticle: { success: boolean; message?: string } },
     { id: string }
-  >(DELETE_ARTICLE, {
-    update: (cache, { data, variables }) => {
-      if (data?.deleteArticle.success && variables?.id) {
-        cache.evict({ id: `Article:${variables.id}` })
-        cache.gc()
-      }
-    },
-  })
+  >(DELETE_ARTICLE)
 
   const deleteArticle = async (id: string) => {
     try {
