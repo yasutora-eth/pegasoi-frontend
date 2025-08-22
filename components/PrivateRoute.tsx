@@ -25,7 +25,7 @@ export function PrivateRoute({
     if (fallback) return <>{fallback}</>
     
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
+      <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900">
         <Card variant="cyber" className="max-w-md w-full">
           <CardHeader className="text-center">
             <Shield className="h-12 w-12 text-cyan-400 mx-auto mb-4" />
@@ -64,7 +64,7 @@ export function PrivateRoute({
 
     if (userLevel < requiredLevel) {
       return (
-        <div className="min-h-screen flex items-center justify-center p-4">
+        <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900">
           <Card variant="cyber" className="max-w-md w-full">
             <CardHeader className="text-center">
               <Shield className="h-12 w-12 text-red-400 mx-auto mb-4" />

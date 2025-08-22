@@ -37,7 +37,7 @@ export default function RootLayout({
     <ApolloWrapper>
       <DevAuthProvider>
         <html lang="en" className="dark">
-          <body className={inter.className}>
+          <body className={`${inter.className} bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 min-h-screen`}>
             <div className="flex min-h-screen flex-col">
               <Header />
               <main className="flex-1">{children}</main>
