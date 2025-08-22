@@ -157,13 +157,13 @@ export default function Home() {
             <ErrorState 
               title="Standard Error"
               message="Something went wrong with the operation."
-              onRetry={() => console.log('Retry clicked')}
+              onRetry={() => {/* Handle retry */}}
             />
             <CyberError
               title="SYSTEM MALFUNCTION"
               message="Critical error detected in the neural network interface."
               errorCode="SYS_001"
-              onRetry={() => console.log('Cyber retry clicked')}
+              onRetry={() => {/* Handle cyber retry */}}
             />
           </div>
         </div>

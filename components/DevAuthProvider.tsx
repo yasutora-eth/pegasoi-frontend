@@ -51,7 +51,8 @@ export function DevAuthProvider({ children }: { children: ReactNode }) {
           setUser(savedUser)
         }
       } catch (error) {
-        console.warn('Failed to restore auth state:', error)
+        // Failed to restore auth state - use defaults
+        localStorage.removeItem('dev-auth-state')
       }
     }
   }, [])

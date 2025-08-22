@@ -101,8 +101,8 @@ export default function ArticlesPage() {
   const articles = data?.articles && data.articles.length > 0 ? data.articles : mockArticles
   
   const handleViewArticle = (article: Article) => {
-    console.log('Viewing article:', article.title)
     // TODO: Navigate to article detail page or open modal
+    // Could implement: router.push(`/articles/${article.articleId}`)
   }
 
   const handleRefresh = () => {
