@@ -223,24 +223,53 @@ class ApiService {
     )
   }
 
-  // Multi-source search - Updated to use backend's unified response format
+  // Multi-source search - Try different parameter combinations to find working format
   async searchAllSources(
     query: string,
     limit: number = 10,
     sources: string[] = ['crossref', 'arxiv', 'doaj']
   ): Promise<SearchPaper[]> {
-    try {
-      const sourcesParam = sources.join(',')
-      return this.request<SearchPaper[]>(
-        `/api/v1/search/papers?query=${encodeURIComponent(query.trim())}&limit=${limit}&sources=${sourcesParam}`,
-        {},
-        90000 // 90 second timeout for search requests
-      )
-    } catch (error) {
-      throw new Error(
-        `Search service unavailable: ${error instanceof Error ? error.message : 'Unknown error'}`
-      )
+    const trimmedQuery = query.trim()
+
+    // Try different parameter combinations until we find one that works
+    const searchVariations = [
+      // Variation 1: Standard format
+      `/api/v1/search/papers?query=${encodeURIComponent(trimmedQuery)}&limit=${limit}&sources=${sources.join(',')}`,
+
+      // Variation 2: Without sources parameter
+      `/api/v1/search/papers?query=${encodeURIComponent(trimmedQuery)}&limit=${limit}`,
+
+      // Variation 3: Single source only
+      `/api/v1/search/papers?query=${encodeURIComponent(trimmedQuery)}&limit=${limit}&sources=crossref`,
+
+      // Variation 4: Different query encoding
+      `/api/v1/search/papers?query=${trimmedQuery.replace(/\s+/g, '+')}&limit=${limit}&sources=${sources.join(',')}`,
+
+      // Variation 5: Quoted query
+      `/api/v1/search/papers?query=${encodeURIComponent('"' + trimmedQuery + '"')}&limit=${limit}&sources=crossref`,
+
+      // Variation 6: Boolean format
+      `/api/v1/search/papers?query=${encodeURIComponent(trimmedQuery.split(' ').join(' AND '))}&limit=${limit}&sources=crossref`,
+    ]
+
+    for (const [index, endpoint] of searchVariations.entries()) {
+      try {
+        console.log(`Trying search variation ${index + 1}: ${endpoint}`)
+        const result = await this.request<SearchPaper[]>(endpoint, {}, 90000)
+
+        if (Array.isArray(result) && result.length > 0) {
+          console.log(`✅ Found working search format ${index + 1}! Got ${result.length} results`)
+          return result
+        }
+      } catch (error) {
+        console.log(`❌ Search variation ${index + 1} failed:`, error)
+        continue
+      }
     }
+
+    // If no variation worked, return empty array
+    console.log('❌ All search variations failed, returning empty results')
+    return []
   }
 
   async searchSingleSource(
