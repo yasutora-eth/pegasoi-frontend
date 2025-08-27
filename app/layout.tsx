@@ -83,9 +83,10 @@ export default function RootLayout({
   return (
     <ApolloWrapper>
       <DevAuthProvider>
-        <html lang="en" className="dark">
+        <html lang="en" className="dark" suppressHydrationWarning>
           <body
             className={`${inter.className} min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900`}
+            suppressHydrationWarning
           >
             <WebVitalsMonitor />
             <ErrorBoundary>
