@@ -223,7 +223,7 @@ class ApiService {
     )
   }
 
-  // Multi-source search - Try different parameter combinations to find working format
+  // Multi-source search - Optimized with extended timeout and comprehensive parameter testing
   async searchAllSources(
     query: string,
     limit: number = 10,
@@ -231,44 +231,96 @@ class ApiService {
   ): Promise<SearchPaper[]> {
     const trimmedQuery = query.trim()
 
-    // Try different parameter combinations until we find one that works
+    // Extended search variations including different approaches
     const searchVariations = [
-      // Variation 1: Standard format
-      `/api/v1/search/papers?query=${encodeURIComponent(trimmedQuery)}&limit=${limit}&sources=${sources.join(',')}`,
+      // Standard formats
+      {
+        endpoint: `/api/v1/search/papers?query=${encodeURIComponent(trimmedQuery)}&limit=${limit}&sources=${sources.join(',')}`,
+        description: 'Standard multi-source'
+      },
+      {
+        endpoint: `/api/v1/search/papers?query=${encodeURIComponent(trimmedQuery)}&limit=${limit}`,
+        description: 'No sources specified'
+      },
+      {
+        endpoint: `/api/v1/search/papers?query=${encodeURIComponent(trimmedQuery)}&limit=${limit}&sources=crossref`,
+        description: 'CrossRef only'
+      },
+      {
+        endpoint: `/api/v1/search/papers?query=${encodeURIComponent(trimmedQuery)}&limit=${limit}&sources=arxiv`,
+        description: 'ArXiv only'
+      },
+      {
+        endpoint: `/api/v1/search/papers?query=${encodeURIComponent(trimmedQuery)}&limit=${limit}&sources=doaj`,
+        description: 'DOAJ only'
+      },
 
-      // Variation 2: Without sources parameter
-      `/api/v1/search/papers?query=${encodeURIComponent(trimmedQuery)}&limit=${limit}`,
+      // Different query encodings
+      {
+        endpoint: `/api/v1/search/papers?query=${trimmedQuery.replace(/\s+/g, '+')}&limit=${limit}&sources=crossref`,
+        description: 'Plus encoding'
+      },
+      {
+        endpoint: `/api/v1/search/papers?query=${encodeURIComponent('"' + trimmedQuery + '"')}&limit=${limit}&sources=crossref`,
+        description: 'Quoted query'
+      },
+      {
+        endpoint: `/api/v1/search/papers?query=${encodeURIComponent(trimmedQuery.split(' ').join(' AND '))}&limit=${limit}&sources=crossref`,
+        description: 'Boolean AND'
+      },
+      {
+        endpoint: `/api/v1/search/papers?query=${encodeURIComponent(trimmedQuery.split(' ').join(' OR '))}&limit=${limit}&sources=crossref`,
+        description: 'Boolean OR'
+      },
 
-      // Variation 3: Single source only
-      `/api/v1/search/papers?query=${encodeURIComponent(trimmedQuery)}&limit=${limit}&sources=crossref`,
-
-      // Variation 4: Different query encoding
-      `/api/v1/search/papers?query=${trimmedQuery.replace(/\s+/g, '+')}&limit=${limit}&sources=${sources.join(',')}`,
-
-      // Variation 5: Quoted query
-      `/api/v1/search/papers?query=${encodeURIComponent('"' + trimmedQuery + '"')}&limit=${limit}&sources=crossref`,
-
-      // Variation 6: Boolean format
-      `/api/v1/search/papers?query=${encodeURIComponent(trimmedQuery.split(' ').join(' AND '))}&limit=${limit}&sources=crossref`,
+      // Academic-specific formats
+      {
+        endpoint: `/api/v1/search/papers?query=${encodeURIComponent('title:' + trimmedQuery)}&limit=${limit}&sources=crossref`,
+        description: 'Title field search'
+      },
+      {
+        endpoint: `/api/v1/search/papers?query=${encodeURIComponent('abstract:' + trimmedQuery)}&limit=${limit}&sources=crossref`,
+        description: 'Abstract field search'
+      }
     ]
 
-    for (const [index, endpoint] of searchVariations.entries()) {
+    console.log(`🔍 Starting comprehensive search for: "${trimmedQuery}"`)
+
+    for (const [index, variation] of searchVariations.entries()) {
       try {
-        console.log(`Trying search variation ${index + 1}: ${endpoint}`)
-        const result = await this.request<SearchPaper[]>(endpoint, {}, 90000)
+        console.log(`Trying variation ${index + 1}/11: ${variation.description}`)
+        console.log(`URL: ${variation.endpoint}`)
+
+        const result = await this.request<SearchPaper[]>(
+          variation.endpoint,
+          {
+            headers: {
+              'User-Agent': 'Pegasoi-Research-Platform/1.0',
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            }
+          },
+          120000 // 2 minute timeout for thorough testing
+        )
 
         if (Array.isArray(result) && result.length > 0) {
-          console.log(`✅ Found working search format ${index + 1}! Got ${result.length} results`)
+          console.log(`✅ SUCCESS! Found working format: ${variation.description}`)
+          console.log(`✅ Got ${result.length} results from variation ${index + 1}`)
+          console.log(`✅ Working URL: ${variation.endpoint}`)
           return result
+        } else {
+          console.log(`❌ Variation ${index + 1} returned empty results`)
         }
       } catch (error) {
-        console.log(`❌ Search variation ${index + 1} failed:`, error)
+        console.log(`❌ Variation ${index + 1} failed:`, error instanceof Error ? error.message : error)
         continue
       }
+
+      // Small delay between attempts to be respectful
+      await new Promise(resolve => setTimeout(resolve, 500))
     }
 
-    // If no variation worked, return empty array
-    console.log('❌ All search variations failed, returning empty results')
+    console.log('❌ All 11 search variations failed - backend may be experiencing issues with external APIs')
     return []
   }
 
