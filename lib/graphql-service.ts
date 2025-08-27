@@ -99,15 +99,21 @@ export class GraphQLService {
     }
   }
 
-  // Search Operations
+  // Search Operations - Updated to match backend GraphQL schema
   async searchPapers(query: string, sources?: string[], limit = 20) {
     try {
+      // Default to all sources if none specified
+      const searchSources = sources || ['crossref', 'arxiv', 'doaj']
+
       const { data } = await apolloClient.query({
         query: SEARCH_PAPERS,
-        variables: { query, sources, limit },
+        variables: { query: query.trim(), sources: searchSources, limit },
         fetchPolicy: 'no-cache', // Always fetch fresh search results
+        context: {
+          timeout: 90000, // 90 second timeout for search requests
+        },
       })
-      return data.searchPapers
+      return data.search // Backend returns 'search' not 'searchPapers'
     } catch (error) {
       console.error('GraphQL searchPapers error:', error)
       throw new Error('Failed to search papers via GraphQL')

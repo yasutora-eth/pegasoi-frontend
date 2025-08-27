@@ -37,6 +37,21 @@ export interface ArticleUpdate {
 }
 
 // Search Result Types
+// Unified search result interface matching backend response
+export interface SearchPaper {
+  title: string
+  authors: string[]
+  abstract: string
+  source: string
+  url: string
+  relevanceScore: number
+  doi?: string
+  journal?: string
+  publicationDate: string
+  keywords?: string[]
+}
+
+// Legacy search result interface for backward compatibility
 export interface SearchResult {
   arxiv?: SearchSourceResult<ArxivData>
   doaj?: SearchSourceResult<DoajData>

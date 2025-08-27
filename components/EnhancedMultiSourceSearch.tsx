@@ -56,6 +56,42 @@ interface SearchResponse {
   fallback?: boolean
 }
 
+// Convert unified backend response to legacy format for this component
+function convertUnifiedToLegacyFormat(unifiedResults: any[]): Record<string, SearchResponse> {
+  const legacyFormat: Record<string, SearchResponse> = {}
+
+  unifiedResults.forEach((paper: any) => {
+    const source = paper.source?.toLowerCase() || 'unknown'
+
+    if (!legacyFormat[source]) {
+      legacyFormat[source] = {
+        ok: true,
+        data: { entries: [], total: 0 }
+      }
+    }
+
+    const entry: ParsedEntry = {
+      title: paper.title || '',
+      authors: paper.authors || [],
+      published: paper.publicationDate || '',
+      source: paper.source || '',
+      abstract: paper.abstract || '',
+      url: paper.url || '',
+      doi: paper.doi || '',
+      journal: paper.journal || '',
+      keywords: paper.keywords || [],
+      relevanceScore: paper.relevanceScore || 0
+    }
+
+    if (legacyFormat[source].data?.entries) {
+      legacyFormat[source].data!.entries!.push(entry)
+      legacyFormat[source].data!.total = (legacyFormat[source].data!.total || 0) + 1
+    }
+  })
+
+  return legacyFormat
+}
+
 export function EnhancedMultiSourceSearch() {
   const [query, setQuery] = useState('ancient rome')
   const [results, setResults] = useState<Record<string, SearchResponse> | null>(
@@ -79,21 +115,25 @@ export function EnhancedMultiSourceSearch() {
       let data: Record<string, SearchResponse>
 
       try {
-        response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/search?query=${encodeURIComponent(query.trim())}`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        )
+        // Use the correct backend search endpoint with proper parameters
+        const searchUrl = `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/v1/search/papers?query=${encodeURIComponent(query.trim())}&limit=10&sources=crossref,arxiv,doaj`
+
+        response = await fetch(searchUrl, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+          signal: AbortSignal.timeout(60000), // 60 second timeout
+        })
 
         if (!response.ok) {
           throw new Error(`Backend API error: ${response.status}`)
         }
 
-        data = await response.json()
+        const unifiedResults = await response.json()
+        // Convert unified results to legacy format for this component
+        data = convertUnifiedToLegacyFormat(unifiedResults)
       } catch {
         // Backend unavailable, trying direct API calls
         setUsingFallback(true)
@@ -344,34 +384,20 @@ export function EnhancedMultiSourceSearch() {
       }
     }
 
-    // Getty Museum API (will likely fail due to CORS, so use curated data)
+    // Getty Museum - Use curated data with web search links
+    // Note: Getty doesn't provide a simple REST search API like ArXiv/DOAJ/CrossRef
+    // They use SPARQL queries or individual object access only
+    // So we provide curated data with links to their web search interface
     try {
-      const gettyResponse = await fetch(
-        `https://data.getty.edu/museum/collection/object?q=${encodeURIComponent(searchQuery)}&limit=30`,
-        {
-          headers: {
-            Accept: 'application/json',
-            'User-Agent': 'Mozilla/5.0 (compatible; Academic Research Bot/1.0)',
-          },
-        }
-      )
-
-      if (gettyResponse.ok) {
-        const gettyData = await gettyResponse.json()
-        const parsedData = parseGettyMuseumResponse(gettyData)
-        if (parsedData.entries.length > 0) {
-          results.getty = {
-            ok: true,
-            data: parsedData,
-          }
-        } else {
-          throw new Error('No Getty Museum results')
-        }
-      } else {
-        throw new Error(`Getty Museum API error: ${gettyResponse.status}`)
+      // Always use curated Getty Museum data with working web search links
+      results.getty = {
+        ok: true,
+        data: createGettyMuseumFallbackData(searchQuery),
+        fallback: false, // This is intentional - Getty doesn't have a simple search API
+        note: 'Getty Museum uses SPARQL/individual object access - linking to web search'
       }
     } catch {
-      // Use curated Getty Museum data with working links
+      // Fallback to basic Getty data
       results.getty = {
         ok: true,
         data: createGettyMuseumFallbackData(searchQuery),
@@ -486,19 +512,35 @@ export function EnhancedMultiSourceSearch() {
       })
     }
 
-    // If no specific matches, provide general Getty search
-    if (fallbackEntries.length === 0) {
+    // Always provide Getty web search link as the primary result
+    fallbackEntries.unshift({
+      title: `Search Getty Museum Collection: "${query}"`,
+      abstract: `Explore the Getty Museum's extensive collection for "${query}". The Getty Museum houses art from ancient to contemporary times, including paintings, sculptures, decorative arts, photographs, and manuscripts.`,
+      authors: ['J. Paul Getty Museum'],
+      published: new Date().getFullYear().toString(),
+      journal: 'Getty Museum Collection',
+      subjects: ['Art History', 'Museum Collection', 'Cultural Heritage'],
+      links: [
+        `https://www.getty.edu/art/collection/search/?q=${encodeURIComponent(query)}`,
+      ],
+      getty_uri: `https://www.getty.edu/art/collection/search/?q=${encodeURIComponent(query)}`,
+      source: 'getty',
+      note: 'Click to search the full Getty Museum collection'
+    })
+
+    // If no specific matches were found, provide general Getty information
+    if (fallbackEntries.length === 1) { // Only the search link above
       fallbackEntries.push({
-        title: `Getty Museum Collection: ${query}`,
-        abstract: `Search results for "${query}" in the Getty Museum collection, featuring art and cultural objects from around the world.`,
-        authors: ['Getty Museum'],
-        published: '',
+        title: `Getty Museum Collection Overview`,
+        abstract: `The J. Paul Getty Museum collection includes Greek, Roman, and Etruscan art from the Neolithic to Late Antiquity; European art from the Middle Ages to the early twentieth century; and international photography from its inception to the present day.`,
+        authors: ['J. Paul Getty Museum'],
+        published: new Date().getFullYear().toString(),
         journal: 'Getty Museum Collection',
-        subjects: ['Art History', 'Cultural Heritage'],
+        subjects: ['Art History', 'Museum Studies', 'Cultural Heritage'],
         links: [
-          `https://www.getty.edu/art/collection/search/?q=${query.replace(/ /g, '+')}`,
+          'https://www.getty.edu/art/collection/',
         ],
-        getty_uri: `https://www.getty.edu/art/collection/search/?q=${query.replace(/ /g, '+')}`,
+        getty_uri: 'https://www.getty.edu/art/collection/',
         source: 'getty',
       })
     }

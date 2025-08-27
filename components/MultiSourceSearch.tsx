@@ -34,7 +34,8 @@ export function MultiSourceSearch() {
     setResults(null)
 
     try {
-      const searchResults = await apiService.searchAllSources(query.trim())
+      // Use legacy method for backward compatibility with existing UI
+      const searchResults = await apiService.searchAllSourcesLegacy(query.trim())
       setResults(searchResults)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Search failed')

@@ -71,9 +71,9 @@ export const SEARCH_ARTICLES_BY_KEYWORDS = gql`
   }
 `
 
-// Multi-source Search Queries
+// Multi-source Search Queries - Updated to match backend GraphQL schema
 export const SEARCH_PAPERS = gql`
-  query SearchPapers($query: String!, $sources: [String!], $limit: Int = 10) {
+  query SearchArticles($query: String!, $sources: [String!], $limit: Int) {
     search(query: $query, sources: $sources, limit: $limit) {
       title
       authors

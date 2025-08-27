@@ -7,12 +7,23 @@ import {
 import { setContext } from '@apollo/client/link/context'
 import { onError } from '@apollo/client/link/error'
 
-// HTTP Link to GraphQL endpoint
+// HTTP Link to GraphQL endpoint with timeout support
 const httpLink = createHttpLink({
   uri: process.env.NEXT_PUBLIC_GRAPHQL_URL || 'http://localhost:8000/graphql',
   credentials: 'same-origin',
   headers: {
     'Content-Type': 'application/json',
+  },
+  fetch: (uri, options) => {
+    // Add timeout support for GraphQL requests
+    const controller = new AbortController()
+    const timeout = options?.context?.timeout || 60000 // Default 60 seconds
+    const timeoutId = setTimeout(() => controller.abort(), timeout)
+
+    return fetch(uri, {
+      ...options,
+      signal: controller.signal,
+    }).finally(() => clearTimeout(timeoutId))
   },
 })
 
