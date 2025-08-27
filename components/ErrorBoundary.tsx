@@ -29,9 +29,14 @@ export class ErrorBoundary extends Component<Props, State> {
     return { hasError: true, error }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    // Error logging can be handled by external services
+    // Log error for development and production monitoring
+    if (process.env.NODE_ENV === 'development') {
+      console.error('ErrorBoundary caught an error:', error, errorInfo)
+    }
+
+    // In production, send to error monitoring service
+    // Example: Sentry.captureException(error, { contexts: { react: errorInfo } })
   }
 
   public render() {

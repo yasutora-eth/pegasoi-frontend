@@ -23,7 +23,7 @@ A clear and concise description of the blockchain functionality you want to add.
 - [ ] DAO governance
 - [ ] Identity/authentication
 - [ ] Cross-chain functionality
-- [ ] Other: ****\_\_\_****
+- [ ] Other: \***\*\_\_\_\*\***
 
 ## 🌐 Network Requirements
 
@@ -34,9 +34,9 @@ A clear and concise description of the blockchain functionality you want to add.
 - [ ] Arbitrum
 - [ ] Optimism
 - [ ] Base
-- [ ] Testnet only (specify): ****\_\_\_****
+- [ ] Testnet only (specify): \***\*\_\_\_\*\***
 - [ ] Multi-chain support
-- [ ] Other: ****\_\_\_****
+- [ ] Other: \***\*\_\_\_\*\***
 
 ## 🔧 Technical Implementation
 
@@ -48,7 +48,7 @@ A clear and concise description of the blockchain functionality you want to add.
 - [ ] RainbowKit
 - [ ] Web3Modal
 - [ ] Custom implementation
-- [ ] Other: ****\_\_\_****
+- [ ] Other: \***\*\_\_\_\*\***
 
 **Smart Contract Requirements:**
 
@@ -80,7 +80,7 @@ A clear and concise description of the blockchain functionality you want to add.
 - [ ] Access control
 - [ ] Gas optimization
 - [ ] MEV protection
-- [ ] Other: ****\_\_\_****
+- [ ] Other: \***\*\_\_\_\*\***
 
 ## 👥 User Experience
 
@@ -112,7 +112,7 @@ A clear and concise description of the blockchain functionality you want to add.
 - [ ] Multiple wallet testing (MetaMask, WalletConnect, etc.)
 - [ ] Gas estimation testing
 - [ ] Error scenario testing
-- [ ] Manual testing steps: ****\_\_\_****
+- [ ] Manual testing steps: \***\*\_\_\_\*\***
 
 ## 📊 Expected Benefits
 
@@ -125,7 +125,7 @@ A clear and concise description of the blockchain functionality you want to add.
 - [ ] Improved security
 - [ ] Academic credential verification
 - [ ] Research funding mechanisms
-- [ ] Other: ****\_\_\_****
+- [ ] Other: \***\*\_\_\_\*\***
 
 ## 🔗 Related Issues/PRs
 
@@ -156,7 +156,7 @@ A clear and concise description of the blockchain functionality you want to add.
 - [ ] Research funding
 - [ ] Data provenance
 - [ ] Collaboration tools
-- [ ] Other: ****\_\_\_****
+- [ ] Other: \***\*\_\_\_\*\***
 
 ---
 

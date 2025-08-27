@@ -41,7 +41,7 @@ export default function Login() {
         <CardContent>
           <div className="space-y-4">
             <SignInButton>
-              <Button className="w-full flex items-center gap-2">
+              <Button className="flex w-full items-center gap-2">
                 <LogIn className="h-4 w-4" />
                 Sign In / Sign Up
               </Button>

@@ -3,6 +3,7 @@
 ## Component Architecture Patterns
 
 ### 1. Component Composition Pattern
+
 ```typescript
 // Preferred: Composable components
 <Card>
@@ -19,23 +20,25 @@
 ```
 
 ### 2. Custom Hook Pattern
+
 ```typescript
 // Extract logic into custom hooks
 function useArticleSearch() {
   const [results, setResults] = useState([])
   const [loading, setLoading] = useState(false)
-  
+
   const search = useCallback(async (query: string) => {
     setLoading(true)
     // Search logic
     setLoading(false)
   }, [])
-  
+
   return { results, loading, search }
 }
 ```
 
 ### 3. Error Boundary Pattern
+
 ```typescript
 // Wrap components with error boundaries
 <ErrorBoundary fallback={<ErrorFallback />}>
@@ -46,20 +49,24 @@ function useArticleSearch() {
 ## State Management Patterns
 
 ### 1. Local State (useState)
+
 - Use for component-specific state
 - Form inputs, UI toggles, local loading states
 
 ### 2. Apollo Client (GraphQL)
+
 - Use for server state management
 - Caching, optimistic updates, error handling
 
 ### 3. Context Pattern (Sparingly)
+
 - Use only for truly global state
 - Theme, authentication status, user preferences
 
 ## Styling Patterns
 
 ### 1. Utility-First with Tailwind
+
 ```typescript
 // Preferred: Tailwind utilities
 <div className="flex items-center justify-between p-4 bg-card rounded-lg">
@@ -69,6 +76,7 @@ function useArticleSearch() {
 ```
 
 ### 2. Component Variants with CVA
+
 ```typescript
 import { cva } from 'class-variance-authority'
 
@@ -90,6 +98,7 @@ const buttonVariants = cva(
 ```
 
 ### 3. CSS Variables for Theming
+
 ```css
 /* Use CSS variables for consistent theming */
 :root {
@@ -101,6 +110,7 @@ const buttonVariants = cva(
 ## API Integration Patterns
 
 ### 1. GraphQL with Apollo
+
 ```typescript
 // Use Apollo hooks for GraphQL
 const { data, loading, error } = useQuery(GET_ARTICLES)
@@ -108,13 +118,14 @@ const [createArticle] = useMutation(CREATE_ARTICLE)
 ```
 
 ### 2. REST API with Custom Hooks
+
 ```typescript
 // Wrap API calls in custom hooks
 function useApiCall<T>(endpoint: string) {
   const [data, setData] = useState<T | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  
+
   // Implementation
   return { data, loading, error, refetch }
 }
@@ -123,6 +134,7 @@ function useApiCall<T>(endpoint: string) {
 ## Error Handling Patterns
 
 ### 1. Component-Level Error Boundaries
+
 ```typescript
 // Wrap risky components
 <ErrorBoundary>
@@ -131,6 +143,7 @@ function useApiCall<T>(endpoint: string) {
 ```
 
 ### 2. Async Error Handling
+
 ```typescript
 // Always handle async errors
 try {
@@ -144,6 +157,7 @@ try {
 ```
 
 ### 3. User-Friendly Error Messages
+
 ```typescript
 // Provide helpful error messages
 const getErrorMessage = (error: unknown) => {
@@ -157,6 +171,7 @@ const getErrorMessage = (error: unknown) => {
 ## Performance Patterns
 
 ### 1. Code Splitting
+
 ```typescript
 // Lazy load heavy components
 const HeavyComponent = lazy(() => import('./HeavyComponent'))
@@ -168,6 +183,7 @@ const HeavyComponent = lazy(() => import('./HeavyComponent'))
 ```
 
 ### 2. Memoization
+
 ```typescript
 // Memoize expensive calculations
 const expensiveValue = useMemo(() => {
@@ -181,6 +197,7 @@ const handleClick = useCallback(() => {
 ```
 
 ### 3. Virtualization for Large Lists
+
 ```typescript
 // Use virtualization for large datasets
 // (To be implemented when needed)
@@ -189,6 +206,7 @@ const handleClick = useCallback(() => {
 ## Accessibility Patterns
 
 ### 1. Semantic HTML
+
 ```typescript
 // Use semantic elements
 <main>
@@ -200,6 +218,7 @@ const handleClick = useCallback(() => {
 ```
 
 ### 2. ARIA Labels
+
 ```typescript
 // Provide ARIA labels for screen readers
 <button aria-label="Search articles">
@@ -208,9 +227,10 @@ const handleClick = useCallback(() => {
 ```
 
 ### 3. Keyboard Navigation
+
 ```typescript
 // Ensure keyboard accessibility
-<div 
+<div
   tabIndex={0}
   onKeyDown={(e) => e.key === 'Enter' && handleClick()}
 >
@@ -221,6 +241,7 @@ const handleClick = useCallback(() => {
 ## Testing Patterns (Future)
 
 ### 1. Component Testing
+
 ```typescript
 // Test component behavior, not implementation
 test('should display search results', () => {
@@ -230,6 +251,7 @@ test('should display search results', () => {
 ```
 
 ### 2. Custom Hook Testing
+
 ```typescript
 // Test custom hooks with renderHook
 test('should handle search state', () => {

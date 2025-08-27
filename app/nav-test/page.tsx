@@ -31,11 +31,16 @@ export default function NavigationTest() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
-        <h1 className="text-4xl font-bold text-cyan-400 mb-4">Navigation Test Page</h1>
+        <h1 className="mb-4 text-4xl font-bold text-cyan-400">
+          Navigation Test Page
+        </h1>
         <div className="cyber-card p-4">
-          <h2 className="text-xl font-semibold text-cyan-300 mb-2">Current State:</h2>
+          <h2 className="mb-2 text-xl font-semibold text-cyan-300">
+            Current State:
+          </h2>
           <p className="text-cyan-200">
-            <strong>Authentication:</strong> {isSignedIn ? 'AUTHENTICATED' : 'GUEST MODE'}
+            <strong>Authentication:</strong>{' '}
+            {isSignedIn ? 'AUTHENTICATED' : 'GUEST MODE'}
           </p>
           {isSignedIn && user && (
             <p className="text-cyan-200">
@@ -48,16 +53,16 @@ export default function NavigationTest() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {currentRoutes.map((route) => (
           <Card key={route.href} variant="cyber">
             <CardHeader>
               <CardTitle className="text-cyan-400">{route.label}</CardTitle>
             </CardHeader>
             <CardContent>
-              <Link 
+              <Link
                 href={route.href}
-                className="cyber-button inline-block px-4 py-2 text-center w-full"
+                className="cyber-button inline-block w-full px-4 py-2 text-center"
               >
                 Navigate to {route.label}
               </Link>
@@ -72,12 +77,24 @@ export default function NavigationTest() {
             <CardTitle className="text-cyan-400">Instructions</CardTitle>
           </CardHeader>
           <CardContent className="text-cyan-200">
-            <ol className="list-decimal list-inside space-y-2">
-              <li>Use the DevToggle button (bottom-right corner) to switch between Guest and Authenticated modes</li>
-              <li>In <strong>Guest Mode</strong>: You'll see 4 public navigation items</li>
-              <li>In <strong>Authenticated Mode</strong>: You'll see 9 navigation items including Dashboard, GraphQL, etc.</li>
+            <ol className="list-inside list-decimal space-y-2">
+              <li>
+                Use the DevToggle button (bottom-right corner) to switch between
+                Guest and Authenticated modes
+              </li>
+              <li>
+                In <strong>Guest Mode</strong>: You'll see 4 public navigation
+                items
+              </li>
+              <li>
+                In <strong>Authenticated Mode</strong>: You'll see 9 navigation
+                items including Dashboard, GraphQL, etc.
+              </li>
               <li>Click any navigation button above to test the routing</li>
-              <li>Protected pages (Dashboard, etc.) will show login prompt in Guest mode</li>
+              <li>
+                Protected pages (Dashboard, etc.) will show login prompt in
+                Guest mode
+              </li>
             </ol>
           </CardContent>
         </Card>

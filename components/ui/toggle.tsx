@@ -12,7 +12,8 @@ const toggleVariants = cva(
         default: '',
         outline:
           'border border-input bg-transparent hover:bg-accent hover:text-accent-foreground',
-        cyber: 'cyber-button data-[state=on]:bg-gradient-to-r data-[state=on]:from-cyan-400/20 data-[state=on]:to-purple-500/20 data-[state=on]:border-cyan-400/60 data-[state=on]:shadow-[0_0_20px_rgba(0,255,255,0.3)]',
+        cyber:
+          'cyber-button data-[state=on]:bg-gradient-to-r data-[state=on]:from-cyan-400/20 data-[state=on]:to-purple-500/20 data-[state=on]:border-cyan-400/60 data-[state=on]:shadow-[0_0_20px_rgba(0,255,255,0.3)]',
       },
       size: {
         default: 'h-10 px-3',

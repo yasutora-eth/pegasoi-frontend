@@ -49,7 +49,7 @@ export function Header() {
   return (
     <header className="cyber-card sticky top-0 z-50 w-full border-b border-cyan-500/30 backdrop-blur-lg">
       <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between relative">
+        <div className="relative flex h-16 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-400 to-purple-600">
@@ -160,7 +160,7 @@ export function Header() {
             {!isSignedIn && (
               <div className="mt-4 border-t border-cyan-500/30 pt-4">
                 <SignInButton>
-                  <Button className="cyber-button w-full flex items-center space-x-2">
+                  <Button className="cyber-button flex w-full items-center space-x-2">
                     <LogIn className="h-4 w-4" />
                     <span>Sign In</span>
                   </Button>

@@ -9,7 +9,8 @@ const inputVariants = cva(
     variants: {
       variant: {
         default: '',
-        cyber: 'cyber-tabs border-cyan-400/20 bg-gray-900/50 text-cyan-300 placeholder:text-cyan-400/50 focus-visible:ring-cyan-400/50',
+        cyber:
+          'cyber-tabs border-cyan-400/20 bg-gray-900/50 text-cyan-300 placeholder:text-cyan-400/50 focus-visible:ring-cyan-400/50',
       },
     },
     defaultVariants: {

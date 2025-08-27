@@ -2,27 +2,24 @@ import * as React from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
-const loadingVariants = cva(
-  'inline-flex items-center justify-center',
-  {
-    variants: {
-      variant: {
-        default: 'text-primary',
-        cyber: 'text-cyan-400',
-      },
-      size: {
-        sm: 'h-4 w-4',
-        default: 'h-6 w-6',
-        lg: 'h-8 w-8',
-        xl: 'h-12 w-12',
-      },
+const loadingVariants = cva('inline-flex items-center justify-center', {
+  variants: {
+    variant: {
+      default: 'text-primary',
+      cyber: 'text-cyan-400',
     },
-    defaultVariants: {
-      variant: 'default',
-      size: 'default',
+    size: {
+      sm: 'h-4 w-4',
+      default: 'h-6 w-6',
+      lg: 'h-8 w-8',
+      xl: 'h-12 w-12',
     },
-  }
-)
+  },
+  defaultVariants: {
+    variant: 'default',
+    size: 'default',
+  },
+})
 
 export interface LoadingSpinnerProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -67,18 +64,25 @@ export interface LoadingStateProps {
   className?: string
 }
 
-const LoadingState: React.FC<LoadingStateProps> = ({ 
-  variant = 'default', 
-  size = 'default', 
-  message = 'Loading...', 
-  className 
+const LoadingState: React.FC<LoadingStateProps> = ({
+  variant = 'default',
+  size = 'default',
+  message = 'Loading...',
+  className,
 }) => (
-  <div className={cn('flex flex-col items-center justify-center gap-4 p-8', className)}>
+  <div
+    className={cn(
+      'flex flex-col items-center justify-center gap-4 p-8',
+      className
+    )}
+  >
     <LoadingSpinner variant={variant} size={size} />
-    <p className={cn(
-      'text-sm font-medium',
-      variant === 'cyber' ? 'text-cyan-300' : 'text-muted-foreground'
-    )}>
+    <p
+      className={cn(
+        'text-sm font-medium',
+        variant === 'cyber' ? 'text-cyan-300' : 'text-muted-foreground'
+      )}
+    >
       {message}
     </p>
   </div>
@@ -89,22 +93,27 @@ export interface CyberLoadingProps {
   className?: string
 }
 
-const CyberLoading: React.FC<CyberLoadingProps> = ({ 
-  message = 'INITIALIZING SYSTEMS...', 
-  className 
+const CyberLoading: React.FC<CyberLoadingProps> = ({
+  message = 'INITIALIZING SYSTEMS...',
+  className,
 }) => (
-  <div className={cn('flex flex-col items-center justify-center gap-6 p-12', className)}>
+  <div
+    className={cn(
+      'flex flex-col items-center justify-center gap-6 p-12',
+      className
+    )}
+  >
     <div className="relative">
       <LoadingSpinner variant="cyber" size="xl" />
       <div className="absolute inset-0 animate-ping">
         <LoadingSpinner variant="cyber" size="xl" className="opacity-20" />
       </div>
     </div>
-    <div className="text-center space-y-2">
+    <div className="space-y-2 text-center">
       <p className="text-cyber text-glow text-lg font-bold uppercase tracking-wider">
         {message}
       </p>
-      <div className="data-stream w-32 h-1 mx-auto" />
+      <div className="data-stream mx-auto h-1 w-32" />
     </div>
   </div>
 )

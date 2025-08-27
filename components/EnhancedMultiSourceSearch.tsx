@@ -54,10 +54,13 @@ interface SearchResponse {
   }
   error?: string
   fallback?: boolean
+  note?: string
 }
 
 // Convert unified backend response to legacy format for this component
-function convertUnifiedToLegacyFormat(unifiedResults: any[]): Record<string, SearchResponse> {
+function convertUnifiedToLegacyFormat(
+  unifiedResults: any[]
+): Record<string, SearchResponse> {
   const legacyFormat: Record<string, SearchResponse> = {}
 
   unifiedResults.forEach((paper: any) => {
@@ -66,7 +69,7 @@ function convertUnifiedToLegacyFormat(unifiedResults: any[]): Record<string, Sea
     if (!legacyFormat[source]) {
       legacyFormat[source] = {
         ok: true,
-        data: { entries: [], total: 0 }
+        data: { entries: [], total: 0 },
       }
     }
 
@@ -80,12 +83,13 @@ function convertUnifiedToLegacyFormat(unifiedResults: any[]): Record<string, Sea
       doi: paper.doi || '',
       journal: paper.journal || '',
       keywords: paper.keywords || [],
-      relevanceScore: paper.relevanceScore || 0
+      relevanceScore: paper.relevanceScore || 0,
     }
 
     if (legacyFormat[source].data?.entries) {
       legacyFormat[source].data!.entries!.push(entry)
-      legacyFormat[source].data!.total = (legacyFormat[source].data!.total || 0) + 1
+      legacyFormat[source].data!.total =
+        (legacyFormat[source].data!.total || 0) + 1
     }
   })
 
@@ -122,7 +126,7 @@ export function EnhancedMultiSourceSearch() {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            'Accept': 'application/json',
+            Accept: 'application/json',
           },
           signal: AbortSignal.timeout(60000), // 60 second timeout
         })
@@ -394,7 +398,7 @@ export function EnhancedMultiSourceSearch() {
         ok: true,
         data: createGettyMuseumFallbackData(searchQuery),
         fallback: false, // This is intentional - Getty doesn't have a simple search API
-        note: 'Getty Museum uses SPARQL/individual object access - linking to web search'
+        note: 'Getty Museum uses SPARQL/individual object access - linking to web search',
       }
     } catch {
       // Fallback to basic Getty data
@@ -525,11 +529,12 @@ export function EnhancedMultiSourceSearch() {
       ],
       getty_uri: `https://www.getty.edu/art/collection/search/?q=${encodeURIComponent(query)}`,
       source: 'getty',
-      note: 'Click to search the full Getty Museum collection'
+      note: 'Click to search the full Getty Museum collection',
     })
 
     // If no specific matches were found, provide general Getty information
-    if (fallbackEntries.length === 1) { // Only the search link above
+    if (fallbackEntries.length === 1) {
+      // Only the search link above
       fallbackEntries.push({
         title: `Getty Museum Collection Overview`,
         abstract: `The J. Paul Getty Museum collection includes Greek, Roman, and Etruscan art from the Neolithic to Late Antiquity; European art from the Middle Ages to the early twentieth century; and international photography from its inception to the present day.`,
@@ -537,9 +542,7 @@ export function EnhancedMultiSourceSearch() {
         published: new Date().getFullYear().toString(),
         journal: 'Getty Museum Collection',
         subjects: ['Art History', 'Museum Studies', 'Cultural Heritage'],
-        links: [
-          'https://www.getty.edu/art/collection/',
-        ],
+        links: ['https://www.getty.edu/art/collection/'],
         getty_uri: 'https://www.getty.edu/art/collection/',
         source: 'getty',
       })

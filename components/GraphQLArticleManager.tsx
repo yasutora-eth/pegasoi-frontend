@@ -51,7 +51,8 @@ export function GraphQLArticleManager() {
       articleId: '1',
       title: 'Roman Architecture in the Imperial Period',
       authors: ['Dr. Marcus Aurelius'],
-      abstract: 'An extensive study of architectural developments during the height of the Roman Empire, examining the evolution of construction techniques, materials, and design principles.',
+      abstract:
+        'An extensive study of architectural developments during the height of the Roman Empire, examining the evolution of construction techniques, materials, and design principles.',
       content: 'Full content of the Roman Architecture article...',
       keywords: ['Roman', 'Architecture', 'Imperial', 'Construction'],
       publicationDate: '2024-01-15T00:00:00',
@@ -59,13 +60,14 @@ export function GraphQLArticleManager() {
       createdAt: '2024-01-15T00:00:00',
       updatedAt: '2024-01-15T00:00:00',
       doi: '10.1000/182',
-      journal: 'Classical Studies Quarterly'
+      journal: 'Classical Studies Quarterly',
     },
     {
       articleId: '2',
       title: 'Greek Pottery: Styles and Techniques',
       authors: ['Prof. Helena Athena'],
-      abstract: 'A comprehensive analysis of ancient Greek pottery traditions, exploring the various styles, decorative techniques, and cultural significance of ceramic art.',
+      abstract:
+        'A comprehensive analysis of ancient Greek pottery traditions, exploring the various styles, decorative techniques, and cultural significance of ceramic art.',
       content: 'Full content of the Greek Pottery article...',
       keywords: ['Greek', 'Pottery', 'Ceramics', 'Art'],
       publicationDate: '2024-01-20T00:00:00',
@@ -73,8 +75,8 @@ export function GraphQLArticleManager() {
       createdAt: '2024-01-20T00:00:00',
       updatedAt: '2024-01-20T00:00:00',
       doi: '10.1000/183',
-      journal: 'Archaeological Review'
-    }
+      journal: 'Archaeological Review',
+    },
   ]
 
   // Use articles from GraphQL or fallback to mock data

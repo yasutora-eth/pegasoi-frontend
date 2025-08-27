@@ -1,6 +1,7 @@
 # Pegasoi Frontend - Project Structure
 
 ## Root Directory Structure
+
 ```
 pegasoi-frontend/
 ├── .github/              # GitHub workflows and templates
@@ -27,6 +28,7 @@ pegasoi-frontend/
 ```
 
 ## App Directory (Next.js App Router)
+
 ```
 app/
 ├── (auth)/               # Authentication routes (route groups)
@@ -55,6 +57,7 @@ app/
 ```
 
 ## Components Directory
+
 ```
 components/
 ├── ui/                   # Shadcn/ui base components
@@ -85,6 +88,7 @@ components/
 ```
 
 ## Lib Directory
+
 ```
 lib/
 ├── graphql/              # GraphQL queries and mutations
@@ -98,6 +102,7 @@ lib/
 ```
 
 ## Types Directory
+
 ```
 types/
 ├── article.ts            # Article-related types
@@ -106,6 +111,7 @@ types/
 ```
 
 ## Key Configuration Files
+
 - **next.config.mjs**: Next.js configuration with dynamic rendering
 - **tailwind.config.ts**: Tailwind with custom cyber/web3 theme
 - **tsconfig.json**: TypeScript configuration with path aliases

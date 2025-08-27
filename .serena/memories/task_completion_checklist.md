@@ -3,6 +3,7 @@
 ## Before Committing Code
 
 ### 1. Code Quality Checks
+
 ```bash
 # Run type checking
 npm run type-check
@@ -18,6 +19,7 @@ npm run format
 ```
 
 ### 2. Build Verification
+
 ```bash
 # Ensure production build works
 npm run build
@@ -27,6 +29,7 @@ npm run start
 ```
 
 ### 3. Manual Testing
+
 - [ ] Test the feature in development mode (`npm run dev`)
 - [ ] Verify responsive design on different screen sizes
 - [ ] Test dark/light mode switching (if applicable)
@@ -34,6 +37,7 @@ npm run start
 - [ ] Test with different browsers (Chrome, Firefox, Safari)
 
 ### 4. Code Review Self-Check
+
 - [ ] Follow naming conventions (PascalCase for components, camelCase for functions)
 - [ ] Use TypeScript properly (avoid `any` when possible)
 - [ ] Add proper error handling
@@ -43,6 +47,7 @@ npm run start
 - [ ] Follow component structure conventions
 
 ### 5. Documentation Updates
+
 - [ ] Update README.md if adding new features
 - [ ] Add JSDoc comments for complex functions
 - [ ] Update type definitions if needed
@@ -51,11 +56,13 @@ npm run start
 ## Git Workflow
 
 ### 1. Pre-commit (Automatic via Husky)
+
 - ESLint runs automatically
 - Prettier formats code automatically
 - TypeScript compilation check
 
 ### 2. Commit Message Format
+
 ```bash
 # Use conventional commit format
 git commit -m "feat: add new search functionality"
@@ -66,12 +73,14 @@ git commit -m "refactor: optimize search component"
 ```
 
 ### 3. Branch Strategy
+
 - `main`: Production-ready code
 - `develop`: Development branch for integration
 - `feature/*`: Feature branches
 - `fix/*`: Bug fix branches
 
 ## Testing Checklist (When Tests Are Added)
+
 ```bash
 # Run all tests
 npm run test
@@ -87,6 +96,7 @@ npm run test:e2e
 ```
 
 ## Performance Checklist
+
 - [ ] Check bundle size impact (`npm run build:analyze`)
 - [ ] Verify Core Web Vitals in development
 - [ ] Test loading performance on slow connections
@@ -94,6 +104,7 @@ npm run test:e2e
 - [ ] Check for unnecessary re-renders
 
 ## Security Checklist
+
 - [ ] No sensitive data in client-side code
 - [ ] Environment variables properly configured
 - [ ] API endpoints properly secured
@@ -101,6 +112,7 @@ npm run test:e2e
 - [ ] XSS prevention measures in place
 
 ## Deployment Readiness
+
 - [ ] All environment variables documented
 - [ ] Build process works without errors
 - [ ] No console errors in production build

@@ -25,17 +25,17 @@ export function useSearchPapers() {
       const searchSources = sources || ['crossref', 'arxiv', 'doaj']
 
       const result = await searchPapers({
-        variables: { query, sources: searchSources, limit }
+        variables: { query, sources: searchSources, limit },
       })
       return {
         success: true,
         data: result.data?.search,
-        loading: result.loading
+        loading: result.loading,
       }
     } catch (err) {
       return {
         success: false,
-        error: err instanceof Error ? err.message : 'Search failed'
+        error: err instanceof Error ? err.message : 'Search failed',
       }
     }
   }
@@ -44,7 +44,7 @@ export function useSearchPapers() {
     search,
     loading,
     error,
-    data: data?.search
+    data: data?.search,
   }
 }
 

@@ -1,15 +1,15 @@
 import { useQuery, useMutation, useApolloClient } from '@apollo/client'
-import { 
-  GET_ARTICLES, 
-  GET_ARTICLE_BY_ID, 
+import {
+  GET_ARTICLES,
+  GET_ARTICLE_BY_ID,
   GET_ARTICLES_BY_STATUS,
-  SEARCH_ARTICLES_BY_KEYWORDS 
+  SEARCH_ARTICLES_BY_KEYWORDS,
 } from '../graphql/queries'
-import { 
-  CREATE_ARTICLE, 
-  UPDATE_ARTICLE_STATUS, 
+import {
+  CREATE_ARTICLE,
+  UPDATE_ARTICLE_STATUS,
   DELETE_ARTICLE,
-  ADD_KEYWORDS_TO_ARTICLE 
+  ADD_KEYWORDS_TO_ARTICLE,
 } from '../graphql/mutations'
 import type { Article, ArticleCreate, ArticleStatus } from '@/types/graphql'
 
@@ -23,7 +23,7 @@ export function useArticles(status?: string, limit = 100) {
     fetchPolicy: 'cache-first',
     onError: (error) => {
       console.warn('GraphQL query failed, using fallback data:', error.message)
-    }
+    },
   })
 }
 
@@ -65,9 +65,9 @@ export function useCreateArticle() {
       const result = await createArticleMutation({ variables: { input } })
       return { success: true, data: result.data?.createArticle }
     } catch (err) {
-      return { 
-        success: false, 
-        error: err instanceof Error ? err.message : 'Failed to create article' 
+      return {
+        success: false,
+        error: err instanceof Error ? err.message : 'Failed to create article',
       }
     }
   }
@@ -88,9 +88,12 @@ export function useUpdateArticleStatus() {
       const result = await updateStatusMutation({ variables: { id, status } })
       return { success: true, data: result.data?.updateArticleStatus }
     } catch (err) {
-      return { 
-        success: false, 
-        error: err instanceof Error ? err.message : 'Failed to update article status' 
+      return {
+        success: false,
+        error:
+          err instanceof Error
+            ? err.message
+            : 'Failed to update article status',
       }
     }
   }
@@ -108,14 +111,14 @@ export function useDeleteArticle() {
   const deleteArticle = async (id: string) => {
     try {
       const result = await deleteArticleMutation({ variables: { id } })
-      return { 
+      return {
         success: result.data?.deleteArticle.success ?? false,
-        message: result.data?.deleteArticle.message 
+        message: result.data?.deleteArticle.message,
       }
     } catch (err) {
-      return { 
-        success: false, 
-        error: err instanceof Error ? err.message : 'Failed to delete article' 
+      return {
+        success: false,
+        error: err instanceof Error ? err.message : 'Failed to delete article',
       }
     }
   }
@@ -134,9 +137,9 @@ export function useAddKeywords() {
       const result = await addKeywordsMutation({ variables: { id, keywords } })
       return { success: true, data: result.data?.addKeywordsToArticle }
     } catch (err) {
-      return { 
-        success: false, 
-        error: err instanceof Error ? err.message : 'Failed to add keywords' 
+      return {
+        success: false,
+        error: err instanceof Error ? err.message : 'Failed to add keywords',
       }
     }
   }
@@ -155,9 +158,10 @@ export function useRefetchArticles() {
       })
       return { success: true }
     } catch (err) {
-      return { 
-        success: false, 
-        error: err instanceof Error ? err.message : 'Failed to refetch articles' 
+      return {
+        success: false,
+        error:
+          err instanceof Error ? err.message : 'Failed to refetch articles',
       }
     }
   }

@@ -21,22 +21,28 @@ const ErrorState: React.FC<ErrorStateProps> = ({
   onDismiss,
   className,
 }) => (
-  <Card className={cn(
-    'border-destructive/50 bg-destructive/5',
-    variant === 'cyber' && 'cyber-card border-red-500/30 bg-red-900/10',
-    className
-  )}>
+  <Card
+    className={cn(
+      'border-destructive/50 bg-destructive/5',
+      variant === 'cyber' && 'cyber-card border-red-500/30 bg-red-900/10',
+      className
+    )}
+  >
     <CardHeader className="pb-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <AlertTriangle className={cn(
-            'h-5 w-5 text-destructive',
-            variant === 'cyber' && 'text-red-400'
-          )} />
-          <CardTitle className={cn(
-            'text-destructive',
-            variant === 'cyber' && 'text-red-400'
-          )}>
+          <AlertTriangle
+            className={cn(
+              'h-5 w-5 text-destructive',
+              variant === 'cyber' && 'text-red-400'
+            )}
+          />
+          <CardTitle
+            className={cn(
+              'text-destructive',
+              variant === 'cyber' && 'text-red-400'
+            )}
+          >
             {title}
           </CardTitle>
         </div>
@@ -56,10 +62,12 @@ const ErrorState: React.FC<ErrorStateProps> = ({
       </div>
     </CardHeader>
     <CardContent className="space-y-4">
-      <p className={cn(
-        'text-sm text-muted-foreground',
-        variant === 'cyber' && 'text-red-300/70'
-      )}>
+      <p
+        className={cn(
+          'text-sm text-muted-foreground',
+          variant === 'cyber' && 'text-red-300/70'
+        )}
+      >
         {message}
       </p>
       {onRetry && (
@@ -94,31 +102,31 @@ const CyberError: React.FC<CyberErrorProps> = ({
   onDismiss,
   className,
 }) => (
-  <div className={cn('cyber-card p-8 border-red-500/30 bg-red-900/10', className)}>
-    <div className="text-center space-y-6">
+  <div
+    className={cn('cyber-card border-red-500/30 bg-red-900/10 p-8', className)}
+  >
+    <div className="space-y-6 text-center">
       <div className="relative">
-        <AlertTriangle className="h-16 w-16 text-red-400 mx-auto animate-pulse" />
+        <AlertTriangle className="mx-auto h-16 w-16 animate-pulse text-red-400" />
         <div className="absolute inset-0 animate-ping">
-          <AlertTriangle className="h-16 w-16 text-red-400 mx-auto opacity-20" />
+          <AlertTriangle className="mx-auto h-16 w-16 text-red-400 opacity-20" />
         </div>
       </div>
-      
+
       <div className="space-y-2">
-        <h2 className="text-red-400 text-glow text-2xl font-bold uppercase tracking-wider">
+        <h2 className="text-glow text-2xl font-bold uppercase tracking-wider text-red-400">
           {title}
         </h2>
         {errorCode && (
-          <p className="text-red-300/70 text-sm font-mono">
+          <p className="font-mono text-sm text-red-300/70">
             ERROR CODE: {errorCode}
           </p>
         )}
       </div>
-      
-      <p className="text-red-300/80 max-w-md mx-auto">
-        {message}
-      </p>
-      
-      <div className="flex gap-4 justify-center">
+
+      <p className="mx-auto max-w-md text-red-300/80">{message}</p>
+
+      <div className="flex justify-center gap-4">
         {onRetry && (
           <Button variant="cyber" onClick={onRetry} className="gap-2">
             <RefreshCw className="h-4 w-4" />
@@ -126,8 +134,8 @@ const CyberError: React.FC<CyberErrorProps> = ({
           </Button>
         )}
         {onDismiss && (
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             onClick={onDismiss}
             className="border-red-400/30 text-red-400 hover:bg-red-400/10"
           >
@@ -135,8 +143,8 @@ const CyberError: React.FC<CyberErrorProps> = ({
           </Button>
         )}
       </div>
-      
-      <div className="data-stream w-48 h-1 mx-auto opacity-50" />
+
+      <div className="data-stream mx-auto h-1 w-48 opacity-50" />
     </div>
   </div>
 )
@@ -156,11 +164,11 @@ const GraphQLError: React.FC<GraphQLErrorProps> = ({
 }) => {
   if (!error) return null
 
-  const isNetworkError = error.message.includes('Network error') || 
-                        error.message.includes('fetch')
-  
+  const isNetworkError =
+    error.message.includes('Network error') || error.message.includes('fetch')
+
   const title = isNetworkError ? 'Connection Error' : 'Data Error'
-  const message = isNetworkError 
+  const message = isNetworkError
     ? 'Unable to connect to the server. Please check your connection and try again.'
     : error.message
 

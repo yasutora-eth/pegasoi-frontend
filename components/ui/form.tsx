@@ -18,7 +18,7 @@ const Form = FormProvider
 
 type FormFieldContextValue<
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > = {
   name: TName
 }
@@ -29,7 +29,7 @@ const FormFieldContext = React.createContext<FormFieldContextValue>(
 
 const FormField = <
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({
   ...props
 }: ControllerProps<TFieldValues, TName>) => {
@@ -71,20 +71,17 @@ const FormItemContext = React.createContext<FormItemContextValue>(
   {} as FormItemContextValue
 )
 
-const formItemVariants = cva(
-  'space-y-2',
-  {
-    variants: {
-      variant: {
-        default: '',
-        cyber: 'space-y-3',
-      },
+const formItemVariants = cva('space-y-2', {
+  variants: {
+    variant: {
+      default: '',
+      cyber: 'space-y-3',
     },
-    defaultVariants: {
-      variant: 'default',
-    },
-  }
-)
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
+})
 
 export interface FormItemProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -96,7 +93,11 @@ const FormItem = React.forwardRef<HTMLDivElement, FormItemProps>(
 
     return (
       <FormItemContext.Provider value={{ id }}>
-        <div ref={ref} className={cn(formItemVariants({ variant, className }))} {...props} />
+        <div
+          ref={ref}
+          className={cn(formItemVariants({ variant, className }))}
+          {...props}
+        />
       </FormItemContext.Provider>
     )
   }

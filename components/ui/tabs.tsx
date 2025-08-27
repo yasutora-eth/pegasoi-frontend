@@ -25,7 +25,8 @@ const tabsTriggerVariants = cva(
     variants: {
       variant: {
         default: '',
-        cyber: 'cyber-tab-trigger data-[state=active]:bg-cyan-400/10 data-[state=active]:text-cyan-400 data-[state=active]:border-cyan-400/40',
+        cyber:
+          'cyber-tab-trigger data-[state=active]:bg-cyan-400/10 data-[state=active]:text-cyan-400 data-[state=active]:border-cyan-400/40',
       },
     },
     defaultVariants: {

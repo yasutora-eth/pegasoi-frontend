@@ -68,15 +68,15 @@ export const theme = {
       display: ['Space Grotesk', 'Inter', 'sans-serif'],
     },
     sizes: {
-      xs: '0.75rem',    // 12px
-      sm: '0.875rem',   // 14px
-      base: '1rem',     // 16px
-      lg: '1.125rem',   // 18px
-      xl: '1.25rem',    // 20px
-      '2xl': '1.5rem',  // 24px
+      xs: '0.75rem', // 12px
+      sm: '0.875rem', // 14px
+      base: '1rem', // 16px
+      lg: '1.125rem', // 18px
+      xl: '1.25rem', // 20px
+      '2xl': '1.5rem', // 24px
       '3xl': '1.875rem', // 30px
       '4xl': '2.25rem', // 36px
-      '5xl': '3rem',    // 48px
+      '5xl': '3rem', // 48px
       '6xl': '3.75rem', // 60px
     },
     weights: {
@@ -158,9 +158,12 @@ export const theme = {
     '2xl': '0 25px 50px -12px rgb(0 0 0 / 0.25)',
     inner: 'inset 0 2px 4px 0 rgb(0 0 0 / 0.05)',
     // Cyber-specific shadows
-    cyber: '0 0 20px rgba(0, 255, 255, 0.4), 0 0 40px rgba(0, 255, 255, 0.2), 0 0 60px rgba(168, 85, 247, 0.1)',
-    cyberGlow: '0 0 30px rgba(0, 255, 255, 0.6), 0 0 60px rgba(0, 255, 255, 0.3)',
-    cyberPulse: '0 0 20px rgba(0, 255, 255, 0.3), 0 0 40px rgba(0, 255, 255, 0.1)',
+    cyber:
+      '0 0 20px rgba(0, 255, 255, 0.4), 0 0 40px rgba(0, 255, 255, 0.2), 0 0 60px rgba(168, 85, 247, 0.1)',
+    cyberGlow:
+      '0 0 30px rgba(0, 255, 255, 0.6), 0 0 60px rgba(0, 255, 255, 0.3)',
+    cyberPulse:
+      '0 0 20px rgba(0, 255, 255, 0.3), 0 0 40px rgba(0, 255, 255, 0.1)',
   },
 
   // Animation system
@@ -263,14 +266,17 @@ export const getSpacing = (key: keyof typeof theme.spacing) => {
   return theme.spacing[key]
 }
 
-export const getTypography = (category: keyof typeof theme.typography, key: string) => {
+export const getTypography = (
+  category: keyof typeof theme.typography,
+  key: string
+) => {
   return (theme.typography[category] as any)?.[key]
 }
 
 // CSS custom properties generator
 export const generateCSSCustomProperties = () => {
   const properties: Record<string, string> = {}
-  
+
   // Generate color properties
   Object.entries(theme.colors).forEach(([colorName, colorValue]) => {
     if (typeof colorValue === 'string') {
@@ -281,11 +287,11 @@ export const generateCSSCustomProperties = () => {
       })
     }
   })
-  
+
   // Generate spacing properties
   Object.entries(theme.spacing).forEach(([key, value]) => {
     properties[`--spacing-${key}`] = value
   })
-  
+
   return properties
 }

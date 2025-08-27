@@ -11,7 +11,8 @@ const checkboxVariants = cva(
     variants: {
       variant: {
         default: '',
-        cyber: 'border-cyan-400/50 data-[state=checked]:bg-gradient-to-br data-[state=checked]:from-cyan-400 data-[state=checked]:to-purple-500 data-[state=checked]:shadow-[0_0_10px_rgba(0,255,255,0.5)]',
+        cyber:
+          'border-cyan-400/50 data-[state=checked]:bg-gradient-to-br data-[state=checked]:from-cyan-400 data-[state=checked]:to-purple-500 data-[state=checked]:shadow-[0_0_10px_rgba(0,255,255,0.5)]',
       },
     },
     defaultVariants: {

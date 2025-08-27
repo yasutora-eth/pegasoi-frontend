@@ -14,6 +14,7 @@ export interface Article {
   updatedAt: string
   doi?: string | null
   journal?: string | null
+  url?: string | null // Optional URL for external articles
 }
 
 // Match backend CreateArticleDTO exactly
@@ -127,7 +128,7 @@ class ApiService {
     const config: RequestInit = {
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
+        Accept: 'application/json',
         ...options.headers,
       },
       ...options,
@@ -236,59 +237,61 @@ class ApiService {
       // Standard formats
       {
         endpoint: `/api/v1/search/papers?query=${encodeURIComponent(trimmedQuery)}&limit=${limit}&sources=${sources.join(',')}`,
-        description: 'Standard multi-source'
+        description: 'Standard multi-source',
       },
       {
         endpoint: `/api/v1/search/papers?query=${encodeURIComponent(trimmedQuery)}&limit=${limit}`,
-        description: 'No sources specified'
+        description: 'No sources specified',
       },
       {
         endpoint: `/api/v1/search/papers?query=${encodeURIComponent(trimmedQuery)}&limit=${limit}&sources=crossref`,
-        description: 'CrossRef only'
+        description: 'CrossRef only',
       },
       {
         endpoint: `/api/v1/search/papers?query=${encodeURIComponent(trimmedQuery)}&limit=${limit}&sources=arxiv`,
-        description: 'ArXiv only'
+        description: 'ArXiv only',
       },
       {
         endpoint: `/api/v1/search/papers?query=${encodeURIComponent(trimmedQuery)}&limit=${limit}&sources=doaj`,
-        description: 'DOAJ only'
+        description: 'DOAJ only',
       },
 
       // Different query encodings
       {
         endpoint: `/api/v1/search/papers?query=${trimmedQuery.replace(/\s+/g, '+')}&limit=${limit}&sources=crossref`,
-        description: 'Plus encoding'
+        description: 'Plus encoding',
       },
       {
         endpoint: `/api/v1/search/papers?query=${encodeURIComponent('"' + trimmedQuery + '"')}&limit=${limit}&sources=crossref`,
-        description: 'Quoted query'
+        description: 'Quoted query',
       },
       {
         endpoint: `/api/v1/search/papers?query=${encodeURIComponent(trimmedQuery.split(' ').join(' AND '))}&limit=${limit}&sources=crossref`,
-        description: 'Boolean AND'
+        description: 'Boolean AND',
       },
       {
         endpoint: `/api/v1/search/papers?query=${encodeURIComponent(trimmedQuery.split(' ').join(' OR '))}&limit=${limit}&sources=crossref`,
-        description: 'Boolean OR'
+        description: 'Boolean OR',
       },
 
       // Academic-specific formats
       {
         endpoint: `/api/v1/search/papers?query=${encodeURIComponent('title:' + trimmedQuery)}&limit=${limit}&sources=crossref`,
-        description: 'Title field search'
+        description: 'Title field search',
       },
       {
         endpoint: `/api/v1/search/papers?query=${encodeURIComponent('abstract:' + trimmedQuery)}&limit=${limit}&sources=crossref`,
-        description: 'Abstract field search'
-      }
+        description: 'Abstract field search',
+      },
     ]
 
     console.log(`🔍 Starting comprehensive search for: "${trimmedQuery}"`)
 
     for (const [index, variation] of searchVariations.entries()) {
       try {
-        console.log(`Trying variation ${index + 1}/11: ${variation.description}`)
+        console.log(
+          `Trying variation ${index + 1}/11: ${variation.description}`
+        )
         console.log(`URL: ${variation.endpoint}`)
 
         const result = await this.request<SearchPaper[]>(
@@ -296,31 +299,40 @@ class ApiService {
           {
             headers: {
               'User-Agent': 'Pegasoi-Research-Platform/1.0',
-              'Accept': 'application/json',
+              Accept: 'application/json',
               'Content-Type': 'application/json',
-            }
+            },
           },
           120000 // 2 minute timeout for thorough testing
         )
 
         if (Array.isArray(result) && result.length > 0) {
-          console.log(`✅ SUCCESS! Found working format: ${variation.description}`)
-          console.log(`✅ Got ${result.length} results from variation ${index + 1}`)
+          console.log(
+            `✅ SUCCESS! Found working format: ${variation.description}`
+          )
+          console.log(
+            `✅ Got ${result.length} results from variation ${index + 1}`
+          )
           console.log(`✅ Working URL: ${variation.endpoint}`)
           return result
         } else {
           console.log(`❌ Variation ${index + 1} returned empty results`)
         }
       } catch (error) {
-        console.log(`❌ Variation ${index + 1} failed:`, error instanceof Error ? error.message : error)
+        console.log(
+          `❌ Variation ${index + 1} failed:`,
+          error instanceof Error ? error.message : error
+        )
         continue
       }
 
       // Small delay between attempts to be respectful
-      await new Promise(resolve => setTimeout(resolve, 500))
+      await new Promise((resolve) => setTimeout(resolve, 500))
     }
 
-    console.log('❌ All 11 search variations failed - backend may be experiencing issues with external APIs')
+    console.log(
+      '❌ All 11 search variations failed - backend may be experiencing issues with external APIs'
+    )
     return []
   }
 
@@ -355,7 +367,7 @@ class ApiService {
   private convertToLegacyFormat(papers: SearchPaper[]): SearchResult {
     const result: SearchResult = {}
 
-    papers.forEach(paper => {
+    papers.forEach((paper) => {
       if (!result[paper.source as keyof SearchResult]) {
         result[paper.source as keyof SearchResult] = { ok: true, data: [] }
       }
@@ -364,31 +376,31 @@ class ApiService {
       if (sourceData && sourceData.data) {
         // Convert to legacy format based on source
         if (paper.source === 'arxiv') {
-          (sourceData.data as ArxivData[]).push({
+          ;(sourceData.data as ArxivData[]).push({
             title: paper.title,
             authors: paper.authors,
             abstract: paper.abstract,
             url: paper.url,
             publishedDate: paper.publicationDate,
-            categories: paper.keywords || []
+            categories: paper.keywords || [],
           })
         } else if (paper.source === 'doaj') {
-          (sourceData.data as DoajData[]).push({
+          ;(sourceData.data as DoajData[]).push({
             title: paper.title,
             authors: paper.authors,
             abstract: paper.abstract,
             url: paper.url,
             journal: paper.journal || '',
-            publishedDate: paper.publicationDate
+            publishedDate: paper.publicationDate,
           })
         } else if (paper.source === 'crossref') {
-          (sourceData.data as CrossrefData[]).push({
+          ;(sourceData.data as CrossrefData[]).push({
             title: paper.title,
             authors: paper.authors,
             abstract: paper.abstract,
             doi: paper.doi || '',
             journal: paper.journal || '',
-            publishedDate: paper.publicationDate
+            publishedDate: paper.publicationDate,
           })
         }
       }

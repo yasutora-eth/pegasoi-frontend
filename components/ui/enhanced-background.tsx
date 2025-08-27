@@ -7,9 +7,9 @@ interface EnhancedBackgroundProps {
   className?: string
 }
 
-export function EnhancedBackground({ 
-  intensity = 'subtle', 
-  className = '' 
+export function EnhancedBackground({
+  intensity = 'subtle',
+  className = '',
 }: EnhancedBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -25,7 +25,7 @@ export function EnhancedBackground({
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
     }
-    
+
     resizeCanvas()
     window.addEventListener('resize', resizeCanvas)
 
@@ -43,7 +43,7 @@ export function EnhancedBackground({
     const intensitySettings = {
       subtle: { count: 15, maxOpacity: 0.008, speed: 0.1 },
       normal: { count: 25, maxOpacity: 0.015, speed: 0.2 },
-      enhanced: { count: 35, maxOpacity: 0.025, speed: 0.3 }
+      enhanced: { count: 35, maxOpacity: 0.025, speed: 0.3 },
     }
 
     const settings = intensitySettings[intensity]
@@ -57,7 +57,7 @@ export function EnhancedBackground({
         vy: (Math.random() - 0.5) * settings.speed,
         opacity: Math.random() * settings.maxOpacity,
         size: Math.random() * 1.5 + 0.5,
-        hue: Math.random() * 60 + 180 // Cyan to purple range
+        hue: Math.random() * 60 + 180, // Cyan to purple range
       })
     }
 
@@ -66,7 +66,7 @@ export function EnhancedBackground({
 
     const animate = () => {
       time += 0.01
-      
+
       // Clear with ultra-low opacity
       ctx.fillStyle = 'rgba(10, 10, 15, 0.02)'
       ctx.fillRect(0, 0, canvas.width, canvas.height)
@@ -83,14 +83,22 @@ export function EnhancedBackground({
         if (particle.y > canvas.height) particle.y = 0
 
         // Subtle opacity fluctuation
-        particle.opacity = settings.maxOpacity * (0.5 + 0.5 * Math.sin(time * 2 + index))
+        particle.opacity =
+          settings.maxOpacity * (0.5 + 0.5 * Math.sin(time * 2 + index))
 
         // Draw particle with gradient
         const gradient = ctx.createRadialGradient(
-          particle.x, particle.y, 0,
-          particle.x, particle.y, particle.size * 3
+          particle.x,
+          particle.y,
+          0,
+          particle.x,
+          particle.y,
+          particle.size * 3
         )
-        gradient.addColorStop(0, `hsla(${particle.hue}, 70%, 60%, ${particle.opacity})`)
+        gradient.addColorStop(
+          0,
+          `hsla(${particle.hue}, 70%, 60%, ${particle.opacity})`
+        )
         gradient.addColorStop(1, `hsla(${particle.hue}, 70%, 60%, 0)`)
 
         ctx.fillStyle = gradient
@@ -113,10 +121,10 @@ export function EnhancedBackground({
   return (
     <canvas
       ref={canvasRef}
-      className={`fixed inset-0 pointer-events-none z-[-2] ${className}`}
+      className={`pointer-events-none fixed inset-0 z-[-2] ${className}`}
       style={{
         mixBlendMode: 'screen',
-        opacity: 0.4
+        opacity: 0.4,
       }}
     />
   )
@@ -125,8 +133,8 @@ export function EnhancedBackground({
 // Micro-texture overlay component
 export function MicroTextureOverlay() {
   return (
-    <div 
-      className="fixed inset-0 pointer-events-none z-[-1]"
+    <div
+      className="pointer-events-none fixed inset-0 z-[-1]"
       style={{
         backgroundImage: `
           radial-gradient(circle at 25% 25%, rgba(0, 255, 255, 0.003) 1px, transparent 1px),
@@ -136,7 +144,7 @@ export function MicroTextureOverlay() {
         backgroundSize: '60px 60px, 80px 80px, 40px 40px',
         backgroundPosition: '0 0, 30px 30px, 20px 20px',
         animation: 'micro-texture-drift 120s ease-in-out infinite alternate',
-        opacity: 0.8
+        opacity: 0.8,
       }}
     />
   )

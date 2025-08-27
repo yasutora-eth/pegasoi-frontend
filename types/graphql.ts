@@ -12,11 +12,12 @@ export interface Article {
   updatedAt: string
   doi?: string | null
   journal?: string | null
+  url?: string | null // Optional URL for external articles
 }
 
-export type ArticleStatus = 
+export type ArticleStatus =
   | 'draft'
-  | 'in_review' 
+  | 'in_review'
   | 'published'
   | 'archived'
   | 'rejected'

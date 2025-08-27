@@ -1,19 +1,61 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Removed deprecated experimental.appDir for Next.js 14+
+  // Production optimizations
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: false, // Enable ESLint in production builds
   },
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false, // Enable TypeScript checking in production builds
   },
+
+  // Image optimization
   images: {
-    domains: ['placeholder.svg'],
-    unoptimized: true, // Required for IPFS/Web3 deployments
+    domains: ['placeholder.svg', 'arxiv.org', 'doaj.org'],
+    formats: ['image/webp', 'image/avif'],
+    unoptimized: false, // Enable optimization for better performance
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
   },
-  // Disable static generation for pages with client-side context
+
+  // Performance optimizations
   experimental: {
     missingSuspenseWithCSRBailout: false,
+    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
+  },
+
+  // Compression and optimization
+  compress: true,
+  poweredByHeader: false,
+
+  // Security headers
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'origin-when-cross-origin',
+          },
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=()',
+          },
+        ],
+      },
+    ]
   },
   // Web3/IPFS compatibility
   trailingSlash: true,

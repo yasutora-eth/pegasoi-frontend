@@ -3,7 +3,13 @@
 import React, { useState } from 'react'
 import { ArticleCard } from './ArticleCard'
 import { Button } from '@/components/ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Badge } from '@/components/ui/badge'
 import { CyberLoading, LoadingState } from '@/components/ui/loading'
 import { CyberError, ErrorState } from '@/components/ui/error'
@@ -27,26 +33,32 @@ export function ArticlesList({
   variant = 'default',
   onRefresh,
   onViewArticle,
-  className
+  className,
 }: ArticlesListProps) {
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState<ArticleStatus | 'all'>('all')
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
 
   // Filter articles based on search and status
-  const filteredArticles = articles.filter(article => {
-    const matchesSearch = searchTerm === '' || 
+  const filteredArticles = articles.filter((article) => {
+    const matchesSearch =
+      searchTerm === '' ||
       article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      article.authors.some(author => author.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      article.authors.some((author) =>
+        author.toLowerCase().includes(searchTerm.toLowerCase())
+      ) ||
       article.articleAbstract?.toLowerCase().includes(searchTerm.toLowerCase())
 
-    const matchesStatus = statusFilter === 'all' || article.status === statusFilter
+    const matchesStatus =
+      statusFilter === 'all' || article.status === statusFilter
 
     return matchesSearch && matchesStatus
   })
 
   // Get unique statuses for filter
-  const availableStatuses = Array.from(new Set(articles.map(a => a.status))) as ArticleStatus[]
+  const availableStatuses = Array.from(
+    new Set(articles.map((a) => a.status))
+  ) as ArticleStatus[]
 
   // Loading state
   if (loading) {
@@ -80,14 +92,18 @@ export function ArticlesList({
       {/* Header with Controls */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div className="space-y-1">
-          <h1 className={`text-4xl font-bold ${
-            variant === 'cyber' ? 'text-cyber text-glow' : ''
-          }`}>
+          <h1
+            className={`text-4xl font-bold ${
+              variant === 'cyber' ? 'text-cyber text-glow' : ''
+            }`}
+          >
             {variant === 'cyber' ? 'RESEARCH DATABASE' : 'Articles'}
           </h1>
-          <p className={`${
-            variant === 'cyber' ? 'text-cyan-300/70' : 'text-muted-foreground'
-          }`}>
+          <p
+            className={`${
+              variant === 'cyber' ? 'text-cyan-300/70' : 'text-muted-foreground'
+            }`}
+          >
             {filteredArticles.length} of {articles.length} articles
           </p>
         </div>
@@ -109,7 +125,13 @@ export function ArticlesList({
           {/* View Mode Toggle */}
           <div className="flex rounded-md border">
             <Button
-              variant={viewMode === 'grid' ? (variant === 'cyber' ? 'cyber' : 'default') : 'ghost'}
+              variant={
+                viewMode === 'grid'
+                  ? variant === 'cyber'
+                    ? 'cyber'
+                    : 'default'
+                  : 'ghost'
+              }
               size="sm"
               onClick={() => setViewMode('grid')}
               className="rounded-r-none"
@@ -117,7 +139,13 @@ export function ArticlesList({
               <Grid className="h-4 w-4" />
             </Button>
             <Button
-              variant={viewMode === 'list' ? (variant === 'cyber' ? 'cyber' : 'default') : 'ghost'}
+              variant={
+                viewMode === 'list'
+                  ? variant === 'cyber'
+                    ? 'cyber'
+                    : 'default'
+                  : 'ghost'
+              }
               size="sm"
               onClick={() => setViewMode('list')}
               className="rounded-l-none"
@@ -132,16 +160,20 @@ export function ArticlesList({
       <div className="flex flex-col gap-4 md:flex-row md:items-center">
         {/* Search */}
         <div className="relative flex-1">
-          <Search className={`absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 ${
-            variant === 'cyber' ? 'text-cyan-400' : 'text-muted-foreground'
-          }`} />
+          <Search
+            className={`absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 ${
+              variant === 'cyber' ? 'text-cyan-400' : 'text-muted-foreground'
+            }`}
+          />
           <input
             type="text"
-            placeholder={variant === 'cyber' ? 'SEARCH DATABASE...' : 'Search articles...'}
+            placeholder={
+              variant === 'cyber' ? 'SEARCH DATABASE...' : 'Search articles...'
+            }
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className={`w-full rounded-md border px-10 py-2 text-sm focus:outline-none focus:ring-2 ${
-              variant === 'cyber' 
+              variant === 'cyber'
                 ? 'cyber-tabs border-cyan-400/20 bg-gray-900/50 text-cyan-300 placeholder:text-cyan-400/50 focus:ring-cyan-400/50'
                 : 'border-input bg-background focus:ring-ring'
             }`}
@@ -150,11 +182,18 @@ export function ArticlesList({
 
         {/* Status Filter */}
         <div className="flex items-center gap-2">
-          <Filter className={`h-4 w-4 ${
-            variant === 'cyber' ? 'text-cyan-400' : 'text-muted-foreground'
-          }`} />
-          <Select value={statusFilter} onValueChange={(value: ArticleStatus | 'all') => setStatusFilter(value)}>
-            <SelectTrigger 
+          <Filter
+            className={`h-4 w-4 ${
+              variant === 'cyber' ? 'text-cyan-400' : 'text-muted-foreground'
+            }`}
+          />
+          <Select
+            value={statusFilter}
+            onValueChange={(value: ArticleStatus | 'all') =>
+              setStatusFilter(value)
+            }
+          >
+            <SelectTrigger
               variant={variant === 'cyber' ? 'cyber' : 'default'}
               className="w-40"
             >
@@ -162,7 +201,7 @@ export function ArticlesList({
             </SelectTrigger>
             <SelectContent variant={variant === 'cyber' ? 'cyber' : 'default'}>
               <SelectItem value="all">All Status</SelectItem>
-              {availableStatuses.map(status => (
+              {availableStatuses.map((status) => (
                 <SelectItem key={status} value={status}>
                   {status.replace('_', ' ').toUpperCase()}
                 </SelectItem>
@@ -174,12 +213,14 @@ export function ArticlesList({
 
       {/* Articles Grid/List */}
       {filteredArticles.length === 0 ? (
-        <div className="text-center py-12">
-          <p className={`text-lg ${
-            variant === 'cyber' ? 'text-cyan-300/70' : 'text-muted-foreground'
-          }`}>
-            {searchTerm || statusFilter !== 'all' 
-              ? 'No articles match your filters.' 
+        <div className="py-12 text-center">
+          <p
+            className={`text-lg ${
+              variant === 'cyber' ? 'text-cyan-300/70' : 'text-muted-foreground'
+            }`}
+          >
+            {searchTerm || statusFilter !== 'all'
+              ? 'No articles match your filters.'
               : 'No articles found.'}
           </p>
           {(searchTerm || statusFilter !== 'all') && (
@@ -196,11 +237,13 @@ export function ArticlesList({
           )}
         </div>
       ) : (
-        <div className={
-          viewMode === 'grid' 
-            ? 'grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3'
-            : 'space-y-4'
-        }>
+        <div
+          className={
+            viewMode === 'grid'
+              ? 'grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3'
+              : 'space-y-4'
+          }
+        >
           {filteredArticles.map((article) => (
             <ArticleCard
               key={article.articleId}

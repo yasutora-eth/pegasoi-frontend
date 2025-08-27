@@ -1,9 +1,15 @@
-"use client"
+'use client'
 
 import React from 'react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { useAuth } from '@/components/DevAuthProvider'
 import { LogIn, LogOut, User, Shield, Crown } from 'lucide-react'
 import type { UserRole } from '@/types/graphql'
@@ -19,39 +25,46 @@ export function DevToggle() {
 
   const roleColors = {
     user: 'text-blue-400 border-blue-400/30',
-    publisher: 'text-green-400 border-green-400/30', 
+    publisher: 'text-green-400 border-green-400/30',
     admin: 'text-yellow-400 border-yellow-400/30',
   }
 
   return (
     <div className="fixed bottom-4 right-4 z-50 space-y-2">
       {/* Auth Status */}
-      <div className="cyber-card p-4 bg-gray-900/90 backdrop-blur-sm border-cyan-400/20">
-        <div className="flex items-center gap-3 mb-3">
-          <div className={`h-2 w-2 rounded-full ${
-            isAuthenticated ? 'bg-green-400 animate-pulse' : 'bg-red-400'
-          }`} />
-          <span className="text-xs font-mono text-cyan-300 uppercase tracking-wider">
+      <div className="cyber-card border-cyan-400/20 bg-gray-900/90 p-4 backdrop-blur-sm">
+        <div className="mb-3 flex items-center gap-3">
+          <div
+            className={`h-2 w-2 rounded-full ${
+              isAuthenticated ? 'animate-pulse bg-green-400' : 'bg-red-400'
+            }`}
+          />
+          <span className="font-mono text-xs uppercase tracking-wider text-cyan-300">
             {isAuthenticated ? 'AUTHENTICATED' : 'GUEST MODE'}
           </span>
         </div>
 
         {/* User Info */}
         {isAuthenticated && user && (
-          <div className="space-y-2 mb-3">
+          <div className="mb-3 space-y-2">
             <Badge variant="cyber" className={roleColors[user.role]}>
-              {React.createElement(roleIcons[user.role], { className: "h-3 w-3 mr-1" })}
+              {React.createElement(roleIcons[user.role], {
+                className: 'h-3 w-3 mr-1',
+              })}
               {user.role.toUpperCase()}
             </Badge>
             <p className="text-xs text-cyan-300/70">{user.name}</p>
-            <p className="text-xs text-cyan-300/50 font-mono">{user.email}</p>
+            <p className="font-mono text-xs text-cyan-300/50">{user.email}</p>
           </div>
         )}
 
         {/* Role Selector */}
         {isAuthenticated && (
           <div className="mb-3">
-            <Select value={user?.role} onValueChange={(value: UserRole) => setRole(value)}>
+            <Select
+              value={user?.role}
+              onValueChange={(value: UserRole) => setRole(value)}
+            >
               <SelectTrigger variant="cyber" className="h-8 text-xs">
                 <SelectValue placeholder="Select role" />
               </SelectTrigger>
@@ -85,11 +98,11 @@ export function DevToggle() {
           size="sm"
           onClick={() => {
             // DevToggle clicked
-            toggleAuth();
+            toggleAuth()
             // Force a small delay to ensure state updates
             setTimeout(() => {
               // Auth state toggled
-            }, 100);
+            }, 100)
           }}
           className="w-full gap-2"
         >

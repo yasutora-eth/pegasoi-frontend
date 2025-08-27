@@ -22,7 +22,7 @@ A clear and concise description of what you want to happen.
 - [ ] Bundle size reduction
 - [ ] Accessibility improvement
 - [ ] TypeScript enhancement
-- [ ] Other: ****\_\_\_****
+- [ ] Other: \***\*\_\_\_\*\***
 
 ## 🏗️ Technical Details
 
@@ -50,7 +50,7 @@ A clear and concise description of what you want to happen.
 - [ ] Better SEO
 - [ ] Improved accessibility
 - [ ] Code maintainability
-- [ ] Other: ****\_\_\_****
+- [ ] Other: \***\*\_\_\_\*\***
 
 ## 📝 Acceptance Criteria
 
@@ -77,7 +77,7 @@ A clear and concise description of what you want to happen.
 - [ ] E2E tests
 - [ ] Performance tests
 - [ ] Accessibility tests
-- [ ] Manual testing steps: ****\_\_\_****
+- [ ] Manual testing steps: \***\*\_\_\_\*\***
 
 ## 📚 Additional Context
 

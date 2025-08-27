@@ -14,11 +14,11 @@ interface ArticleCardProps {
   className?: string
 }
 
-export function ArticleCard({ 
-  article, 
-  variant = 'default', 
+export function ArticleCard({
+  article,
+  variant = 'default',
   onView,
-  className 
+  className,
 }: ArticleCardProps) {
   const handleView = () => {
     if (onView) {
@@ -44,53 +44,65 @@ export function ArticleCard({
   }
 
   return (
-    <Card 
-      variant={variant} 
+    <Card
+      variant={variant}
       className={`group transition-all duration-300 hover:scale-[1.02] ${className}`}
     >
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between gap-2">
-          <CardTitle className={`text-lg leading-tight ${
-            variant === 'cyber' ? 'text-cyan-400' : ''
-          }`}>
+          <CardTitle
+            className={`text-lg leading-tight ${
+              variant === 'cyber' ? 'text-cyan-400' : ''
+            }`}
+          >
             {article.title}
           </CardTitle>
-          <Badge 
+          <Badge
             variant={variant === 'cyber' ? 'cyber' : 'outline'}
-            className={variant === 'cyber' ? getStatusColor(article.status) : ''}
+            className={
+              variant === 'cyber' ? getStatusColor(article.status) : ''
+            }
           >
             {article.status.replace('_', ' ').toUpperCase()}
           </Badge>
         </div>
-        
-        <div className={`flex items-center gap-4 text-sm ${
-          variant === 'cyber' ? 'text-cyan-300/70' : 'text-muted-foreground'
-        }`}>
+
+        <div
+          className={`flex items-center gap-4 text-sm ${
+            variant === 'cyber' ? 'text-cyan-300/70' : 'text-muted-foreground'
+          }`}
+        >
           <div className="flex items-center gap-1">
             <User className="h-3 w-3" />
             <span>{article.authors.join(', ')}</span>
           </div>
           <div className="flex items-center gap-1">
             <Calendar className="h-3 w-3" />
-            <span>{new Date(article.publicationDate).toLocaleDateString()}</span>
+            <span>
+              {new Date(article.publicationDate).toLocaleDateString()}
+            </span>
           </div>
         </div>
       </CardHeader>
 
       <CardContent className="space-y-4">
         {/* Abstract Preview */}
-        <p className={`text-sm leading-relaxed ${
-          variant === 'cyber' ? 'text-cyan-300/80' : 'text-muted-foreground'
-        }`}>
+        <p
+          className={`text-sm leading-relaxed ${
+            variant === 'cyber' ? 'text-cyan-300/80' : 'text-muted-foreground'
+          }`}
+        >
           {article.articleAbstract?.substring(0, 200)}
-          {article.articleAbstract && article.articleAbstract.length > 200 && '...'}
+          {article.articleAbstract &&
+            article.articleAbstract.length > 200 &&
+            '...'}
         </p>
 
         {/* Keywords */}
         {article.keywords && article.keywords.length > 0 && (
           <div className="flex flex-wrap gap-1">
             {article.keywords.slice(0, 3).map((keyword, index) => (
-              <Badge 
+              <Badge
                 key={index}
                 variant={variant === 'cyber' ? 'cyber' : 'secondary'}
                 className="text-xs"
@@ -99,7 +111,7 @@ export function ArticleCard({
               </Badge>
             ))}
             {article.keywords.length > 3 && (
-              <Badge 
+              <Badge
                 variant={variant === 'cyber' ? 'cyber' : 'secondary'}
                 className="text-xs"
               >
@@ -111,9 +123,11 @@ export function ArticleCard({
 
         {/* Journal Info */}
         {article.journal && (
-          <div className={`flex items-center gap-1 text-xs ${
-            variant === 'cyber' ? 'text-cyan-300/60' : 'text-muted-foreground'
-          }`}>
+          <div
+            className={`flex items-center gap-1 text-xs ${
+              variant === 'cyber' ? 'text-cyan-300/60' : 'text-muted-foreground'
+            }`}
+          >
             <BookOpen className="h-3 w-3" />
             <span>{article.journal}</span>
           </div>
@@ -121,9 +135,11 @@ export function ArticleCard({
 
         {/* DOI */}
         {article.doi && (
-          <div className={`flex items-center gap-1 text-xs ${
-            variant === 'cyber' ? 'text-cyan-300/60' : 'text-muted-foreground'
-          }`}>
+          <div
+            className={`flex items-center gap-1 text-xs ${
+              variant === 'cyber' ? 'text-cyan-300/60' : 'text-muted-foreground'
+            }`}
+          >
             <ExternalLink className="h-3 w-3" />
             <span className="font-mono">DOI: {article.doi}</span>
           </div>
@@ -135,7 +151,7 @@ export function ArticleCard({
             variant={variant === 'cyber' ? 'cyber' : 'outline'}
             size="sm"
             onClick={handleView}
-            className="w-full gap-2 group-hover:scale-105 transition-transform"
+            className="w-full gap-2 transition-transform group-hover:scale-105"
           >
             <BookOpen className="h-3 w-3" />
             {variant === 'cyber' ? 'ACCESS ARTICLE' : 'View Article'}

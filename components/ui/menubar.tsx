@@ -26,7 +26,8 @@ const menubarTriggerVariants = cva(
     variants: {
       variant: {
         default: '',
-        cyber: 'text-cyan-300 focus:bg-cyan-400/10 focus:text-cyan-200 data-[state=open]:bg-cyan-400/10 data-[state=open]:text-cyan-200',
+        cyber:
+          'text-cyan-300 focus:bg-cyan-400/10 focus:text-cyan-200 data-[state=open]:bg-cyan-400/10 data-[state=open]:text-cyan-200',
       },
     },
     defaultVariants: {
@@ -41,7 +42,8 @@ const menubarContentVariants = cva(
     variants: {
       variant: {
         default: '',
-        cyber: 'cyber-tabs border-cyan-400/20 bg-gray-900/95 text-cyan-300 shadow-[0_0_20px_rgba(0,255,255,0.2)]',
+        cyber:
+          'cyber-tabs border-cyan-400/20 bg-gray-900/95 text-cyan-300 shadow-[0_0_20px_rgba(0,255,255,0.2)]',
       },
     },
     defaultVariants: {
@@ -128,18 +130,30 @@ export interface MenubarContentProps
 const MenubarContent = React.forwardRef<
   React.ElementRef<typeof MenubarPrimitive.Content>,
   MenubarContentProps
->(({ className, variant, align = 'start', alignOffset = -4, sideOffset = 8, ...props }, ref) => (
-  <MenubarPrimitive.Portal>
-    <MenubarPrimitive.Content
-      ref={ref}
-      align={align}
-      alignOffset={alignOffset}
-      sideOffset={sideOffset}
-      className={cn(menubarContentVariants({ variant, className }))}
-      {...props}
-    />
-  </MenubarPrimitive.Portal>
-))
+>(
+  (
+    {
+      className,
+      variant,
+      align = 'start',
+      alignOffset = -4,
+      sideOffset = 8,
+      ...props
+    },
+    ref
+  ) => (
+    <MenubarPrimitive.Portal>
+      <MenubarPrimitive.Content
+        ref={ref}
+        align={align}
+        alignOffset={alignOffset}
+        sideOffset={sideOffset}
+        className={cn(menubarContentVariants({ variant, className }))}
+        {...props}
+      />
+    </MenubarPrimitive.Portal>
+  )
+)
 MenubarContent.displayName = MenubarPrimitive.Content.displayName
 
 const MenubarItem = React.forwardRef<

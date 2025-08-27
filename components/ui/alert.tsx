@@ -11,7 +11,8 @@ const alertVariants = cva(
         default: 'bg-background text-foreground',
         destructive:
           'border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive',
-        cyber: 'cyber-card border-cyan-400/20 bg-gray-900/50 text-cyan-300 [&>svg]:text-cyan-400',
+        cyber:
+          'cyber-card border-cyan-400/20 bg-gray-900/50 text-cyan-300 [&>svg]:text-cyan-400',
       },
     },
     defaultVariants: {

@@ -34,20 +34,18 @@ const sliderTrackVariants = cva(
   }
 )
 
-const sliderRangeVariants = cva(
-  'absolute h-full bg-primary',
-  {
-    variants: {
-      variant: {
-        default: '',
-        cyber: 'bg-gradient-to-r from-cyan-400 to-purple-500 shadow-[0_0_10px_rgba(0,255,255,0.5)]',
-      },
+const sliderRangeVariants = cva('absolute h-full bg-primary', {
+  variants: {
+    variant: {
+      default: '',
+      cyber:
+        'bg-gradient-to-r from-cyan-400 to-purple-500 shadow-[0_0_10px_rgba(0,255,255,0.5)]',
     },
-    defaultVariants: {
-      variant: 'default',
-    },
-  }
-)
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
+})
 
 const sliderThumbVariants = cva(
   'block h-5 w-5 rounded-full border-2 border-primary bg-background ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
@@ -55,7 +53,8 @@ const sliderThumbVariants = cva(
     variants: {
       variant: {
         default: '',
-        cyber: 'border-cyan-400 bg-white shadow-[0_0_15px_rgba(0,255,255,0.4)] focus-visible:ring-cyan-400/50',
+        cyber:
+          'border-cyan-400 bg-white shadow-[0_0_15px_rgba(0,255,255,0.4)] focus-visible:ring-cyan-400/50',
       },
     },
     defaultVariants: {

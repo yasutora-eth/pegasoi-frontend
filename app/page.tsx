@@ -5,7 +5,13 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { CyberLoading, LoadingState } from '@/components/ui/loading'
 import { CyberError, ErrorState } from '@/components/ui/error'
 import { useAuth } from '@/components/DevAuthProvider'
@@ -25,8 +31,14 @@ export function CyberBackground() {
   return (
     <div className="pointer-events-none fixed inset-0 z-0">
       <div className="floating-element absolute left-20 top-20 h-32 w-32 rounded-full bg-gradient-to-br from-cyan-400/20 to-purple-600/10 blur-xl"></div>
-      <div className="floating-element absolute right-20 top-1/3 h-24 w-24 rounded-full bg-gradient-to-br from-purple-500/15 to-cyan-400/10 blur-lg" style={{ animationDelay: '2s' }}></div>
-      <div className="floating-element absolute left-1/3 bottom-20 h-28 w-28 rounded-full bg-gradient-to-br from-cyan-300/10 to-purple-400/15 blur-xl" style={{ animationDelay: '4s' }}></div>
+      <div
+        className="floating-element absolute right-20 top-1/3 h-24 w-24 rounded-full bg-gradient-to-br from-purple-500/15 to-cyan-400/10 blur-lg"
+        style={{ animationDelay: '2s' }}
+      ></div>
+      <div
+        className="floating-element absolute bottom-20 left-1/3 h-28 w-28 rounded-full bg-gradient-to-br from-cyan-300/10 to-purple-400/15 blur-xl"
+        style={{ animationDelay: '4s' }}
+      ></div>
     </div>
   )
 }
@@ -38,9 +50,9 @@ export default function Home() {
     <div className="relative z-10 space-y-8">
       <div className="animate-fade-in text-center">
         <div className="mb-6 flex items-center justify-center gap-4">
-          <img 
-            src="/pegasus-logo.svg" 
-            alt="Pegasus Logo" 
+          <img
+            src="/pegasus-logo.svg"
+            alt="Pegasus Logo"
             className="h-16 w-16 animate-pulse"
           />
           <h1 className="text-cyber text-glow text-6xl font-bold">
@@ -50,15 +62,13 @@ export default function Home() {
         <p className="mb-6 text-2xl text-cyan-300">
           Classical Studies Research & Publication Platform
         </p>
-        <Badge variant="cyber">
-          PUBLIC ACCESS • INITIALIZE LOGIN PROTOCOL
-        </Badge>
+        <Badge variant="cyber">PUBLIC ACCESS • INITIALIZE LOGIN PROTOCOL</Badge>
       </div>
 
       {/* Component Showcase */}
       <div className="space-y-8">
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-cyan-400 mb-4">
+          <h2 className="mb-4 text-3xl font-bold text-cyan-400">
             Enhanced Cyber Components
           </h2>
           <p className="text-cyan-300/70">
@@ -68,7 +78,9 @@ export default function Home() {
 
         {/* Button Variants */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-cyan-400">Button Variants</h3>
+          <h3 className="text-xl font-semibold text-cyan-400">
+            Button Variants
+          </h3>
           <div className="flex flex-wrap gap-4">
             <Button variant="default">Default Button</Button>
             <Button variant="cyber">Cyber Button</Button>
@@ -80,7 +92,7 @@ export default function Home() {
         {/* Card Variants */}
         <div className="space-y-4">
           <h3 className="text-xl font-semibold text-cyan-400">Card Variants</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <Card>
               <CardHeader>
                 <CardTitle>Default Card</CardTitle>
@@ -106,7 +118,9 @@ export default function Home() {
 
         {/* Badge Variants */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-cyan-400">Badge Variants</h3>
+          <h3 className="text-xl font-semibold text-cyan-400">
+            Badge Variants
+          </h3>
           <div className="flex flex-wrap gap-4">
             <Badge>Default Badge</Badge>
             <Badge variant="cyber">Cyber Badge</Badge>
@@ -117,8 +131,10 @@ export default function Home() {
 
         {/* Select Component */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-cyan-400">Select Components</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-md">
+          <h3 className="text-xl font-semibold text-cyan-400">
+            Select Components
+          </h3>
+          <div className="grid max-w-md grid-cols-1 gap-4 md:grid-cols-2">
             <Select>
               <SelectTrigger>
                 <SelectValue placeholder="Default Select" />
@@ -144,8 +160,10 @@ export default function Home() {
 
         {/* Loading States */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-cyan-400">Loading States</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <h3 className="text-xl font-semibold text-cyan-400">
+            Loading States
+          </h3>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <LoadingState message="Loading data..." />
             <CyberLoading message="ACCESSING DATABASE..." />
           </div>
@@ -154,17 +172,21 @@ export default function Home() {
         {/* Error States */}
         <div className="space-y-4">
           <h3 className="text-xl font-semibold text-cyan-400">Error States</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <ErrorState 
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <ErrorState
               title="Standard Error"
               message="Something went wrong with the operation."
-              onRetry={() => {/* Handle retry */}}
+              onRetry={() => {
+                /* Handle retry */
+              }}
             />
             <CyberError
               title="SYSTEM MALFUNCTION"
               message="Critical error detected in the neural network interface."
               errorCode="SYS_001"
-              onRetry={() => {/* Handle cyber retry */}}
+              onRetry={() => {
+                /* Handle cyber retry */
+              }}
             />
           </div>
         </div>
@@ -262,8 +284,8 @@ export default function Home() {
               <p className="mb-4 text-sm text-gray-300">
                 Browse and search research articles
               </p>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="w-full border-blue-400 text-blue-400"
               >
                 INITIALIZE USER MODE
@@ -280,8 +302,8 @@ export default function Home() {
               <p className="mb-4 text-sm text-gray-300">
                 Submit and manage articles
               </p>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="w-full border-green-400 text-green-400"
               >
                 INITIALIZE PUBLISHER MODE
@@ -298,8 +320,8 @@ export default function Home() {
               <p className="mb-4 text-sm text-gray-300">
                 Full platform management
               </p>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="w-full border-yellow-400 text-yellow-400"
               >
                 INITIALIZE ADMIN MODE
@@ -324,14 +346,17 @@ export default function Home() {
             </CardHeader>
             <CardContent>
               <ul className="space-y-2 text-sm text-gray-300">
-                - • &ldquo;Roman Architecture in the Imperial Period&rdquo;
-                - • &ldquo;Greek Pottery: Styles and Techniques&rdquo;
-                - • &ldquo;Egyptian Hieroglyphic Evolution&rdquo;
-                - • &ldquo;Classical Literature Analysis&rdquo;
-                - • &ldquo;Byzantine Art and Culture&rdquo;
+                - • &ldquo;Roman Architecture in the Imperial Period&rdquo; - •
+                &ldquo;Greek Pottery: Styles and Techniques&rdquo; - •
+                &ldquo;Egyptian Hieroglyphic Evolution&rdquo; - •
+                &ldquo;Classical Literature Analysis&rdquo; - • &ldquo;Byzantine
+                Art and Culture&rdquo;
               </ul>
               <Link href="/articles">
-                <Button variant="outline" className="mt-4 w-full border-cyan-400 text-cyan-400">
+                <Button
+                  variant="outline"
+                  className="mt-4 w-full border-cyan-400 text-cyan-400"
+                >
                   Access Full Database
                 </Button>
               </Link>
@@ -365,7 +390,10 @@ export default function Home() {
                 </div>
               </div>
               <Link href="/system-check">
-                <Button variant="outline" className="mt-4 w-full border-cyan-400 text-cyan-400">
+                <Button
+                  variant="outline"
+                  className="mt-4 w-full border-cyan-400 text-cyan-400"
+                >
                   Run Full Diagnostics
                 </Button>
               </Link>
@@ -392,9 +420,7 @@ export default function Home() {
         <p className="mb-6 text-2xl text-cyan-300">
           Access Level: {user?.role?.toUpperCase() || 'USER'}
         </p>
-        <Badge variant="cyber">
-          AUTHENTICATED • SYSTEM ACCESS GRANTED
-        </Badge>
+        <Badge variant="cyber">AUTHENTICATED • SYSTEM ACCESS GRANTED</Badge>
       </div>
 
       {/* Quick Access Dashboard */}

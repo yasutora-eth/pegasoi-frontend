@@ -23,7 +23,8 @@ const dropdownMenuSubTriggerVariants = cva(
     variants: {
       variant: {
         default: '',
-        cyber: 'text-cyan-300 focus:bg-cyan-400/10 data-[state=open]:bg-cyan-400/10',
+        cyber:
+          'text-cyan-300 focus:bg-cyan-400/10 data-[state=open]:bg-cyan-400/10',
       },
       inset: {
         true: 'pl-8',
@@ -43,7 +44,8 @@ const dropdownMenuSubContentVariants = cva(
     variants: {
       variant: {
         default: '',
-        cyber: 'cyber-tabs border-cyan-400/20 bg-gray-900/95 text-cyan-300 shadow-[0_0_20px_rgba(0,255,255,0.2)]',
+        cyber:
+          'cyber-tabs border-cyan-400/20 bg-gray-900/95 text-cyan-300 shadow-[0_0_20px_rgba(0,255,255,0.2)]',
       },
     },
     defaultVariants: {
@@ -58,7 +60,8 @@ const dropdownMenuContentVariants = cva(
     variants: {
       variant: {
         default: '',
-        cyber: 'cyber-tabs border-cyan-400/20 bg-gray-900/95 text-cyan-300 shadow-[0_0_20px_rgba(0,255,255,0.2)]',
+        cyber:
+          'cyber-tabs border-cyan-400/20 bg-gray-900/95 text-cyan-300 shadow-[0_0_20px_rgba(0,255,255,0.2)]',
       },
     },
     defaultVariants: {
@@ -212,7 +215,9 @@ const DropdownMenuShortcut = ({
 DropdownMenuShortcut.displayName = 'DropdownMenuShortcut'
 
 export interface DropdownMenuSubTriggerProps
-  extends React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger>,
+  extends React.ComponentPropsWithoutRef<
+      typeof DropdownMenuPrimitive.SubTrigger
+    >,
     VariantProps<typeof dropdownMenuSubTriggerVariants> {}
 
 const DropdownMenuSubTrigger = React.forwardRef<
@@ -221,7 +226,9 @@ const DropdownMenuSubTrigger = React.forwardRef<
 >(({ className, variant, inset, children, ...props }, ref) => (
   <DropdownMenuPrimitive.SubTrigger
     ref={ref}
-    className={cn(dropdownMenuSubTriggerVariants({ variant, inset, className }))}
+    className={cn(
+      dropdownMenuSubTriggerVariants({ variant, inset, className })
+    )}
     {...props}
   >
     {children}
@@ -232,7 +239,9 @@ DropdownMenuSubTrigger.displayName =
   DropdownMenuPrimitive.SubTrigger.displayName
 
 export interface DropdownMenuSubContentProps
-  extends React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent>,
+  extends React.ComponentPropsWithoutRef<
+      typeof DropdownMenuPrimitive.SubContent
+    >,
     VariantProps<typeof dropdownMenuSubContentVariants> {}
 
 const DropdownMenuSubContent = React.forwardRef<

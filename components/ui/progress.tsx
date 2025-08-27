@@ -25,7 +25,8 @@ const progressIndicatorVariants = cva(
     variants: {
       variant: {
         default: '',
-        cyber: 'bg-gradient-to-r from-cyan-400 to-purple-500 shadow-[0_0_20px_rgba(0,255,255,0.5)]',
+        cyber:
+          'bg-gradient-to-r from-cyan-400 to-purple-500 shadow-[0_0_20px_rgba(0,255,255,0.5)]',
       },
     },
     defaultVariants: {

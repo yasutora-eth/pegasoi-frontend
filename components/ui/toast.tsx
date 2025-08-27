@@ -30,7 +30,8 @@ const toastVariants = cva(
         default: 'border bg-background text-foreground',
         destructive:
           'destructive border-destructive bg-destructive text-destructive-foreground',
-        cyber: 'cyber-card border-cyan-400/30 bg-gray-900/95 text-cyan-300 shadow-[0_0_30px_rgba(0,255,255,0.2)]',
+        cyber:
+          'cyber-card border-cyan-400/30 bg-gray-900/95 text-cyan-300 shadow-[0_0_30px_rgba(0,255,255,0.2)]',
       },
     },
     defaultVariants: {

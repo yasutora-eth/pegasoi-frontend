@@ -35,15 +35,23 @@ export function MultiSourceSearch() {
 
     try {
       // Use legacy method for backward compatibility with existing UI
-      const searchResults = await apiService.searchAllSourcesLegacy(query.trim())
+      const searchResults = await apiService.searchAllSourcesLegacy(
+        query.trim()
+      )
       setResults(searchResults)
 
       // If no results, provide helpful feedback
       if (!searchResults || Object.keys(searchResults).length === 0) {
-        setError('No results found. The backend is testing multiple parameter formats - check browser console for details. External academic APIs may be rate-limited.')
+        setError(
+          'No results found. The backend is testing multiple parameter formats - check browser console for details. External academic APIs may be rate-limited.'
+        )
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Search failed - check browser console for detailed parameter testing logs')
+      setError(
+        err instanceof Error
+          ? err.message
+          : 'Search failed - check browser console for detailed parameter testing logs'
+      )
     } finally {
       setLoading(false)
     }

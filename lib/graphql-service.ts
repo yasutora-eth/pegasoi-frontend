@@ -114,7 +114,9 @@ export class GraphQLService {
 
     for (const [index, queryVariation] of queryVariations.entries()) {
       try {
-        console.log(`Trying GraphQL query variation ${index + 1}: "${queryVariation}"`)
+        console.log(
+          `Trying GraphQL query variation ${index + 1}: "${queryVariation}"`
+        )
 
         const { data } = await apolloClient.query({
           query: SEARCH_PAPERS,
@@ -127,7 +129,9 @@ export class GraphQLService {
 
         const results = data.search || []
         if (Array.isArray(results) && results.length > 0) {
-          console.log(`✅ Found working GraphQL query format ${index + 1}! Got ${results.length} results`)
+          console.log(
+            `✅ Found working GraphQL query format ${index + 1}! Got ${results.length} results`
+          )
           return results
         }
       } catch (error) {
@@ -136,7 +140,9 @@ export class GraphQLService {
       }
     }
 
-    console.log('❌ All GraphQL query variations failed, returning empty results')
+    console.log(
+      '❌ All GraphQL query variations failed, returning empty results'
+    )
     return []
   }
 

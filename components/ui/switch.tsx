@@ -10,7 +10,8 @@ const switchVariants = cva(
     variants: {
       variant: {
         default: '',
-        cyber: 'data-[state=checked]:bg-gradient-to-r data-[state=checked]:from-cyan-400 data-[state=checked]:to-purple-500 data-[state=checked]:shadow-[0_0_20px_rgba(0,255,255,0.4)] data-[state=unchecked]:bg-gray-800 data-[state=unchecked]:border-cyan-400/20',
+        cyber:
+          'data-[state=checked]:bg-gradient-to-r data-[state=checked]:from-cyan-400 data-[state=checked]:to-purple-500 data-[state=checked]:shadow-[0_0_20px_rgba(0,255,255,0.4)] data-[state=unchecked]:bg-gray-800 data-[state=unchecked]:border-cyan-400/20',
       },
     },
     defaultVariants: {

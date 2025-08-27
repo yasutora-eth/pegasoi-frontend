@@ -16,7 +16,8 @@ const tooltipContentVariants = cva(
     variants: {
       variant: {
         default: '',
-        cyber: 'cyber-card border-cyan-400/30 bg-gray-900/95 text-cyan-300 shadow-[0_0_20px_rgba(0,255,255,0.2)]',
+        cyber:
+          'cyber-card border-cyan-400/30 bg-gray-900/95 text-cyan-300 shadow-[0_0_20px_rgba(0,255,255,0.2)]',
       },
     },
     defaultVariants: {

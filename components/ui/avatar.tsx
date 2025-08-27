@@ -10,7 +10,8 @@ const avatarVariants = cva(
     variants: {
       variant: {
         default: '',
-        cyber: 'border-2 border-cyan-400/30 shadow-[0_0_20px_rgba(0,255,255,0.2)]',
+        cyber:
+          'border-2 border-cyan-400/30 shadow-[0_0_20px_rgba(0,255,255,0.2)]',
       },
       size: {
         sm: 'h-8 w-8',
