@@ -27,7 +27,7 @@ export function SEOHead({
     'blockchain',
     'academic discovery',
   ],
-  image = '/pegasus-logo.svg',
+  image = '/pegasoi-logo-1024.png',
   url = 'https://pegasoi.com',
   type = 'website',
   publishedTime,
@@ -94,10 +94,11 @@ export function SEOHead({
       <link rel="canonical" href={url} />
 
       {/* Favicon and Icons */}
-      <link rel="icon" href="/favicon.ico" />
-      <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png" />
-      <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
-      <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
+      <link rel="icon" href="/pegasoi-favicon-32.png" />
+      <link rel="apple-touch-icon" sizes="192x192" href="/pegasoi-logo-1024.png" />
+      <link rel="icon" type="image/png" sizes="32x32" href="/pegasoi-favicon-32.png" />
+      <link rel="icon" type="image/png" sizes="192x192" href="/pegasoi-logo-1024.png" />
+      <link rel="icon" type="image/png" sizes="512x512" href="/pegasoi-logo-1024.png" />
 
       {/* Manifest */}
       <link rel="manifest" href="/manifest.json" />
@@ -125,7 +126,7 @@ export function SEOHead({
               name: 'Pegasoi',
               logo: {
                 '@type': 'ImageObject',
-                url: `${url}/pegasus-logo.svg`,
+                url: `${url}/pegasoi-logo-1024.png`,
               },
             },
           }),
@@ -154,7 +155,7 @@ export function SEOHead({
                 name: 'Pegasoi Research Platform',
                 logo: {
                   '@type': 'ImageObject',
-                  url: `${url}/pegasus-logo.svg`,
+                  url: `${url}/pegasoi-logo-1024.png`,
                 },
               },
               mainEntityOfPage: {

@@ -52,11 +52,15 @@ export function Header() {
         <div className="relative flex h-16 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-400 to-purple-600">
-              <BookOpen className="h-5 w-5 text-cyan-100" />
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-400 to-purple-600 overflow-hidden">
+              <img
+                src="/pegasoi-favicon-32.png"
+                alt="Pegasoi Logo"
+                className="h-6 w-6 object-contain"
+              />
             </div>
             <span className="text-cyber text-glow text-xl font-bold">
-              Research Portal
+              Pegasoi
             </span>
           </Link>
 

@@ -38,8 +38,9 @@ export const metadata: Metadata = {
   robots: 'index, follow',
   manifest: '/manifest.json',
   icons: {
-    icon: '/favicon.ico',
-    apple: '/icon-192.png',
+    icon: '/pegasoi-favicon-32.png',
+    apple: '/pegasoi-logo-1024.png',
+    shortcut: '/pegasoi-favicon-32.png',
   },
   openGraph: {
     type: 'website',
@@ -51,9 +52,9 @@ export const metadata: Metadata = {
       'Discover academic research papers across multiple sources including ArXiv, DOAJ, Crossref, and Getty Vocabulary. Web3-ready platform for researchers.',
     images: [
       {
-        url: '/pegasus-logo.svg',
-        width: 1200,
-        height: 630,
+        url: '/pegasoi-logo-1024.png',
+        width: 1024,
+        height: 1024,
         alt: 'Pegasoi Research Platform',
       },
     ],
@@ -63,7 +64,7 @@ export const metadata: Metadata = {
     title: 'Pegasoi Research Platform - Academic Research Discovery',
     description:
       'Discover academic research papers across multiple sources including ArXiv, DOAJ, Crossref, and Getty Vocabulary.',
-    images: ['/pegasus-logo.svg'],
+    images: ['/pegasoi-logo-1024.png'],
     creator: '@pegasoi',
   },
 }
