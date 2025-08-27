@@ -84,11 +84,11 @@ export function DevToggle() {
           variant="cyber"
           size="sm"
           onClick={() => {
-            console.log('DevToggle clicked, current state:', isAuthenticated);
+            // DevToggle clicked
             toggleAuth();
             // Force a small delay to ensure state updates
             setTimeout(() => {
-              console.log('Auth state after toggle:', localStorage.getItem('dev-auth-state'));
+              // Auth state toggled
             }, 100);
           }}
           className="w-full gap-2"
