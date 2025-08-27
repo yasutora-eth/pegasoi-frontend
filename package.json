@@ -37,7 +37,11 @@
     "test:coverage": "node scripts/run-tests.js --coverage",
     "test:components": "node scripts/run-tests.js components",
     "test:pages": "node scripts/run-tests.js pages",
-    "test:e2e": "echo 'E2E tests to be implemented'",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:debug": "playwright test --debug",
+    "test:e2e:report": "playwright show-report",
     "web3:dev": "echo 'Web3 development mode - to be implemented by Web3 expert'",
     "web3:test": "echo 'Web3 integration tests - to be implemented'",
     "contracts:compile": "echo 'Smart contract compilation - to be implemented'",
@@ -99,6 +103,7 @@
     "zod": "^4.0.17"
   },
   "devDependencies": {
+    "@playwright/test": "1.55.0",
     "@types/node": "^24.3.0",
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",

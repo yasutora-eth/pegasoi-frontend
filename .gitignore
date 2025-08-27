@@ -215,3 +215,12 @@ WEB3_DEPLOYMENT_STRATEGY.md
 
 # clerk configuration (can include secrets)
 /.clerk/
+
+# Playwright - Keep all testing artifacts local
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/tests/
+playwright.config.ts
+run-playwright-demo.sh
