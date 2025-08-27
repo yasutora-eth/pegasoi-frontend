@@ -36,15 +36,15 @@ export function useArticle(id: string) {
 }
 
 export function useArticlesByStatus(status: ArticleStatus, limit = 50) {
-  return useQuery<{ articlesByStatus: Article[] }>(GET_ARTICLES_BY_STATUS, {
+  return useQuery<{ articles: Article[] }>(GET_ARTICLES_BY_STATUS, {
     variables: { status, limit },
     errorPolicy: 'all',
   })
 }
 
 export function useSearchArticles(keywords: string, limit = 20) {
-  return useQuery<{ searchArticlesByKeywords: Article[] }>(SEARCH_ARTICLES_BY_KEYWORDS, {
-    variables: { keywords, limit },
+  return useQuery<{ searchArticles: Article[] }>(SEARCH_ARTICLES_BY_KEYWORDS, {
+    variables: { keywords },
     errorPolicy: 'all',
     skip: !keywords || keywords.trim().length === 0,
   })

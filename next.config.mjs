@@ -19,6 +19,15 @@ const nextConfig = {
   trailingSlash: true,
   // output: 'export', // Temporarily disabled until auth pages are fixed
   // distDir: 'out',
+
+  // Webpack configuration to fix caching issues
+  webpack: (config, { dev, isServer }) => {
+    if (dev) {
+      // Disable webpack caching in development to prevent file system errors
+      config.cache = false
+    }
+    return config
+  },
   async headers() {
     return [
       {

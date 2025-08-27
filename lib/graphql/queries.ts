@@ -41,7 +41,7 @@ export const GET_ARTICLE_BY_ID = gql`
 
 export const GET_ARTICLES_BY_STATUS = gql`
   query GetArticlesByStatus($status: String!, $limit: Int = 50) {
-    articlesByStatus(status: $status, limit: $limit) {
+    articles(status: $status, limit: $limit) {
       articleId
       title
       authors
@@ -57,7 +57,7 @@ export const GET_ARTICLES_BY_STATUS = gql`
 
 export const SEARCH_ARTICLES_BY_KEYWORDS = gql`
   query SearchArticlesByKeywords($keywords: String!, $limit: Int = 20) {
-    searchArticlesByKeywords(keywords: $keywords, limit: $limit) {
+    searchArticles(keywords: $keywords) {
       articleId
       title
       authors
@@ -74,106 +74,28 @@ export const SEARCH_ARTICLES_BY_KEYWORDS = gql`
 // Multi-source Search Queries
 export const SEARCH_PAPERS = gql`
   query SearchPapers($query: String!, $sources: [String!], $limit: Int = 10) {
-    searchPapers(query: $query, sources: $sources, limit: $limit) {
-      arxiv {
-        ok
-        data {
-          title
-          authors
-          abstract
-          url
-          publishedDate
-          categories
-        }
-        error
-      }
-      doaj {
-        ok
-        data {
-          title
-          authors
-          abstract
-          url
-          journal
-          publishedDate
-        }
-        error
-      }
-      crossref {
-        ok
-        data {
-          title
-          authors
-          abstract
-          doi
-          journal
-          publishedDate
-        }
-        error
-      }
-      getty {
-        ok
-        data {
-          title
-          description
-          url
-          imageUrl
-        }
-        error
-      }
+    search(query: $query, sources: $sources, limit: $limit) {
+      title
+      authors
+      abstract
+      source
+      url
+      publicationDate
+      doi
+      journal
+      keywords
+      relevanceScore
     }
   }
 `
 
-export const SEARCH_SINGLE_SOURCE = gql`
-  query SearchSingleSource($query: String!, $source: String!, $limit: Int = 10) {
-    searchSingleSource(query: $query, source: $source, limit: $limit) {
-      papers {
-        ... on ArxivData {
-          title
-          authors
-          abstract
-          url
-          publishedDate
-          categories
-        }
-        ... on DoajData {
-          title
-          authors
-          abstract
-          url
-          journal
-          publishedDate
-        }
-        ... on CrossrefData {
-          title
-          authors
-          abstract
-          doi
-          journal
-          publishedDate
-        }
-      }
-      totalCount
-      nextPage
-    }
-  }
-`
+// SEARCH_SINGLE_SOURCE query removed - not supported by backend
+// Use SEARCH_PAPERS with specific sources instead
 
 // Health and System Queries
 export const GET_HEALTH_STATUS = gql`
   query GetHealthStatus {
-    health {
-      status
-      timestamp
-      services {
-        redis
-        database
-        graphql
-      }
-      environment
-      version
-    }
+    health
   }
 `
 

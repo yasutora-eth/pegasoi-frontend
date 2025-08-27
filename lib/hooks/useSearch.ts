@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useQuery, useLazyQuery } from '@apollo/client'
-import { SEARCH_PAPERS, SEARCH_SINGLE_SOURCE } from '../graphql/queries'
+import { SEARCH_PAPERS } from '../graphql/queries'
 import type { SearchResult } from '@/types/graphql'
 
 export function useSearchPapers() {
   const [searchPapers, { loading, error, data }] = useLazyQuery<
-    { searchPapers: SearchResult },
+    { search: SearchResult[] },
     { query: string; sources?: string[]; limit?: number }
   >(SEARCH_PAPERS, {
     errorPolicy: 'all',
@@ -19,69 +19,29 @@ export function useSearchPapers() {
 
     try {
       const result = await searchPapers({ variables: { query, sources, limit } })
-      return { 
-        success: true, 
-        data: result.data?.searchPapers,
-        loading: result.loading 
+      return {
+        success: true,
+        data: result.data?.search,
+        loading: result.loading
       }
     } catch (err) {
-      return { 
-        success: false, 
-        error: err instanceof Error ? err.message : 'Search failed' 
+      return {
+        success: false,
+        error: err instanceof Error ? err.message : 'Search failed'
       }
     }
   }
 
-  return { 
-    search, 
-    loading, 
-    error, 
-    data: data?.searchPapers 
+  return {
+    search,
+    loading,
+    error,
+    data: data?.search
   }
 }
 
-export function useSearchSingleSource() {
-  const [searchSingleSource, { loading, error, data }] = useLazyQuery<
-    { 
-      searchSingleSource: {
-        papers: any[]
-        totalCount: number
-        nextPage?: string
-      }
-    },
-    { query: string; source: string; limit?: number }
-  >(SEARCH_SINGLE_SOURCE, {
-    errorPolicy: 'all',
-    fetchPolicy: 'no-cache',
-  })
-
-  const search = async (query: string, source: 'arxiv' | 'doaj' | 'crossref', limit = 10) => {
-    if (!query.trim()) {
-      return { success: false, error: 'Search query cannot be empty' }
-    }
-
-    try {
-      const result = await searchSingleSource({ variables: { query, source, limit } })
-      return { 
-        success: true, 
-        data: result.data?.searchSingleSource,
-        loading: result.loading 
-      }
-    } catch (err) {
-      return { 
-        success: false, 
-        error: err instanceof Error ? err.message : 'Search failed' 
-      }
-    }
-  }
-
-  return { 
-    search, 
-    loading, 
-    error, 
-    data: data?.searchSingleSource 
-  }
-}
+// useSearchSingleSource removed - not supported by backend
+// Use useSearchPapers with specific sources instead
 
 // Hook for real-time search with debouncing
 export function useSearchWithDebounce(
@@ -100,7 +60,7 @@ export function useSearchWithDebounce(
   }, [query, delay])
 
   return useQuery<
-    { searchPapers: SearchResult },
+    { search: SearchResult[] },
     { query: string; sources?: string[]; limit?: number }
   >(SEARCH_PAPERS, {
     variables: { query: debouncedQuery, sources, limit: 10 },

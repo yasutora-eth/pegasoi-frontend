@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { CyberLoading, LoadingState } from '@/components/ui/loading'
 import { CyberError, ErrorState } from '@/components/ui/error'
+import { useAuth } from '@/components/DevAuthProvider'
 import {
   BookOpen,
   Search,
@@ -31,7 +32,7 @@ export function CyberBackground() {
 }
 
 export default function Home() {
-  const isAuthenticated = false
+  const { isAuthenticated, user } = useAuth()
 
   const PublicContent = () => (
     <div className="relative z-10 space-y-8">
@@ -375,11 +376,94 @@ export default function Home() {
     </div>
   )
 
+  const AuthenticatedContent = () => (
+    <div className="relative z-10 space-y-8">
+      <div className="animate-fade-in text-center">
+        <div className="mb-6 flex items-center justify-center gap-4">
+          <img
+            src="/pegasus-logo.svg"
+            alt="Pegasus Logo"
+            className="h-16 w-16 animate-pulse"
+          />
+          <h1 className="text-cyber text-glow text-6xl font-bold">
+            Welcome Back, {user?.name || 'Researcher'}
+          </h1>
+        </div>
+        <p className="mb-6 text-2xl text-cyan-300">
+          Access Level: {user?.role?.toUpperCase() || 'USER'}
+        </p>
+        <Badge variant="cyber">
+          AUTHENTICATED • SYSTEM ACCESS GRANTED
+        </Badge>
+      </div>
+
+      {/* Quick Access Dashboard */}
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <Card variant="cyber">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-cyan-400">
+              <Database className="h-5 w-5" />
+              Dashboard
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="mb-4 text-sm text-cyan-300/70">
+              Access your personal dashboard
+            </p>
+            <Link href="/dashboard">
+              <Button variant="cyber" className="w-full">
+                ENTER DASHBOARD
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
+
+        <Card variant="cyber">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-cyan-400">
+              <Search className="h-5 w-5" />
+              Research Gallery
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="mb-4 text-sm text-cyan-300/70">
+              Advanced search and research tools
+            </p>
+            <Link href="/research-gallery">
+              <Button variant="cyber" className="w-full">
+                ACCESS RESEARCH
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
+
+        <Card variant="cyber">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-cyan-400">
+              <BookOpen className="h-5 w-5" />
+              Articles
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="mb-4 text-sm text-cyan-300/70">
+              Browse and manage articles
+            </p>
+            <Link href="/articles">
+              <Button variant="cyber" className="w-full">
+                VIEW ARTICLES
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  )
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
       <CyberBackground />
       <div className="container mx-auto px-4 py-12">
-        {!isAuthenticated ? <PublicContent /> : null}
+        {isAuthenticated ? <AuthenticatedContent /> : <PublicContent />}
       </div>
     </div>
   )
