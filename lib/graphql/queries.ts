@@ -1,11 +1,12 @@
 import { gql } from '@apollo/client'
 
-// Article Queries - Match backend schema exactly
+// Article Queries
 export const GET_ARTICLES = gql`
-  query GetArticles($status: String, $limit: Int, $offset: Int) {
+  query GetArticles($status: String, $limit: Int = 100, $offset: Int = 0) {
     articles(status: $status, limit: $limit, offset: $offset) {
       articleId
       title
+      content
       authors
       abstract
       keywords
@@ -22,16 +23,16 @@ export const GET_ARTICLES = gql`
 export const GET_ARTICLE_BY_ID = gql`
   query GetArticleById($id: ID!) {
     article(id: $id) {
-      article_id
+      articleId
       title
       content
       authors
       abstract
       keywords
-      publication_date
+      publicationDate
       status
-      created_at
-      updated_at
+      createdAt
+      updatedAt
       doi
       journal
     }
@@ -39,134 +40,90 @@ export const GET_ARTICLE_BY_ID = gql`
 `
 
 export const GET_ARTICLES_BY_STATUS = gql`
-  query GetArticlesByStatus($status: String!, $limit: Int) {
-    articlesByStatus(status: $status, limit: $limit) {
-      article_id
+  query GetArticlesByStatus($status: String!, $limit: Int = 50) {
+    articles(status: $status, limit: $limit) {
+      articleId
       title
       authors
       abstract
+      publicationDate
       status
-      created_at
-      updated_at
+      createdAt
+      updatedAt
+      journal
     }
   }
 `
 
-// Search Queries
+export const SEARCH_ARTICLES_BY_KEYWORDS = gql`
+  query SearchArticlesByKeywords($keywords: String!, $limit: Int = 20) {
+    searchArticles(keywords: $keywords) {
+      articleId
+      title
+      authors
+      abstract
+      keywords
+      publicationDate
+      status
+      journal
+      doi
+    }
+  }
+`
+
+// Multi-source Search Queries - Updated to match backend GraphQL schema
 export const SEARCH_PAPERS = gql`
-  query SearchPapers($query: String!, $sources: [String!], $limit: Int) {
-    searchPapers(query: $query, sources: $sources, limit: $limit) {
-      ok
-      data {
-        entries {
-          title
-          authors
-          abstract
-          source
-          url
-          year
-          journal
-          doi
-          classics_relevance
-        }
-        total
-      }
-      error
+  query SearchArticles($query: String!, $sources: [String!], $limit: Int) {
+    search(query: $query, sources: $sources, limit: $limit) {
+      title
+      authors
+      abstract
+      source
+      url
+      publicationDate
+      doi
+      journal
+      keywords
+      relevanceScore
     }
   }
 `
 
-export const SEARCH_MULTI_SOURCE = gql`
-  query SearchMultiSource($query: String!, $limit: Int) {
-    searchMultiSource(query: $query, limit: $limit) {
-      arxiv {
-        ok
-        data {
-          entries {
-            title
-            authors
-            abstract
-            url
-            source
-          }
-          total
-        }
-        error
-      }
-      doaj {
-        ok
-        data {
-          entries {
-            title
-            authors
-            abstract
-            url
-            source
-          }
-          total
-        }
-        error
-      }
-      crossref {
-        ok
-        data {
-          entries {
-            title
-            authors
-            abstract
-            url
-            source
-          }
-          total
-        }
-        error
-      }
-      getty {
-        ok
-        data {
-          entries {
-            title
-            authors
-            abstract
-            url
-            source
-          }
-          total
-        }
-        error
-      }
-    }
-  }
-`
+// SEARCH_SINGLE_SOURCE query removed - not supported by backend
+// Use SEARCH_PAPERS with specific sources instead
 
-// Health Check
+// Health and System Queries
 export const GET_HEALTH_STATUS = gql`
   query GetHealthStatus {
-    health {
-      status
-      timestamp
-      version
-      database_status
-      redis_status
-      services {
-        name
-        status
-        response_time
-      }
-    }
+    health
   }
 `
 
-// User Queries (if backend supports user management)
+// User Queries (for when auth is implemented)
 export const GET_CURRENT_USER = gql`
   query GetCurrentUser {
     currentUser {
       id
-      email
       name
+      email
       role
-      created_at
-      last_login
+      createdAt
+      updatedAt
+    }
+  }
+`
+
+export const GET_USER_ARTICLES = gql`
+  query GetUserArticles($userId: ID!, $status: String) {
+    userArticles(userId: $userId, status: $status) {
+      articleId
+      title
+      authors
+      abstract
+      status
+      createdAt
+      updatedAt
+      publicationDate
     }
   }
 `

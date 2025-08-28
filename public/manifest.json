@@ -1,27 +1,38 @@
 {
-  "name": "Research Portal",
-  "short_name": "Research Portal",
-  "description": "Classical Studies Research & Publication Platform",
+  "name": "Pegasoi Research Platform - Academic Research Discovery",
+  "short_name": "Pegasoi",
+  "description": "Discover academic research papers across multiple sources including ArXiv, DOAJ, Crossref, and Getty Vocabulary. Web3-ready platform for researchers.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#1f2937",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/icon-192.png",
+      "src": "/pegasoi-favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/pegasoi-logo-1024.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "/icon-512.png",
+      "src": "/pegasoi-logo-1024.png",
       "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/pegasoi-logo-1024.png",
+      "sizes": "1024x1024",
       "type": "image/png",
       "purpose": "maskable any"
     }
   ],
-  "categories": ["education", "productivity"],
+  "categories": ["education", "productivity", "research", "academic"],
   "lang": "en",
   "dir": "ltr"
 }

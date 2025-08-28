@@ -54,7 +54,15 @@ export function RealDataProcessor() {
     setLoading(true)
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/search?query=${encodeURIComponent(query)}`
+        `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/v1/search/papers?query=${encodeURIComponent(query)}&limit=5&sources=crossref,arxiv,doaj`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+          signal: AbortSignal.timeout(60000), // 60 second timeout
+        }
       )
       const data = await response.json()
       setResults(data)
@@ -111,6 +119,74 @@ export function RealDataProcessor() {
   }
 
   const renderArxivResults = (data: Record<string, unknown>) => {
+    // Handle new unified API response format
+    if (Array.isArray(data)) {
+      const arxivResults = (data as any[]).filter(item => item.source === 'arxiv')
+      if (arxivResults.length === 0) {
+        return (
+          <div className="text-muted-foreground">
+            No ArXiv results found for this query
+          </div>
+        )
+      }
+      
+      return (
+        <div className="space-y-4">
+          {arxivResults.map((entry, index) => (
+            <Card key={index} className="border-l-4 border-l-blue-500">
+              <CardHeader className="pb-2">
+                <CardTitle className="flex items-start gap-2 text-lg">
+                  <BookOpen className="mt-1 h-5 w-5 text-blue-500" />
+                  <div className="flex-1">
+                    {entry.title}
+                    {entry.url && (
+                      <a
+                        href={entry.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="ml-2"
+                      >
+                        <ExternalLink className="inline h-4 w-4 text-blue-500 hover:text-blue-700" />
+                      </a>
+                    )}
+                  </div>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                  {entry.authors && entry.authors.length > 0 && (
+                    <div className="flex items-center gap-1">
+                      <User className="h-4 w-4" />
+                      {entry.authors.slice(0, 3).join(', ')}
+                      {entry.authors.length > 3 &&
+                        ` +${entry.authors.length - 3} more`}
+                    </div>
+                  )}
+                  {entry.publicationDate && (
+                    <div className="flex items-center gap-1">
+                      <Calendar className="h-4 w-4" />
+                      {new Date(entry.publicationDate).toLocaleDateString()}
+                    </div>
+                  )}
+                </div>
+                {entry.abstract && (
+                  <p className="text-sm">{entry.abstract.substring(0, 300)}...</p>
+                )}
+                <div className="flex flex-wrap gap-1">
+                  {entry.keywords && entry.keywords.slice(0, 5).map((cat: string, i: number) => (
+                    <Badge key={i} variant="outline" className="text-xs">
+                      {cat}
+                    </Badge>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      )
+    }
+
+    // Legacy format handling
     if (!data?.ok || typeof data.data !== 'string') {
       return (
         <div className="text-destructive">
@@ -176,6 +252,79 @@ export function RealDataProcessor() {
   }
 
   const renderDoajResults = (data: Record<string, unknown>) => {
+    // Handle new unified API response format
+    if (Array.isArray(data)) {
+      const doajResults = (data as any[]).filter(item => item.source === 'doaj')
+      if (doajResults.length === 0) {
+        return (
+          <div className="text-muted-foreground">
+            No DOAJ results found for this query
+          </div>
+        )
+      }
+      
+      return (
+        <div className="space-y-4">
+          {doajResults.map((article, index) => (
+            <Card key={index} className="border-l-4 border-l-green-500">
+              <CardHeader className="pb-2">
+                <CardTitle className="flex items-start gap-2 text-lg">
+                  <BookOpen className="mt-1 h-5 w-5 text-green-500" />
+                  <div className="flex-1">
+                    {article.title || 'No title'}
+                    {article.url && (
+                      <a
+                        href={article.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="ml-2"
+                      >
+                        <ExternalLink className="inline h-4 w-4 text-green-500 hover:text-green-700" />
+                      </a>
+                    )}
+                  </div>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                  {article.authors && (
+                    <div className="flex items-center gap-1">
+                      <User className="h-4 w-4" />
+                      {article.authors.slice(0, 3).join(', ')}
+                    </div>
+                  )}
+                  {article.publicationDate && (
+                    <div className="flex items-center gap-1">
+                      <Calendar className="h-4 w-4" />
+                      {new Date(article.publicationDate).toLocaleDateString()}
+                    </div>
+                  )}
+                  {article.journal && (
+                    <Badge variant="outline">
+                      {article.journal}
+                    </Badge>
+                  )}
+                </div>
+                {article.abstract && (
+                  <p className="text-sm">
+                    {article.abstract.substring(0, 300)}...
+                  </p>
+                )}
+                <div className="flex flex-wrap gap-1">
+                  {article.keywords?.slice(0, 5).map((subj: string, i: number) => (
+                    <Badge key={i} variant="outline" className="text-xs">
+                      {subj}
+                    </Badge>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      )
+    }
+
+    // Legacy format handling
     if (!data?.ok || !(data as any).data?.results) {
       return <div className="text-destructive">DOAJ data unavailable</div>
     }
@@ -247,6 +396,75 @@ export function RealDataProcessor() {
   }
 
   const renderCrossrefResults = (data: Record<string, unknown>) => {
+    // Handle new unified API response format
+    if (Array.isArray(data)) {
+      const crossrefResults = (data as any[]).filter(item => item.source === 'crossref')
+      if (crossrefResults.length === 0) {
+        return (
+          <div className="text-muted-foreground">
+            No CrossRef results found for this query
+          </div>
+        )
+      }
+      
+      return (
+        <div className="space-y-4">
+          {crossrefResults.map((item, index) => (
+            <Card key={index} className="border-l-4 border-l-purple-500">
+              <CardHeader className="pb-2">
+                <CardTitle className="flex items-start gap-2 text-lg">
+                  <BookOpen className="mt-1 h-5 w-5 text-purple-500" />
+                  <div className="flex-1">
+                    {item.title || 'No title'}
+                    {item.url && (
+                      <a
+                        href={item.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="ml-2"
+                      >
+                        <ExternalLink className="inline h-4 w-4 text-purple-500 hover:text-purple-700" />
+                      </a>
+                    )}
+                  </div>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                  {item.authors && (
+                    <div className="flex items-center gap-1">
+                      <User className="h-4 w-4" />
+                      {item.authors.slice(0, 3).join(', ')}
+                    </div>
+                  )}
+                  {item.publicationDate && (
+                    <div className="flex items-center gap-1">
+                      <Calendar className="h-4 w-4" />
+                      {new Date(item.publicationDate).toLocaleDateString()}
+                    </div>
+                  )}
+                  {item.journal && (
+                    <Badge variant="outline">{item.journal}</Badge>
+                  )}
+                </div>
+                {item.abstract && (
+                  <p className="text-sm">{item.abstract.substring(0, 300)}...</p>
+                )}
+                <div className="flex flex-wrap gap-1">
+                  {item.keywords?.slice(0, 5).map((subj: string, i: number) => (
+                    <Badge key={i} variant="outline" className="text-xs">
+                      {subj}
+                    </Badge>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      )
+    }
+
+    // Legacy format handling
     if (!data?.ok || !(data as any).data?.message?.items) {
       return <div className="text-destructive">Crossref data unavailable</div>
     }
@@ -360,93 +578,180 @@ export function RealDataProcessor() {
 
       {results && (
         <div className="space-y-6">
-          {/* ArXiv Results */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <LinkIcon className="h-5 w-5 text-blue-500" />
-                ArXiv Results (XML → Parsed)
-                <Badge
-                  variant={
-                    (results.arxiv as any)?.ok ? 'default' : 'destructive'
-                  }
-                >
-                  {(results.arxiv as any)?.ok ? 'Success' : 'Error'}
-                </Badge>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ScrollArea className="h-96">
-                {renderArxivResults(results.arxiv as Record<string, unknown>)}
-              </ScrollArea>
-            </CardContent>
-          </Card>
+          {/* Unified Results Display */}
+          {Array.isArray(results) ? (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <LinkIcon className="h-5 w-5 text-cyan-500" />
+                  Search Results
+                  <Badge variant="default">
+                    {results.length} results found
+                  </Badge>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ScrollArea className="h-96">
+                  <div className="space-y-4">
+                    {results.map((item: any, index: number) => (
+                      <Card key={index} className={`border-l-4 ${
+                        item.source === 'crossref' ? 'border-l-purple-500' :
+                        item.source === 'arxiv' ? 'border-l-blue-500' :
+                        item.source === 'doaj' ? 'border-l-green-500' :
+                        'border-l-orange-500'
+                      }`}>
+                        <CardHeader className="pb-2">
+                          <CardTitle className="flex items-start gap-2 text-lg">
+                            <BookOpen className={`mt-1 h-5 w-5 ${
+                              item.source === 'crossref' ? 'text-purple-500' :
+                              item.source === 'arxiv' ? 'text-blue-500' :
+                              item.source === 'doaj' ? 'text-green-500' :
+                              'text-orange-500'
+                            }`} />
+                            <div className="flex-1">
+                              {item.title}
+                              {item.url && (
+                                <a
+                                  href={item.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="ml-2"
+                                >
+                                  <ExternalLink className={`inline h-4 w-4 ${
+                                    item.source === 'crossref' ? 'text-purple-500 hover:text-purple-700' :
+                                    item.source === 'arxiv' ? 'text-blue-500 hover:text-blue-700' :
+                                    item.source === 'doaj' ? 'text-green-500 hover:text-green-700' :
+                                    'text-orange-500 hover:text-orange-700'
+                                  }`} />
+                                </a>
+                              )}
+                            </div>
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-2">
+                          <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                            <Badge variant="outline" className="text-xs">
+                              {item.source.toUpperCase()}
+                            </Badge>
+                            {item.authors && (
+                              <div className="flex items-center gap-1">
+                                <User className="h-4 w-4" />
+                                {Array.isArray(item.authors) ? item.authors.slice(0, 3).join(', ') : item.authors}
+                              </div>
+                            )}
+                            {item.publicationDate && (
+                              <div className="flex items-center gap-1">
+                                <Calendar className="h-4 w-4" />
+                                {new Date(item.publicationDate).toLocaleDateString()}
+                              </div>
+                            )}
+                            {item.relevanceScore && (
+                              <Badge variant="secondary">
+                                Score: {item.relevanceScore}
+                              </Badge>
+                            )}
+                          </div>
+                          {item.abstract && (
+                            <p className="text-sm">{item.abstract.substring(0, 300)}...</p>
+                          )}
+                          {item.journal && (
+                            <Badge variant="outline">{item.journal}</Badge>
+                          )}
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </ScrollArea>
+              </CardContent>
+            </Card>
+          ) : (
+            <>
+              {/* Legacy format display */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <LinkIcon className="h-5 w-5 text-blue-500" />
+                    ArXiv Results (XML → Parsed)
+                    <Badge
+                      variant={
+                        (results.arxiv as any)?.ok ? 'default' : 'destructive'
+                      }
+                    >
+                      {(results.arxiv as any)?.ok ? 'Success' : 'Error'}
+                    </Badge>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ScrollArea className="h-96">
+                    {renderArxivResults(results.arxiv as Record<string, unknown>)}
+                  </ScrollArea>
+                </CardContent>
+              </Card>
 
-          {/* DOAJ Results */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <LinkIcon className="h-5 w-5 text-green-500" />
-                DOAJ Results (JSON → Processed)
-                <Badge
-                  variant={
-                    (results.doaj as any)?.ok ? 'default' : 'destructive'
-                  }
-                >
-                  {(results.doaj as any)?.ok ? 'Success' : 'Error'}
-                </Badge>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ScrollArea className="h-96">
-                {renderDoajResults(results.doaj as Record<string, unknown>)}
-              </ScrollArea>
-            </CardContent>
-          </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <LinkIcon className="h-5 w-5 text-green-500" />
+                    DOAJ Results (JSON → Processed)
+                    <Badge
+                      variant={
+                        (results.doaj as any)?.ok ? 'default' : 'destructive'
+                      }
+                    >
+                      {(results.doaj as any)?.ok ? 'Success' : 'Error'}
+                    </Badge>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ScrollArea className="h-96">
+                    {renderDoajResults(results.doaj as Record<string, unknown>)}
+                  </ScrollArea>
+                </CardContent>
+              </Card>
 
-          {/* Crossref Results */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <LinkIcon className="h-5 w-5 text-purple-500" />
-                Crossref Results (JSON → Processed)
-                <Badge
-                  variant={
-                    (results.crossref as any)?.ok ? 'default' : 'destructive'
-                  }
-                >
-                  {(results.crossref as any)?.ok ? 'Success' : 'Error'}
-                </Badge>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ScrollArea className="h-96">
-                {renderCrossrefResults(
-                  results.crossref as Record<string, unknown>
-                )}
-              </ScrollArea>
-            </CardContent>
-          </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <LinkIcon className="h-5 w-5 text-purple-500" />
+                    Crossref Results (JSON → Processed)
+                    <Badge
+                      variant={
+                        (results.crossref as any)?.ok ? 'default' : 'destructive'
+                      }
+                    >
+                      {(results.crossref as any)?.ok ? 'Success' : 'Error'}
+                    </Badge>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ScrollArea className="h-96">
+                    {renderCrossrefResults(
+                      results.crossref as Record<string, unknown>
+                    )}
+                  </ScrollArea>
+                </CardContent>
+              </Card>
 
-          {/* Getty Results */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <LinkIcon className="h-5 w-5 text-orange-500" />
-                Getty Results
-                <Badge
-                  variant={
-                    (results.getty as any)?.ok ? 'default' : 'destructive'
-                  }
-                >
-                  {(results.getty as any)?.ok ? 'Success' : 'Error'}
-                </Badge>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {renderGettyResults(results.getty as Record<string, unknown>)}
-            </CardContent>
-          </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <LinkIcon className="h-5 w-5 text-orange-500" />
+                    Getty Results
+                    <Badge
+                      variant={
+                        (results.getty as any)?.ok ? 'default' : 'destructive'
+                      }
+                    >
+                      {(results.getty as any)?.ok ? 'Success' : 'Error'}
+                    </Badge>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {renderGettyResults(results.getty as Record<string, unknown>)}
+                </CardContent>
+              </Card>
+            </>
+          )}
         </div>
       )}
     </div>

@@ -13,11 +13,16 @@ import {
   Database,
   Zap,
 } from 'lucide-react'
-import { apiService, type HealthStatus, type ConnectionTestResult } from '@/lib/api'
+import {
+  apiService,
+  type HealthStatus,
+  type ConnectionTestResult,
+} from '@/lib/api'
 
 export function SystemStatus() {
   const [health, setHealth] = useState<HealthStatus | null>(null)
-  const [connectionTest, setConnectionTest] = useState<ConnectionTestResult | null>(null)
+  const [connectionTest, setConnectionTest] =
+    useState<ConnectionTestResult | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -108,7 +113,8 @@ export function SystemStatus() {
               <div>✅ Message: {connectionTest.message}</div>
               <div>✅ Status: {connectionTest.status}</div>
               <div>
-                ✅ Timestamp: {new Date(connectionTest.timestamp).toLocaleString()}
+                ✅ Timestamp:{' '}
+                {new Date(connectionTest.timestamp).toLocaleString()}
               </div>
             </div>
           </div>

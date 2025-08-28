@@ -272,12 +272,12 @@ async function getOfflineActions() {
 
 async function removeOfflineAction(actionId) {
   // Implementation would use IndexedDB
-  console.log("Removing offline action:", actionId)
+  // Offline action removed: actionId
 }
 
 // Push notification handling
 self.addEventListener("push", (event) => {
-  console.log("Service Worker: Push notification received")
+  // Service Worker: Push notification received
 
   const options = {
     body: event.data ? event.data.text() : "New research articles available",

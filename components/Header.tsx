@@ -4,14 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-// import { useAuth } from "@/components/AuthProvider"
+import { useUser, SignInButton, UserButton } from '@/components/DevAuthProvider'
 import {
   Menu,
   X,
@@ -27,13 +20,9 @@ import {
   Archive,
   Zap,
 } from 'lucide-react'
-import { useAuth } from '@/components/AuthProvider'
 
 export function Header() {
-  // Use Clerk authentication
-  const { isAuthenticated, user, setRole } = useAuth()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { SignInButton, SignOutButton, UserButton } = useAuth()
+  const { isSignedIn, user } = useUser()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const publicNavItems = [
@@ -55,19 +44,23 @@ export function Header() {
     { href: '/information', label: 'Information', icon: Info },
   ]
 
-  const navItems = isAuthenticated ? authenticatedNavItems : publicNavItems
+  const navItems = isSignedIn ? authenticatedNavItems : publicNavItems
 
   return (
     <header className="cyber-card sticky top-0 z-50 w-full border-b border-cyan-500/30 backdrop-blur-lg">
       <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
+        <div className="relative flex h-16 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-400 to-purple-600">
-              <BookOpen className="h-5 w-5 text-cyan-100" />
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-400 to-purple-600 overflow-hidden">
+              <img
+                src="/pegasoi-favicon-32.png"
+                alt="Pegasoi Logo"
+                className="h-6 w-6 object-contain"
+              />
             </div>
             <span className="text-cyber text-glow text-xl font-bold">
-              Research Portal
+              Pegasoi
             </span>
           </Link>
 
@@ -96,47 +89,24 @@ export function Header() {
 
           {/* User Controls */}
           <div className="flex items-center space-x-4">
-            {isAuthenticated && user && (
+            {isSignedIn && user && (
               <div className="hidden items-center space-x-3 md:flex">
                 <Badge className="cyber-badge px-3 py-1">
                   <User className="mr-1 h-3 w-3" />
                   {user?.name || 'Guest'}
                 </Badge>
-                <Select value={user?.role || 'user'} onValueChange={setRole}>
-                  <SelectTrigger className="w-32 border-cyan-500/30 bg-black/50 text-cyan-300">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="cyber-card border-cyan-500/30">
-                    <SelectItem
-                      value="user"
-                      className="text-cyan-200 hover:bg-cyan-500/20"
-                    >
-                      User
-                    </SelectItem>
-                    <SelectItem
-                      value="publisher"
-                      className="text-cyan-200 hover:bg-cyan-500/20"
-                    >
-                      Publisher
-                    </SelectItem>
-                    <SelectItem
-                      value="admin"
-                      className="text-cyan-200 hover:bg-cyan-500/20"
-                    >
-                      Admin
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
+                <UserButton />
               </div>
             )}
 
-            <Button
-              disabled
-              className="cyber-button flex items-center space-x-2"
-            >
-              <LogIn className="h-4 w-4" />
-              <span className="hidden sm:inline">Login (Dev)</span>
-            </Button>
+            {!isSignedIn && (
+              <SignInButton>
+                <Button className="cyber-button flex items-center space-x-2">
+                  <LogIn className="h-4 w-4" />
+                  <span className="hidden sm:inline">Sign In</span>
+                </Button>
+              </SignInButton>
+            )}
 
             {/* Mobile Menu Button */}
             <Button
@@ -181,37 +151,24 @@ export function Header() {
             </nav>
 
             {/* Mobile User Controls */}
-            {isAuthenticated && user && (
+            {isSignedIn && user && (
               <div className="mt-4 space-y-3 border-t border-cyan-500/30 pt-4">
                 <Badge className="cyber-badge px-3 py-1">
                   <User className="mr-1 h-3 w-3" />
                   {user?.name || 'Guest'}
                 </Badge>
-                <Select value={user?.role || 'user'} onValueChange={setRole}>
-                  <SelectTrigger className="w-full border-cyan-500/30 bg-black/50 text-cyan-300">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="cyber-card border-cyan-500/30">
-                    <SelectItem
-                      value="user"
-                      className="text-cyan-200 hover:bg-cyan-500/20"
-                    >
-                      User
-                    </SelectItem>
-                    <SelectItem
-                      value="publisher"
-                      className="text-cyan-200 hover:bg-cyan-500/20"
-                    >
-                      Publisher
-                    </SelectItem>
-                    <SelectItem
-                      value="admin"
-                      className="text-cyan-200 hover:bg-cyan-500/20"
-                    >
-                      Admin
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
+                <UserButton />
+              </div>
+            )}
+
+            {!isSignedIn && (
+              <div className="mt-4 border-t border-cyan-500/30 pt-4">
+                <SignInButton>
+                  <Button className="cyber-button flex w-full items-center space-x-2">
+                    <LogIn className="h-4 w-4" />
+                    <span>Sign In</span>
+                  </Button>
+                </SignInButton>
               </div>
             )}
           </div>

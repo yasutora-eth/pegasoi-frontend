@@ -1,17 +1,20 @@
 # Multi-stage Docker build for production deployment
 FROM node:18-alpine AS frontend-builder
 
+# Install pnpm
+RUN npm install -g pnpm@8.15.0
+
 WORKDIR /app
 
 # Copy package files
-COPY package*.json ./
-RUN npm ci --only=production
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile --prod
 
 # Copy source code
 COPY . .
 
 # Build Next.js application
-RUN npm run build
+RUN pnpm run build
 
 # Python backend stage
 FROM python:3.11-slim AS backend-builder
@@ -65,5 +68,8 @@ EXPOSE 3000 8000
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD curl -f http://localhost:8000/api/v1/health || exit 1
 
+# Install pnpm in production stage
+RUN npm install -g pnpm@8.15.0
+
 # Start both frontend and backend
-CMD ["sh", "-c", "python backend/main.py & npm start"]
+CMD ["sh", "-c", "python backend/main.py & pnpm start"]

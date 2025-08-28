@@ -5,7 +5,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import type { LegacyArticle } from '@/types/article'
 import { useState } from 'react'
-// import { useAuth } from "@/components/AuthProvider"
+import { useUser } from '@/components/DevAuthProvider'
 
 const initialArticles: LegacyArticle[] = [
   {
@@ -52,11 +52,12 @@ const initialArticles: LegacyArticle[] = [
 
 export default function Archive() {
   const [articles, setArticles] = useState<LegacyArticle[]>(initialArticles)
-  // const { user } = useAuth()
-  const user = { role: 'admin' } // Mock user for dev mode
+  const { user } = useUser()
+  // Default to 'user' role if no role is set
+  const userRole = user?.role || 'user'
 
   const handleArchive = (id: string) => {
-    if (user?.role === 'admin') {
+    if (userRole === 'admin') {
       setArticles(
         articles.map((article) =>
           article.id === id
@@ -92,7 +93,7 @@ export default function Archive() {
                   Last Updated:{' '}
                   {new Date(article.updatedAt).toLocaleDateString()}
                 </p>
-                {user?.role === 'admin' && article.status !== 'archived' && (
+                {userRole === 'admin' && article.status !== 'archived' && (
                   <Button onClick={() => handleArchive(article.id)}>
                     Archive
                   </Button>

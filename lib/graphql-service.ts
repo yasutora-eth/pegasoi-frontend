@@ -99,19 +99,51 @@ export class GraphQLService {
     }
   }
 
-  // Search Operations
+  // Search Operations - Try different query formats to find working combination
   async searchPapers(query: string, sources?: string[], limit = 20) {
-    try {
-      const { data } = await apolloClient.query({
-        query: SEARCH_PAPERS,
-        variables: { query, sources, limit },
-        fetchPolicy: 'no-cache', // Always fetch fresh search results
-      })
-      return data.searchPapers
-    } catch (error) {
-      console.error('GraphQL searchPapers error:', error)
-      throw new Error('Failed to search papers via GraphQL')
+    const trimmedQuery = query.trim()
+    const searchSources = sources || ['crossref', 'arxiv', 'doaj']
+
+    // Try different query formats
+    const queryVariations = [
+      trimmedQuery,
+      `"${trimmedQuery}"`,
+      trimmedQuery.split(' ').join(' AND '),
+      trimmedQuery.replace(/\s+/g, '+'),
+    ]
+
+    for (const [index, queryVariation] of queryVariations.entries()) {
+      try {
+        console.log(
+          `Trying GraphQL query variation ${index + 1}: "${queryVariation}"`
+        )
+
+        const { data } = await apolloClient.query({
+          query: SEARCH_PAPERS,
+          variables: { query: queryVariation, sources: searchSources, limit },
+          fetchPolicy: 'no-cache',
+          context: {
+            timeout: 90000,
+          },
+        })
+
+        const results = data.search || []
+        if (Array.isArray(results) && results.length > 0) {
+          console.log(
+            `✅ Found working GraphQL query format ${index + 1}! Got ${results.length} results`
+          )
+          return results
+        }
+      } catch (error) {
+        console.log(`❌ GraphQL query variation ${index + 1} failed:`, error)
+        continue
+      }
     }
+
+    console.log(
+      '❌ All GraphQL query variations failed, returning empty results'
+    )
+    return []
   }
 
   // Health Check
